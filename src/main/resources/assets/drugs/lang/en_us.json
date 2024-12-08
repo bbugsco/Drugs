@@ -1,0 +1,14 @@
+{
+  "itemgroup.drugs.drugs": "Drugs",
+
+  "block.drugs.marijuana_plant": "Marijuana Seeds",
+  "block.drugs.hash_press": "Hash Press",
+
+  "effect.minecraft.hunger": "Munchies",
+
+  "item.drugs.marijuana": "Marijuana",
+  "item.drugs.marijuana_trim": "Marijuana Trim",
+  "item.drugs.hash": "Hash",
+  "item.drugs.dab_rig": "Dab Rig",
+  "item.drugs.empty_dab_rig": "Dab Rig"
+}
