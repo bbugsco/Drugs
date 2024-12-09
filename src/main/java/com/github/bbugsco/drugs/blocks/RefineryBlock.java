@@ -6,6 +6,7 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
@@ -70,7 +71,7 @@ public class RefineryBlock extends BaseEntityBlock implements EntityBlock {
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof RefineryBlockEntity) {
                 if (level instanceof ServerLevel) {
-                    // Containers.dropContents(level, pos, (RefineryBlockEntity) blockEntity);
+                    Containers.dropContents(level, pos, (RefineryBlockEntity) blockEntity);
                 }
                 super.onRemove(state, level, pos, newState, moved);
                 level.updateNeighbourForOutputSignal(pos, this);

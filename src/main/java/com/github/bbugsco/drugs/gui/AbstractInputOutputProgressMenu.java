@@ -15,21 +15,23 @@ public abstract class AbstractInputOutputProgressMenu extends AbstractContainerM
 
     protected final Container inventory;
     protected final SimpleContainerData simpleContainerData;
-    protected final int containerDataSize;
 
 
-    protected AbstractInputOutputProgressMenu(MenuType<? extends AbstractInputOutputProgressMenu> menu, int syncId, Inventory playerInventory, BlockEntity blockEntity, SimpleContainerData arrayPropertyDelegate, int containerDataSize) {
+    protected AbstractInputOutputProgressMenu(MenuType<? extends AbstractInputOutputProgressMenu> menu, int syncId, Inventory playerInventory, int inventorySize, BlockEntity entity, SimpleContainerData blockEntityData, Slot[] slots) {
         super(menu, syncId);
-        this.containerDataSize = containerDataSize;
-        checkContainerSize(((Container) blockEntity), containerDataSize);
-        this.inventory = ((Container) blockEntity);
+        checkContainerSize(((Container) entity), inventorySize);
+        this.inventory = ((Container) entity);
         inventory.startOpen(playerInventory.player);
-        this.simpleContainerData = arrayPropertyDelegate;
+        this.simpleContainerData = blockEntityData;
+
+        for (Slot slot : slots) {
+            this.addSlot(slot);
+        }
 
         addPlayerInventory(playerInventory);
         addPlayerHotbar(playerInventory);
 
-        addDataSlots(arrayPropertyDelegate);
+        addDataSlots(blockEntityData);
     }
 
     public boolean isCrafting() {
@@ -59,11 +61,11 @@ public abstract class AbstractInputOutputProgressMenu extends AbstractContainerM
 
     @Override
     public @NotNull ItemStack quickMoveStack(Player player, int index) {
-        ItemStack item = ItemStack.EMPTY;
+        ItemStack newStack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
         if (slot.hasItem()) {
             ItemStack originalStack = slot.getItem();
-            item = originalStack.copy();
+            newStack = originalStack.copy();
             if (index < this.inventory.getContainerSize()) {
                 if (!this.moveItemStackTo(originalStack, this.inventory.getContainerSize(), this.slots.size(), true)) {
                     return ItemStack.EMPTY;
@@ -77,7 +79,7 @@ public abstract class AbstractInputOutputProgressMenu extends AbstractContainerM
                 slot.setChanged();
             }
         }
-        return item;
+        return newStack;
     }
 
     @Override

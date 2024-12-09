@@ -31,9 +31,8 @@ import java.util.Optional;
 public class HashPressBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory<BlockPos>, ImplementedInventory {
 
     private final NonNullList<ItemStack> inventory = NonNullList.withSize(2, ItemStack.EMPTY);
-
-    private static final int INPUT_SLOT = 0;
-    private static final int OUTPUT_SLOT = 1;
+    public static final int INPUT_SLOT = 0;
+    public static final int OUTPUT_SLOT = 1;
 
     protected final SimpleContainerData simpleContainerData;
     private int progress;
@@ -115,9 +114,9 @@ public class HashPressBlockEntity extends BlockEntity implements ExtendedScreenH
         if(level.isClientSide) return;
         if (isOutputSlotEmptyOrReceivable()) {
             if (this.hasRecipe()) {
-                this.increaseCraftProgress();
+                progress++;
                 setChanged(level, pos, state);
-                if (hasCraftingFinished()) {
+                if (progress >= maxProgress) {
                     this.craftItem();
                     this.resetProgress();
                 }
@@ -140,14 +139,6 @@ public class HashPressBlockEntity extends BlockEntity implements ExtendedScreenH
         recipe.ifPresent(inputOutputRecipeRecipeEntry -> this.setItem(OUTPUT_SLOT, new ItemStack(
                 inputOutputRecipeRecipeEntry.value().result().getItem(),
                 getItem(OUTPUT_SLOT).getCount() + inputOutputRecipeRecipeEntry.value().result().getCount())));
-    }
-
-    private boolean hasCraftingFinished() {
-        return progress >= maxProgress;
-    }
-
-    private void increaseCraftProgress() {
-        progress++;
     }
 
     private boolean hasRecipe() {

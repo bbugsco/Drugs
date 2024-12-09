@@ -46,7 +46,7 @@ public class HashPressScreen extends AbstractContainerScreen<HashPressMenu> {
     }
 
     private void renderProgressArrow(GuiGraphics context, int x, int y) {
-        if(menu.isCrafting()) {
+        if (menu.isCrafting()) {
             context.blit(TEXTURE, x + 85, y + 30, 176, 0, 8, menu.getScaledProgress());
         }
     }
