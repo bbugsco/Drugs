@@ -1,6 +1,6 @@
 package com.github.bbugsco.drugs.blocks.entity;
 
-import com.github.bbugsco.drugs.gui.menu.HashPressMenu;
+import com.github.bbugsco.drugs.gui.HashPressMenu;
 import com.github.bbugsco.drugs.recipe.HashPressRecipe;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.core.BlockPos;

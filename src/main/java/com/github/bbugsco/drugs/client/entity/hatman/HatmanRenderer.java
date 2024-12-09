@@ -3,11 +3,14 @@ package com.github.bbugsco.drugs.client.entity.hatman;
 import com.github.bbugsco.drugs.Drugs;
 import com.github.bbugsco.drugs.client.entity.DrugsEntityRenderers;
 import com.github.bbugsco.drugs.entities.hatman.HatMan;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
+@Environment(EnvType.CLIENT)
 public class HatmanRenderer extends MobRenderer<HatMan, HatManModel<HatMan>> {
 
     private static final ResourceLocation LOCATION = ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "textures/entity/hatman.png");

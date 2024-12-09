@@ -1,6 +1,5 @@
-package com.github.bbugsco.drugs.gui.menu;
+package com.github.bbugsco.drugs.gui;
 
-import com.github.bbugsco.drugs.gui.DrugsGUIs;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -22,7 +21,7 @@ public class HashPressMenu extends AbstractContainerMenu {
     }
 
     public HashPressMenu(int syncId, Inventory playerInventory, BlockEntity blockEntity, SimpleContainerData arrayPropertyDelegate) {
-        super(DrugsGUIs.HASH_PRESS_MENU, syncId);
+        super(DrugsMenus.HASH_PRESS_MENU, syncId);
         checkContainerSize(((Container) blockEntity), 2);
         this.inventory = ((Container) blockEntity);
         inventory.startOpen(playerInventory.player);
