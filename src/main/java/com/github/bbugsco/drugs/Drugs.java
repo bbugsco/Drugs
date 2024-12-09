@@ -47,7 +47,6 @@ public class Drugs implements ModInitializer, DataGeneratorEntrypoint {
         DrugsFeatures.registerFeatures();
         DrugsLootTables.registerLootTables();
         DrugsEntities.registerEntities();
-        DrugsEntityRenderers.registerEntityRenderers();
     }
 
     @Override

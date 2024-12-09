@@ -5,6 +5,8 @@ import com.github.bbugsco.drugs.blocks.DrugsBlocks;
 import com.github.bbugsco.drugs.items.DrugsItems;
 import com.github.bbugsco.drugs.recipe.HashPressRecipe;
 import com.github.bbugsco.drugs.recipe.HashPressRecipeBuilder;
+import com.github.bbugsco.drugs.recipe.RefineryRecipe;
+import com.github.bbugsco.drugs.recipe.RefineryRecipeBuilder;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.core.HolderLookup;
@@ -60,10 +62,20 @@ public class RecipeGenerator extends FabricRecipeProvider {
         )
                 .unlockedBy("has_item", has(DrugsItems.MARIJUANA))
                 .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "hash_press"));
+
+        RefineryRecipeBuilder.refine(
+                Ingredient.of(Items.COAL),
+                DrugsItems.HASH,
+                100,
+                RefineryRecipe::new
+        )
+                .unlockedBy("has_item", has(DrugsItems.MARIJUANA))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "refine"));
     }
 
     @Override
     public @NotNull String getName() {
         return "";
     }
+
 }
