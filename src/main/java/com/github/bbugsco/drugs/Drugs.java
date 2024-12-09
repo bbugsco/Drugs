@@ -26,6 +26,16 @@ public class Drugs implements ModInitializer, DataGeneratorEntrypoint {
     public static final String MOD_ID = "drugs";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
+    /*
+     TODO:
+     - Oil refining block
+     - yeast composter block
+
+     - urgot?
+     - fermentation tank (vinegar, alcohol)
+
+     */
+
     @Override
     public void onInitialize() {
         DrugsBlocks.registerBlocks();

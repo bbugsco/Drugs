@@ -19,7 +19,9 @@ public class DrugsItemGroups {
                     .icon(() -> new ItemStack(Items.OMINOUS_BOTTLE)).displayItems((displayContext, entries) -> {
                         entries.accept(DrugsItems.MARIJUANA);
                         entries.accept(DrugsItems.MARIJUANA_TRIM);
+                        entries.accept(DrugsItems.EMPTY_DAB_RIG);
                         entries.accept(DrugsItems.DAB_RIG);
+                        entries.accept(DrugsItems.HASH);
                         entries.accept(DrugsBlocks.getBlockItem(DrugsBlocks.MARIJUANA_PLANT));
                         entries.accept(DrugsBlocks.getBlockItem(DrugsBlocks.HASH_PRESS));
                     }).build());
