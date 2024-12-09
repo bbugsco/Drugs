@@ -1,10 +1,8 @@
 package com.github.bbugsco.drugs.client.gui;
 
 import com.github.bbugsco.drugs.Drugs;
-import com.github.bbugsco.drugs.gui.HashPressMenu;
+import com.github.bbugsco.drugs.gui.RefineryMenu;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -12,12 +10,15 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
-@Environment(EnvType.CLIENT)
-public class HashPressScreen extends AbstractContainerScreen<HashPressMenu> {
+public class RefineryScreen extends AbstractContainerScreen<RefineryMenu> {
 
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "textures/gui/hash_press.png");
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "textures/gui/refinery.png");
 
-    public HashPressScreen(HashPressMenu handler, Inventory inventory, Component title) {
+    private static final ResourceLocation SCROLLER_SPRITE = ResourceLocation.withDefaultNamespace("container/stonecutter/scroller");
+    private static final ResourceLocation SCROLLER_DISABLED_SPRITE = ResourceLocation.withDefaultNamespace("container/stonecutter/scroller_disabled");
+    private static final ResourceLocation RECIPE_SELECTED_SPRITE = ResourceLocation.withDefaultNamespace("container/stonecutter/recipe_selected");
+
+    public RefineryScreen(RefineryMenu handler, Inventory inventory, Component title) {
         super(handler, inventory, title);
     }
 
@@ -44,6 +45,7 @@ public class HashPressScreen extends AbstractContainerScreen<HashPressMenu> {
         guiGraphics.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight);
         renderProgressArrow(guiGraphics, x, y);
     }
+
 
     private void renderProgressArrow(GuiGraphics context, int x, int y) {
         if(menu.isCrafting()) {

@@ -28,6 +28,10 @@ public class RefineryRecipe extends SingleItemRecipe {
         this.time = time;
     }
 
+    public int getTime() {
+        return this.time;
+    }
+
     @Override
     public boolean matches(SingleRecipeInput input, Level level) {
         return this.ingredient.test(input.item());

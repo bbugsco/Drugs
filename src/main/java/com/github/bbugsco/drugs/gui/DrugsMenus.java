@@ -16,6 +16,12 @@ public class DrugsMenus {
             new ExtendedScreenHandlerType<>(HashPressMenu::new, BlockPos.STREAM_CODEC.cast())
     );
 
+    public static final MenuType<RefineryMenu> REFINERY_MENU = Registry.register(
+            BuiltInRegistries.MENU,
+            ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "refinery"),
+            new ExtendedScreenHandlerType<>(RefineryMenu::new, BlockPos.STREAM_CODEC.cast())
+    );
+
     public static void registerMenus() {
         Drugs.LOGGER.info("Registering Menus for " + Drugs.MOD_ID);
     }
