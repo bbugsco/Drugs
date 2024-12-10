@@ -28,12 +28,19 @@ public class RefineryMenu extends AbstractInputOutputProgressMenu {
 
     @Override
     public boolean clickMenuButton(Player player, int id) {
-        handle.setSelectedRecipeIndex(id);
+        if (this.isValidRecipeIndex(id)) {
+            handle.setSelectedRecipeIndex(id);
+            handle.setChanged();
+        }
         return true;
     }
 
+    private boolean isValidRecipeIndex(int recipeIndex) {
+        return recipeIndex >= 0 && recipeIndex < handle.getRecipes().size();
+    }
+
     public int getSelectedRecipeIndex() {
-        return handle.getSelectedRecipeIndex();
+        return simpleContainerData.get(2);
     }
 
     public List<RecipeHolder<RefineryRecipe>> getRecipes() {

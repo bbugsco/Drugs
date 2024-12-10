@@ -177,7 +177,7 @@ public class RefineryScreen extends AbstractContainerScreen<RefineryMenu> {
 
     private void renderProgressArrow(GuiGraphics context, int x, int y) {
         if(menu.isCrafting()) {
-            context.blit(TEXTURE, x + 85, y + 30, 176, 0, 8, menu.getScaledProgress());
+            context.blit(TEXTURE, x + 125, y + 30, 176, 0, 8, menu.getScaledProgress());
         }
     }
 

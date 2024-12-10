@@ -1,7 +1,6 @@
 package com.github.bbugsco.drugs.blocks.entity;
 
 import com.github.bbugsco.drugs.gui.RefineryMenu;
-import com.github.bbugsco.drugs.recipe.HashPressRecipe;
 import com.github.bbugsco.drugs.recipe.RefineryRecipe;
 import com.google.common.collect.Lists;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
@@ -76,7 +75,6 @@ public class RefineryBlockEntity extends BlockEntity implements ExtendedScreenHa
         this.setupRecipeList();
     }
 
-    // Recipe methods
     public List<RecipeHolder<RefineryRecipe>> getRecipes() {
         return this.recipes;
     }
@@ -88,12 +86,10 @@ public class RefineryBlockEntity extends BlockEntity implements ExtendedScreenHa
     }
 
     public int getSelectedRecipeIndex() {
-        System.out.println("Get selected recipe index <- " + this.selectedRecipeIndex);
         return this.selectedRecipeIndex;
     }
 
     public void setSelectedRecipeIndex(int selectedRecipeIndex) {
-        System.out.println("Set selected recipe index -> " + this.selectedRecipeIndex);
         this.selectedRecipeIndex = selectedRecipeIndex;
     }
 
@@ -110,11 +106,42 @@ public class RefineryBlockEntity extends BlockEntity implements ExtendedScreenHa
         return recipe.matches(new SingleRecipeInput(inventory.get(INPUT_SLOT)), getLevel());
     }
 
-    //
-
-    // Generic block entity methods
     public void tick(Level level, BlockPos pos, BlockState state) {
+        if(level.isClientSide) return;
+        if (isOutputSlotEmptyOrReceivable()) {
+            if (this.hasRecipe()) {
+                RefineryRecipe recipe = getRecipes().get(getSelectedRecipeIndex()).value();
+                if (recipe.matches(new SingleRecipeInput(inventory.get(INPUT_SLOT)), level)) {
+                    if ((inventory.get(OUTPUT_SLOT).getCount() == 0) || inventory.get(OUTPUT_SLOT).getItem() == recipe.result().getItem()) {
+                        progress++;
+                        setChanged(level, pos, state);
+                        if (progress >= maxProgress) {
+                            this.removeItem(INPUT_SLOT, 1);
+                            ItemStack result = recipe.result();
+                            if (canInsertAmountIntoOutputSlot(result)) {
+                                this.setItem(OUTPUT_SLOT, new ItemStack(result.getItem(), getItem(OUTPUT_SLOT).getCount() + recipe.result().getCount()));
+                            }
+                            progress = 0;
+                        }
+                    } else {
+                        progress = 0;
+                    }
+                }
+            } else {
+                progress = 0;
+            }
+        } else {
+            progress = 0;
+            setChanged(level, pos, state);
+        }
+    }
 
+    private boolean canInsertAmountIntoOutputSlot(ItemStack result) {
+        return this.getItem(OUTPUT_SLOT).getCount() + result.getCount() <= getItem(OUTPUT_SLOT).getMaxStackSize();
+    }
+
+    private boolean isOutputSlotEmptyOrReceivable() {
+        return this.getItem(OUTPUT_SLOT).isEmpty() || this.getItem(OUTPUT_SLOT).getCount() < this.getItem(OUTPUT_SLOT).getMaxStackSize();
     }
 
     @Override
@@ -140,9 +167,6 @@ public class RefineryBlockEntity extends BlockEntity implements ExtendedScreenHa
         }
     }
 
-    //
-
-    // Implemented Inventory methods
     @Override
     public NonNullList<ItemStack> getItems() {
         return inventory;
@@ -160,12 +184,8 @@ public class RefineryBlockEntity extends BlockEntity implements ExtendedScreenHa
         }
     }
 
-    //
-
-    // NBT tags
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        System.out.println("Load <- " + tag);
         super.loadAdditional(tag, registries);
         ContainerHelper.loadAllItems(tag, this.inventory, registries);
         progress = tag.getInt("Progress");
@@ -180,7 +200,6 @@ public class RefineryBlockEntity extends BlockEntity implements ExtendedScreenHa
         tag.putInt("Progress", progress);
         tag.putInt("MaxProgress", maxProgress);
         tag.putInt("SelectedRecipeIndex", selectedRecipeIndex);
-        System.out.println("Save -> " + tag);
     }
 
 }
