@@ -23,7 +23,7 @@ public class DrugsLootTables {
                 LootPool.Builder lootPool = new LootPool.Builder();
                 lootPool.setRolls(ConstantValue.exactly(1.0F))
                         .add(LootItem.lootTableItem(DrugsBlocks.getBlockItem(DrugsBlocks.MARIJUANA_PLANT))
-                        .setWeight(10))
+                        .setWeight(15))
                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)));
                 tableBuilder.withPool(lootPool);
             }
