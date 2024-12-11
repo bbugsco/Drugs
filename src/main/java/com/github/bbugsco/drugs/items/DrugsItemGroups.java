@@ -27,6 +27,7 @@ public class DrugsItemGroups {
                         entries.accept(DrugsBlocks.getBlockItem(DrugsBlocks.MARIJUANA_PLANT));
                         entries.accept(DrugsBlocks.getBlockItem(DrugsBlocks.HASH_PRESS));
                         entries.accept(DrugsBlocks.getBlockItem(DrugsBlocks.REFINERY));
+                        entries.accept(DrugsBlocks.getBlockItem(DrugsBlocks.OIL_SHALE));
                     }).build());
 
     public static void registerItemGroups() {

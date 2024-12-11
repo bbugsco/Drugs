@@ -20,6 +20,7 @@ public class ModelGenerator extends FabricModelProvider {
     public void generateBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
         blockStateModelGenerator.createCrossBlock(DrugsBlocks.MARIJUANA_PLANT, BlockModelGenerators.TintState.NOT_TINTED, MarijuanaPlantBlock.AGE, 0, 1, 2, 3, 4, 5, 6, 7);
         blockStateModelGenerator.createFurnace(DrugsBlocks.REFINERY, TexturedModel.ORIENTABLE_ONLY_TOP);
+        blockStateModelGenerator.createTrivialCube(DrugsBlocks.OIL_SHALE);
     }
 
     @Override
