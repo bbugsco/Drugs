@@ -11,6 +11,8 @@ public class DrugsRecipes {
         Drugs.LOGGER.info("Registering Mod Recipes for "  + Drugs.MOD_ID);
         Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, HashPressRecipe.Serializer.ID), HashPressRecipe.Serializer.INSTANCE);
         Registry.register(BuiltInRegistries.RECIPE_TYPE, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, HashPressRecipe.Type.ID), HashPressRecipe.Type.INSTANCE);
+        Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, RefineryRecipe.Serializer.ID), RefineryRecipe.Serializer.INSTANCE);
+        Registry.register(BuiltInRegistries.RECIPE_TYPE, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, RefineryRecipe.Type.ID), RefineryRecipe.Type.INSTANCE);
     }
 
 }

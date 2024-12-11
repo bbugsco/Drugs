@@ -13,6 +13,10 @@ public class DrugsBlockEntities {
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "hash_press_be"),
                     BlockEntityType.Builder.of(HashPressBlockEntity::new, DrugsBlocks.HASH_PRESS).build());
 
+    public static final BlockEntityType<RefineryBlockEntity> REFINERY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "refinery_be"),
+                    BlockEntityType.Builder.of(RefineryBlockEntity::new, DrugsBlocks.REFINERY).build());
+
     public static void registerBlockEntities() {
         Drugs.LOGGER.info("Registering Block Entities for " + Drugs.MOD_ID);
     }

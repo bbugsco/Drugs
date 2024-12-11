@@ -26,6 +26,7 @@ public class DrugsItemGroups {
                         entries.accept(DrugsItems.KETAMINE);
                         entries.accept(DrugsBlocks.getBlockItem(DrugsBlocks.MARIJUANA_PLANT));
                         entries.accept(DrugsBlocks.getBlockItem(DrugsBlocks.HASH_PRESS));
+                        entries.accept(DrugsBlocks.getBlockItem(DrugsBlocks.REFINERY));
                     }).build());
 
     public static void registerItemGroups() {

@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.models.BlockModelGenerators;
 import net.minecraft.data.models.ItemModelGenerators;
 import net.minecraft.data.models.model.ModelTemplates;
+import net.minecraft.data.models.model.TexturedModel;
 
 public class ModelGenerator extends FabricModelProvider {
 
@@ -18,6 +19,7 @@ public class ModelGenerator extends FabricModelProvider {
     @Override
     public void generateBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
         blockStateModelGenerator.createCrossBlock(DrugsBlocks.MARIJUANA_PLANT, BlockModelGenerators.TintState.NOT_TINTED, MarijuanaPlantBlock.AGE, 0, 1, 2, 3, 4, 5, 6, 7);
+        blockStateModelGenerator.createFurnace(DrugsBlocks.REFINERY, TexturedModel.ORIENTABLE_ONLY_TOP);
     }
 
     @Override

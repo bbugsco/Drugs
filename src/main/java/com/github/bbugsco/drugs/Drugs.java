@@ -2,14 +2,13 @@ package com.github.bbugsco.drugs;
 
 import com.github.bbugsco.drugs.blocks.DrugsBlocks;
 import com.github.bbugsco.drugs.blocks.entity.DrugsBlockEntities;
-import com.github.bbugsco.drugs.client.entity.DrugsEntityRenderers;
 import com.github.bbugsco.drugs.datagen.BlockTagGenerator;
 import com.github.bbugsco.drugs.datagen.ItemTagGenerator;
 import com.github.bbugsco.drugs.datagen.LootTableGenerator;
 import com.github.bbugsco.drugs.datagen.ModelGenerator;
 import com.github.bbugsco.drugs.datagen.RecipeGenerator;
 import com.github.bbugsco.drugs.entities.DrugsEntities;
-import com.github.bbugsco.drugs.gui.DrugsGUIs;
+import com.github.bbugsco.drugs.gui.DrugsMenus;
 import com.github.bbugsco.drugs.items.DrugsItemGroups;
 import com.github.bbugsco.drugs.items.DrugsItems;
 import com.github.bbugsco.drugs.recipe.DrugsRecipes;
@@ -42,12 +41,11 @@ public class Drugs implements ModInitializer, DataGeneratorEntrypoint {
         DrugsBlockEntities.registerBlockEntities();
         DrugsItems.registerModItems();
         DrugsItemGroups.registerItemGroups();
-        DrugsGUIs.registerScreenHandlers();
+        DrugsMenus.registerMenus();
         DrugsRecipes.registerRecipes();
         DrugsFeatures.registerFeatures();
         DrugsLootTables.registerLootTables();
         DrugsEntities.registerEntities();
-        DrugsEntityRenderers.registerEntityRenderers();
     }
 
     @Override

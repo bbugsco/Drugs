@@ -1,49 +1,46 @@
-package com.github.bbugsco.drugs.gui.menu;
+package com.github.bbugsco.drugs.gui;
 
-import com.github.bbugsco.drugs.gui.DrugsGUIs;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import org.jetbrains.annotations.NotNull;
 
-public class HashPressMenu extends AbstractContainerMenu {
+public abstract class AbstractInputOutputProgressMenu extends AbstractContainerMenu {
 
-    private final Container inventory;
-    private final SimpleContainerData propertyDelegate;
+    protected final Container inventory;
+    protected final SimpleContainerData simpleContainerData;
 
-    public HashPressMenu(int syncId, Inventory playerInventory, BlockPos pos) {
-        this(syncId, playerInventory, playerInventory.player.level().getBlockEntity(pos), new SimpleContainerData(2));
-    }
 
-    public HashPressMenu(int syncId, Inventory playerInventory, BlockEntity blockEntity, SimpleContainerData arrayPropertyDelegate) {
-        super(DrugsGUIs.HASH_PRESS_MENU, syncId);
-        checkContainerSize(((Container) blockEntity), 2);
-        this.inventory = ((Container) blockEntity);
+    protected AbstractInputOutputProgressMenu(MenuType<? extends AbstractInputOutputProgressMenu> menu, int syncId, Inventory playerInventory, int inventorySize, BlockEntity entity, SimpleContainerData blockEntityData, Slot[] slots) {
+        super(menu, syncId);
+        checkContainerSize(((Container) entity), inventorySize);
+        this.inventory = ((Container) entity);
         inventory.startOpen(playerInventory.player);
-        this.propertyDelegate = arrayPropertyDelegate;
+        this.simpleContainerData = blockEntityData;
 
-        this.addSlot(new Slot(inventory, 0, 80, 11));
-        this.addSlot(new Slot(inventory, 1, 80, 59));
+        for (Slot slot : slots) {
+            this.addSlot(slot);
+        }
 
         addPlayerInventory(playerInventory);
         addPlayerHotbar(playerInventory);
 
-        addDataSlots(arrayPropertyDelegate);
+        addDataSlots(blockEntityData);
     }
 
     public boolean isCrafting() {
-        return propertyDelegate.get(0) > 0;
+        return simpleContainerData.get(0) > 0;
     }
 
     public int getScaledProgress() {
-        int progress = this.propertyDelegate.get(0);
-        int maxProgress = this.propertyDelegate.get(1);
+        int progress = this.simpleContainerData.get(0);
+        int maxProgress = this.simpleContainerData.get(1);
         int progressArrowSize = 26;
         return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
     }

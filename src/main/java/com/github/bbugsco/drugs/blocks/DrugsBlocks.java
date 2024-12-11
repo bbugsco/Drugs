@@ -25,6 +25,7 @@ public class DrugsBlocks {
             pushReaction(PushReaction.DESTROY)));
 
     public static final Block HASH_PRESS = registerBlock("hash_press", new HashPressBlock(BlockBehaviour.Properties.of()));
+    public static final Block REFINERY = registerBlock("refinery", new RefineryBlock(BlockBehaviour.Properties.of()));
 
     public static Item getBlockItem(Block block) {
         return BLOCK_ITEMS.get(block);

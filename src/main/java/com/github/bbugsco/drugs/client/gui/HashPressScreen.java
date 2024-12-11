@@ -1,8 +1,10 @@
-package com.github.bbugsco.drugs.gui.screen;
+package com.github.bbugsco.drugs.client.gui;
 
 import com.github.bbugsco.drugs.Drugs;
-import com.github.bbugsco.drugs.gui.menu.HashPressMenu;
+import com.github.bbugsco.drugs.gui.HashPressMenu;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -10,6 +12,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
+@Environment(EnvType.CLIENT)
 public class HashPressScreen extends AbstractContainerScreen<HashPressMenu> {
 
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "textures/gui/hash_press.png");
@@ -42,9 +45,8 @@ public class HashPressScreen extends AbstractContainerScreen<HashPressMenu> {
         renderProgressArrow(guiGraphics, x, y);
     }
 
-
     private void renderProgressArrow(GuiGraphics context, int x, int y) {
-        if(menu.isCrafting()) {
+        if (menu.isCrafting()) {
             context.blit(TEXTURE, x + 85, y + 30, 176, 0, 8, menu.getScaledProgress());
         }
     }
