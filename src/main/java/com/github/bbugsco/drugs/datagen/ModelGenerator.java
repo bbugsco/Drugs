@@ -32,6 +32,11 @@ public class ModelGenerator extends FabricModelProvider {
         itemModelGenerator.generateFlatItem(DrugsItems.EMPTY_DAB_RIG, ModelTemplates.FLAT_ITEM);
         itemModelGenerator.generateFlatItem(DrugsItems.DIPHENHYDRAMINE, ModelTemplates.FLAT_ITEM);
         itemModelGenerator.generateFlatItem(DrugsItems.KETAMINE, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(DrugsItems.OIL, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(DrugsItems.PETROLEUM_NAPHTHA, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(DrugsItems.KEROSENE, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(DrugsItems.GASOLINE, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(DrugsItems.METHANOL, ModelTemplates.FLAT_ITEM);
     }
 
 

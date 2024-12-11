@@ -20,6 +20,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
 import java.util.List;
+import java.util.Optional;
 
 @Environment(EnvType.CLIENT)
 public class RefineryScreen extends AbstractContainerScreen<RefineryMenu> {
@@ -70,8 +71,13 @@ public class RefineryScreen extends AbstractContainerScreen<RefineryMenu> {
             int n = i + m % RECIPES_COLUMNS * RECIPES_IMAGE_SIZE_WIDTH;
             int o = j + m / RECIPES_COLUMNS * RECIPES_IMAGE_SIZE_HEIGHT + 2;
             if (x >= n && x < n + RECIPES_IMAGE_SIZE_WIDTH && y >= o && y < o + RECIPES_IMAGE_SIZE_HEIGHT) {
-                ItemStack resultItem = list.get(l).value().getIngredients().get(0).getItems()[0];
-                guiGraphics.renderTooltip(this.font, Component.literal("Requires " + (resultItem.getDisplayName().getString().replace("[", "").replace("]", ""))), x, y);
+                ItemStack inputItem = list.get(l).value().getIngredients().get(0).getItems()[0];
+                ItemStack resultItem = list.get(l).value().result();
+                List<Component> tooltip = List.of(
+                        Component.literal(resultItem.getDisplayName().getString().replace("[", "").replace("]", "")),
+                        Component.literal("Requires " + (inputItem.getDisplayName().getString().replace("[", "").replace("]", "")))
+                        );
+                guiGraphics.renderTooltip(this.font, tooltip, Optional.empty(), x, y);
             }
         }
     }

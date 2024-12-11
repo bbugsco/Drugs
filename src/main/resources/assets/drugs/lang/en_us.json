@@ -14,5 +14,10 @@
   "item.drugs.dab_rig": "Dab Rig",
   "item.drugs.empty_dab_rig": "Dab Rig",
   "item.drugs.diphenhydramine": "Diphenhydramine",
-  "item.drugs.ketamine": "Ketamine"
+  "item.drugs.ketamine": "Ketamine",
+  "item.drugs.oil": "Oil",
+  "item.drugs.petroleum_naphtha": "Petroleum Naphtha",
+  "item.drugs.kerosene": "Kerosene",
+  "item.drugs.gasoline": "Gasoline",
+  "item.drugs.methanol": "Methanol"
 }

@@ -28,6 +28,11 @@ public class DrugsItemGroups {
                         entries.accept(DrugsBlocks.getBlockItem(DrugsBlocks.HASH_PRESS));
                         entries.accept(DrugsBlocks.getBlockItem(DrugsBlocks.REFINERY));
                         entries.accept(DrugsBlocks.getBlockItem(DrugsBlocks.OIL_SHALE));
+                        entries.accept(DrugsItems.OIL);
+                        entries.accept(DrugsItems.PETROLEUM_NAPHTHA);
+                        entries.accept(DrugsItems.KEROSENE);
+                        entries.accept(DrugsItems.GASOLINE);
+                        entries.accept(DrugsItems.METHANOL);
                     }).build());
 
     public static void registerItemGroups() {

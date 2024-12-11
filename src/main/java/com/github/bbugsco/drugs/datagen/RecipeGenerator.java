@@ -13,10 +13,10 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
@@ -55,6 +55,19 @@ public class RecipeGenerator extends FabricRecipeProvider {
                 .unlockedBy("has_item", has(Items.GLASS_BOTTLE))
                 .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "dab_rig"));
 
+        ShapedRecipeBuilder.shaped(
+                        RecipeCategory.MISC,
+                        DrugsBlocks.getBlockItem(DrugsBlocks.REFINERY))
+                .pattern("   ")
+                .pattern("212")
+                .pattern(" 2 ")
+                .define('1', Items.CAULDRON)
+                .define('2', Items.IRON_INGOT)
+                .unlockedBy("has_item", has(Items.CAULDRON))
+                .unlockedBy("has_item", has(Items.IRON_INGOT))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "refinery"));
+
+
         HashPressRecipeBuilder.press(
                         Ingredient.of(DrugsItems.MARIJUANA),
                         DrugsItems.HASH,
@@ -62,66 +75,72 @@ public class RecipeGenerator extends FabricRecipeProvider {
                         HashPressRecipe::new
                 )
                 .unlockedBy("has_item", has(DrugsItems.MARIJUANA))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "hash_press"));
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "press_hash"));
+
+        SimpleCookingRecipeBuilder.smelting(
+                        Ingredient.of(DrugsBlocks.getBlockItem(DrugsBlocks.OIL_SHALE)),
+                        RecipeCategory.MISC,
+                        DrugsItems.OIL,
+                        10,
+                        1000
+                )
+                .unlockedBy("has_item", has(DrugsBlocks.getBlockItem(DrugsBlocks.OIL_SHALE)))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "oil"));
 
         RefineryRecipeBuilder.refine(
-                        Ingredient.of(Items.COAL),
-                        DrugsItems.HASH,
-                        100,
+                        Ingredient.of(DrugsItems.OIL),
+                        DrugsItems.PETROLEUM_NAPHTHA,
+                        1000,
                         RefineryRecipe::new
                 )
-                .unlockedBy("has_item", has(DrugsItems.MARIJUANA))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "refine1"));
+                .unlockedBy("has_item", has(DrugsItems.OIL))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "refine_naphtha"));
 
         RefineryRecipeBuilder.refine(
-                        Ingredient.of(Items.COAL),
-                        DrugsItems.MARIJUANA_TRIM,
-                        100,
+                        Ingredient.of(DrugsItems.OIL),
+                        DrugsItems.KEROSENE,
+                        1000,
                         RefineryRecipe::new
                 )
-                .unlockedBy("has_item", has(DrugsItems.MARIJUANA))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "refine2"));
+                .unlockedBy("has_item", has(DrugsItems.OIL))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "refine_kerosene"));
 
         RefineryRecipeBuilder.refine(
-                        Ingredient.of(Items.COAL),
-                        DrugsBlocks.getBlockItem(DrugsBlocks.MARIJUANA_PLANT),
-                        100,
+                        Ingredient.of(DrugsItems.OIL),
+                        DrugsItems.GASOLINE,
+                        1000,
                         RefineryRecipe::new
                 )
-                .unlockedBy("has_item", has(DrugsItems.MARIJUANA))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "refine3"));
+                .unlockedBy("has_item", has(DrugsItems.OIL))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "refine_gasoline"));
 
         RefineryRecipeBuilder.refine(
-                        Ingredient.of(Items.COAL),
-                        DrugsItems.EMPTY_DAB_RIG,
-                        100,
+                        Ingredient.of(DrugsItems.OIL),
+                        DrugsItems.DIPHENHYDRAMINE,
+                        1000,
                         RefineryRecipe::new
                 )
-                .unlockedBy("has_item", has(DrugsItems.MARIJUANA))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "refine4"));
+                .unlockedBy("has_item", has(DrugsItems.OIL))
+                    .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "refine_dph"));
 
         RefineryRecipeBuilder.refine(
-                        Ingredient.of(Items.COAL),
-                        DrugsItems.DAB_RIG,
-                        100,
+                        Ingredient.of(DrugsItems.OIL),
+                        DrugsItems.KETAMINE,
+                        1000,
                         RefineryRecipe::new
                 )
-                .unlockedBy("has_item", has(DrugsItems.MARIJUANA))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "refine5"));
+                .unlockedBy("has_item", has(DrugsItems.OIL))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "refine_ketamine"));
 
-        ItemLike[] colors = new ItemLike[]{Items.BLACK_CONCRETE, Items.WHITE_CONCRETE, Items.RED_CONCRETE,Items.ORANGE_CONCRETE, Items.YELLOW_CONCRETE, Items.LIME_CONCRETE,
-                Items.GREEN_CONCRETE, Items.CYAN_CONCRETE, Items.LIGHT_BLUE_CONCRETE, Items.BLUE_CONCRETE, Items.MAGENTA_CONCRETE, Items.PURPLE_CONCRETE, Items.PINK_CONCRETE};
+    RefineryRecipeBuilder.refine(
+                        Ingredient.of(Items.COAL),
+                        DrugsItems.METHANOL,
+                        1000,
+                        RefineryRecipe::new
+                )
+                .unlockedBy("has_item", has(DrugsItems.OIL))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "refine_methanol"));
 
-        for (ItemLike color : colors) {
-            RefineryRecipeBuilder.refine(
-                            Ingredient.of(Items.COAL),
-                            color,
-                            100,
-                            RefineryRecipe::new
-                    )
-                    .unlockedBy("has_item", has(DrugsItems.MARIJUANA))
-                    .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, ("refine" + "-" + color.asItem()).replace("minecraft:", "")));
-        }
 
     }
 

@@ -1,5 +1,5 @@
 {
-  "feature": "drugs:oil_vein",
+  "feature": "drugs:oil_shale_vein",
   "placement": [
     {
       "type": "minecraft:rarity_filter",
