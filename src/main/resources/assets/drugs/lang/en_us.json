@@ -3,6 +3,7 @@
 
   "block.drugs.marijuana_plant": "Marijuana Seeds",
   "block.drugs.hash_press": "Hash Press",
+  "block.drugs.refinery": "Refinery",
 
   "effect.minecraft.hunger": "Munchies",
 
@@ -10,5 +11,7 @@
   "item.drugs.marijuana_trim": "Marijuana Trim",
   "item.drugs.hash": "Hash",
   "item.drugs.dab_rig": "Dab Rig",
-  "item.drugs.empty_dab_rig": "Dab Rig"
+  "item.drugs.empty_dab_rig": "Dab Rig",
+  "item.drugs.diphenhydramine": "Diphenhydramine",
+  "item.drugs.ketamine": "Ketamine"
 }
