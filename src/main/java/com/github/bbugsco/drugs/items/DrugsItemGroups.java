@@ -22,6 +22,8 @@ public class DrugsItemGroups {
                         entries.accept(DrugsItems.EMPTY_DAB_RIG);
                         entries.accept(DrugsItems.DAB_RIG);
                         entries.accept(DrugsItems.HASH);
+                        entries.accept(DrugsItems.DIPHENHYDRAMINE);
+                        entries.accept(DrugsItems.KETAMINE);
                         entries.accept(DrugsBlocks.getBlockItem(DrugsBlocks.MARIJUANA_PLANT));
                         entries.accept(DrugsBlocks.getBlockItem(DrugsBlocks.HASH_PRESS));
                     }).build());
