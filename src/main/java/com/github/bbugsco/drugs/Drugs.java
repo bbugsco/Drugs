@@ -28,12 +28,12 @@ public class Drugs implements ModInitializer, DataGeneratorEntrypoint {
 
     /*
      TODO:
-     - Oil refining block
+     - Oil blocks spawning, ocean floor
      - yeast composter block
 
      - urgot?
      - fermentation tank (vinegar, alcohol)
-
+     - dmt
      */
 
     @Override
