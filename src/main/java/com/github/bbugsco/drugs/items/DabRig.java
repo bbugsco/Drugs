@@ -3,6 +3,7 @@ package com.github.bbugsco.drugs.items;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -61,14 +62,20 @@ public class DabRig {
                         float chance = randomSource.nextFloat();
                         int rolls = (chance < 0.15F) ? 0 : ((chance < 0.5) ? 1 : ((chance < 0.8F) ? 2 : 3));
                         for (int i = 0; i < rolls; i++) {
-                            level.addAlwaysVisibleParticle(
-                                    ParticleTypes.CAMPFIRE_COSY_SMOKE,
-                                    positionVector.x + ((double) x) / 8,
-                                    positionVector.y + randomSource.nextFloat() * 0.4F,
-                                    positionVector.z + ((double) z) / 8,
-                                    smokeVelocity.x + (((double) x) / 8) * (randomSource.nextFloat() * 0.07F),
-                                    smokeVelocity.y + randomSource.nextFloat() * 0.05F,
-                                    smokeVelocity.z + (((double) z) / 8) * (randomSource.nextFloat() * 0.07F));
+                            if (!level.isClientSide) {
+                                ServerLevel server = (ServerLevel) level;
+                                server.sendParticles(
+                                        ParticleTypes.CAMPFIRE_COSY_SMOKE,
+                                        positionVector.x + ((double) x) / 8,
+                                        positionVector.y + randomSource.nextFloat() * 0.4F,
+                                        positionVector.z + ((double) z) / 8,
+                                        0,
+                                        smokeVelocity.x + (((double) x) / 8) * (randomSource.nextFloat() * 0.07F),
+                                        smokeVelocity.y + randomSource.nextFloat() * 0.05F,
+                                        smokeVelocity.z + (((double) z) / 8) * (randomSource.nextFloat() * 0.07F),
+                                        1
+                                );
+                            }
                         }
                     }
                 }
