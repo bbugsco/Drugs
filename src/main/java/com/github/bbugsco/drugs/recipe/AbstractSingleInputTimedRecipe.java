@@ -21,8 +21,12 @@ public class AbstractSingleInputTimedRecipe extends SingleItemRecipe {
     private final Ingredient ingredient;
     protected final int time;
 
-    public AbstractSingleInputTimedRecipe(Ingredient ingredient, ItemStack result, int time, String group) {
-        super(AbstractSingleInputTimedRecipe.Type.INSTANCE, AbstractSingleInputTimedRecipe.Serializer.INSTANCE, group, ingredient, result);
+    public AbstractSingleInputTimedRecipe(
+            RecipeType<? extends AbstractSingleInputTimedRecipe> type,
+            RecipeSerializer<? extends AbstractSingleInputTimedRecipe> serializer, String group,
+            Ingredient ingredient, ItemStack result, int time)
+    {
+        super(type, serializer, group, ingredient, result);
         this.ingredient = ingredient;
         this.result = result;
         this.time = time;
@@ -45,38 +49,31 @@ public class AbstractSingleInputTimedRecipe extends SingleItemRecipe {
         return result;
     }
 
+    @NotNull
+    public Ingredient input() {
+        return ingredient;
+    }
+
     @Override
     public @NotNull ItemStack assemble(SingleRecipeInput input, HolderLookup.Provider registries) {
         return result.copy();
     }
 
-    @Override
-    public @NotNull RecipeSerializer<? extends SingleItemRecipe> getSerializer() {
-        return HashPressRecipe.Serializer.INSTANCE;
-    }
+    public static class Serializer<T extends AbstractSingleInputTimedRecipe> implements RecipeSerializer<T> {
 
-    @Override
-    public @NotNull RecipeType<? extends SingleItemRecipe> getType() {
-        return HashPressRecipe.Type.INSTANCE;
-    }
+        private final AbstractSingleInputTimedRecipe.Factory<T> factory;
+        private final MapCodec<T> codec;
+        private final StreamCodec<RegistryFriendlyByteBuf, T> packetCodec;
 
-    public static class Type<T extends SingleItemRecipe> implements RecipeType<T> {
-        public static final AbstractSingleInputTimedRecipe.Type<? extends SingleItemRecipe> INSTANCE = new AbstractSingleInputTimedRecipe.Type<T>;
-    }
-
-    public static class Serializer<T extends SingleItemRecipe> implements RecipeSerializer<T> {
-
-        public static final AbstractSingleInputTimedRecipe.Serializer INSTANCE = new AbstractSingleInputTimedRecipe.Serializer();
-
-        private final MapCodec<T> codec = RecordCodecBuilder.mapCodec(instance ->
-                instance.group(
-                        Ingredient.CODEC.fieldOf("ingredient").forGetter(recipe -> recipe.ingredient),
-                        ItemStack.STRICT_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
-                        Codec.INT.fieldOf("time").orElse(200).forGetter(recipe -> recipe.time)
-                ).apply(instance, T::new)
-        );
-
-        private final StreamCodec<RegistryFriendlyByteBuf, T> packetCodec = StreamCodec.of(this::write, this::read);
+        public Serializer(AbstractSingleInputTimedRecipe.Factory<T> factory) {
+            this.factory = factory;
+            this.codec = RecordCodecBuilder.mapCodec((instance) -> instance.group(
+                    Ingredient.CODEC.fieldOf("ingredient").forGetter(AbstractSingleInputTimedRecipe::input),
+                    ItemStack.STRICT_CODEC.fieldOf("result").forGetter(AbstractSingleInputTimedRecipe::result),
+                    Codec.INT.fieldOf("time").orElse(200).forGetter(recipe -> recipe.time)
+            ).apply(instance, factory::create));
+            packetCodec = StreamCodec.of(this::write, this::read);
+        }
 
         @Override
         public @NotNull MapCodec<T> codec() {
@@ -88,22 +85,21 @@ public class AbstractSingleInputTimedRecipe extends SingleItemRecipe {
             return packetCodec;
         }
 
-        private AbstractSingleInputTimedRecipe read(RegistryFriendlyByteBuf buf) {
+        private T read(RegistryFriendlyByteBuf buf) {
             Ingredient input = Ingredient.CONTENTS_STREAM_CODEC.decode(buf);
             ItemStack output = ItemStack.STREAM_CODEC.decode(buf);
-            return new (input, output, buf.readInt());
+            return this.factory.create(input, output, buf.readInt());
         }
 
-        private void write(RegistryFriendlyByteBuf buf, HashPressRecipe recipe) {
-            Ingredient.CONTENTS_STREAM_CODEC.encode(buf, recipe.ingredient);
+        private void write(RegistryFriendlyByteBuf buf, T recipe) {
+            Ingredient.CONTENTS_STREAM_CODEC.encode(buf, recipe.input());
             ItemStack.STREAM_CODEC.encode(buf, recipe.result());
             buf.writeInt(recipe.time);
-
         }
+    }
 
-
-    public interface RecipeFactory<HashPressRecipe> {
-        HashPressRecipe create(Ingredient input, ItemStack result, int time);
+    public interface Factory<T extends AbstractSingleInputTimedRecipe> {
+        T create(Ingredient ingredient, ItemStack itemStack, int time);
     }
 
 }
