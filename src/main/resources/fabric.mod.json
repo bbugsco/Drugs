@@ -20,9 +20,6 @@
       "com.github.bbugsco.drugs.Drugs"
     ]
   },
-  "mixins": [
-    "drugs.mixins.json"
-  ],
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric": "*",

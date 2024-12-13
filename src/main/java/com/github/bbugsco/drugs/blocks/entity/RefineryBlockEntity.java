@@ -102,8 +102,14 @@ public class RefineryBlockEntity extends BlockEntity implements ExtendedScreenHa
     }
 
     private boolean hasRecipe() {
-        RefineryRecipe recipe = getRecipes().get(getSelectedRecipeIndex()).value();
-        return recipe.matches(new SingleRecipeInput(inventory.get(INPUT_SLOT)), getLevel());
+        RefineryRecipe recipe;
+        try {
+            recipe = getRecipes().get(getSelectedRecipeIndex()).value();
+        } catch (IndexOutOfBoundsException e) {
+            setSelectedRecipeIndex(0);
+            return false;
+        }
+        return recipe.matches(new SingleRecipeInput(inventory.getFirst()), getLevel());
     }
 
     public void tick(Level level, BlockPos pos, BlockState state) {
@@ -111,7 +117,7 @@ public class RefineryBlockEntity extends BlockEntity implements ExtendedScreenHa
         if (isOutputSlotEmptyOrReceivable()) {
             if (this.hasRecipe()) {
                 RefineryRecipe recipe = getRecipes().get(getSelectedRecipeIndex()).value();
-                if (recipe.matches(new SingleRecipeInput(inventory.get(INPUT_SLOT)), level)) {
+                if (recipe.matches(new SingleRecipeInput(inventory.getFirst()), level)) {
                     if ((inventory.get(OUTPUT_SLOT).getCount() == 0) || inventory.get(OUTPUT_SLOT).getItem() == recipe.result().getItem()) {
                         progress++;
                         setChanged(level, pos, state);
