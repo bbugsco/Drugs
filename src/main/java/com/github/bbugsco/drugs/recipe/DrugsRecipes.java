@@ -9,10 +9,18 @@ public class DrugsRecipes {
 
     public static void registerRecipes() {
         Drugs.LOGGER.info("Registering Mod Recipes for "  + Drugs.MOD_ID);
-        Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, HashPressRecipe.Serializer.ID), HashPressRecipe.Serializer.INSTANCE);
-        Registry.register(BuiltInRegistries.RECIPE_TYPE, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, HashPressRecipe.Type.ID), HashPressRecipe.Type.INSTANCE);
+        registerSingleInputRecipeTimed("hash_press");
+        registerSingleInputRecipeTimed("refinery");
+        registerSingleInputRecipeTimed("oxidizer");
+        registerSingleInputRecipeTimed("electrolysis");
+
         Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, RefineryRecipe.Serializer.ID), RefineryRecipe.Serializer.INSTANCE);
         Registry.register(BuiltInRegistries.RECIPE_TYPE, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, RefineryRecipe.Type.ID), RefineryRecipe.Type.INSTANCE);
+    }
+
+    private static void registerSingleInputRecipeTimed(String id) {
+        Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, id), AbstractSingleInputTimedRecipe.Serializer.INSTANCE);
+        Registry.register(BuiltInRegistries.RECIPE_TYPE, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, id), AbstractSingleInputTimedRecipe.Type.INSTANCE);
     }
 
 }

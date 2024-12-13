@@ -16,6 +16,8 @@ public class LootTableGenerator extends FabricBlockLootTableProvider {
     @Override
     public void generate() {
         add(DrugsBlocks.HASH_PRESS, createNameableBlockEntityTable(DrugsBlocks.HASH_PRESS));
+        add(DrugsBlocks.REFINERY, createNameableBlockEntityTable(DrugsBlocks.REFINERY));
+        add(DrugsBlocks.OIL_SHALE, createNameableBlockEntityTable(DrugsBlocks.OIL_SHALE));
     }
 
 }
