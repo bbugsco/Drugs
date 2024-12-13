@@ -1,10 +1,14 @@
-package com.github.bbugsco.drugs.recipe;
+package com.github.bbugsco.drugs.recipe.recipes;
 
 
+import com.github.bbugsco.drugs.blocks.DrugsBlocks;
+import com.github.bbugsco.drugs.recipe.SingleInputSerializer;
+import com.github.bbugsco.drugs.recipe.SingleInputTimedRecipe;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
+import org.jetbrains.annotations.NotNull;
 
 public class HashPressRecipe extends SingleInputTimedRecipe {
 
@@ -14,8 +18,9 @@ public class HashPressRecipe extends SingleInputTimedRecipe {
         super(Type.INSTANCE, Serializer.INSTANCE, "hash_press", ingredient, result, time);
     }
 
-    public interface RecipeFactory<HashPressRecipe> {
-        HashPressRecipe create(Ingredient input, ItemStack result, int time);
+    @Override
+    public @NotNull ItemStack getToastSymbol() {
+        return new ItemStack(DrugsBlocks.HASH_PRESS);
     }
 
     public static class Type implements RecipeType<HashPressRecipe> {

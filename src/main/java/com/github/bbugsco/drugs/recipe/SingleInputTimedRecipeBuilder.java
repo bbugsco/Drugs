@@ -19,28 +19,24 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class HashPressRecipeBuilder implements RecipeBuilder {
+public class SingleInputTimedRecipeBuilder implements RecipeBuilder {
 
     private final Item result;
     private final Ingredient ingredient;
     private final int time;
 
     private final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
-    private final HashPressRecipe.RecipeFactory<HashPressRecipe> factory;
+    private final SingleInputTimedRecipe.Factory<? extends SingleInputTimedRecipe> factory;
 
-    private HashPressRecipeBuilder(final ItemLike result, final Ingredient ingredient, int time, HashPressRecipe.RecipeFactory<HashPressRecipe> factory) {
+    protected SingleInputTimedRecipeBuilder(final ItemLike result, final Ingredient ingredient, int time, SingleInputTimedRecipe.Factory<? extends SingleInputTimedRecipe> factory) {
         this.result = result.asItem();
         this.ingredient = ingredient;
         this.time = time;
         this.factory = factory;
     }
 
-    public static HashPressRecipeBuilder press(Ingredient ingredient, ItemLike result, int time, HashPressRecipe.RecipeFactory<HashPressRecipe> factory) {
-        return new HashPressRecipeBuilder(result, ingredient, time, factory);
-    }
-
     @Override
-    public @NotNull HashPressRecipeBuilder unlockedBy(String string, Criterion<?> advancementCriterion) {
+    public @NotNull SingleInputTimedRecipeBuilder unlockedBy(String string, Criterion<?> advancementCriterion) {
         this.criteria.put(string, advancementCriterion);
         return this;
     }
@@ -61,7 +57,7 @@ public class HashPressRecipeBuilder implements RecipeBuilder {
         Advancement.Builder builder = exporter.advancement().addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(recipeId)).rewards(AdvancementRewards.Builder.recipe(recipeId)).requirements(AdvancementRequirements.Strategy.OR);
         Objects.requireNonNull(builder);
         this.criteria.forEach(builder::addCriterion);
-        HashPressRecipe recipeFactory = this.factory.create(this.ingredient, new ItemStack(this.result), this.time);
+        SingleInputTimedRecipe recipeFactory = this.factory.create(this.ingredient, new ItemStack(this.result), this.time);
         exporter.accept(recipeId, recipeFactory, builder.build(recipeId.withPrefix("recipes/")));
     }
 
@@ -70,5 +66,6 @@ public class HashPressRecipeBuilder implements RecipeBuilder {
             throw new IllegalStateException("No way of obtaining recipe " + recipeId);
         }
     }
+
 
 }

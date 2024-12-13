@@ -93,7 +93,7 @@ public abstract class InputOutputBlockEntity<T extends SingleInputTimedRecipe> e
     @Override
     public void setItem(int slot, ItemStack stack) {
         ItemStack itemStack = this.inventory.get(slot);
-        boolean itemsEqual = !stack.isEmpty() && net.minecraft.world.item.ItemStack.isSameItem(itemStack, stack);
+        boolean itemsEqual = !stack.isEmpty() && ItemStack.isSameItem(itemStack, stack);
         this.inventory.set(slot, stack);
         if (slot == INPUT_SLOT && !itemsEqual) {
             this.maxProgress = getCookTime(this.level, this);
@@ -143,7 +143,7 @@ public abstract class InputOutputBlockEntity<T extends SingleInputTimedRecipe> e
         return this.getItem(OUTPUT_SLOT).getItem() == item || getItem(OUTPUT_SLOT).isEmpty();
     }
 
-    private boolean canInsertAmountIntoOutputSlot(net.minecraft.world.item.ItemStack result) {
+    private boolean canInsertAmountIntoOutputSlot(ItemStack result) {
         return this.getItem(OUTPUT_SLOT).getCount() + result.getCount() <= getItem(OUTPUT_SLOT).getMaxStackSize();
     }
 

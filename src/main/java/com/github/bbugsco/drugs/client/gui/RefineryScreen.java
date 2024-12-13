@@ -2,7 +2,7 @@ package com.github.bbugsco.drugs.client.gui;
 
 import com.github.bbugsco.drugs.Drugs;
 import com.github.bbugsco.drugs.gui.RefineryMenu;
-import com.github.bbugsco.drugs.recipe.RefineryRecipe;
+import com.github.bbugsco.drugs.recipe.recipes.RefineryRecipe;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

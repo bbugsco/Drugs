@@ -1,7 +1,7 @@
 package com.github.bbugsco.drugs.gui;
 
 import com.github.bbugsco.drugs.blocks.entity.RefineryBlockEntity;
-import com.github.bbugsco.drugs.recipe.RefineryRecipe;
+import com.github.bbugsco.drugs.recipe.recipes.RefineryRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;

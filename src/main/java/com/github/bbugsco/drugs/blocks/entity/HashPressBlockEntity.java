@@ -1,7 +1,7 @@
 package com.github.bbugsco.drugs.blocks.entity;
 
 import com.github.bbugsco.drugs.gui.HashPressMenu;
-import com.github.bbugsco.drugs.recipe.HashPressRecipe;
+import com.github.bbugsco.drugs.recipe.recipes.HashPressRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;

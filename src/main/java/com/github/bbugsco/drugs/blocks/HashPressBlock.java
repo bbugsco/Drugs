@@ -16,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class HashPressBlock extends IoBlock {
 
-    public HashPressBlock(BlockBehaviour.Properties settings) {
+    public HashPressBlock(Properties settings) {
         super(settings, simpleCodec(HashPressBlock::new), Block.box(1, 0, 1, 15, 15, 15));
         this.registerDefaultState(this.defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH));
     }

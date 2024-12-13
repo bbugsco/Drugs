@@ -60,7 +60,7 @@ public class MarijuanaPlantBlock extends BushBlock implements BonemealableBlock 
             Block.box(0.0, 0.0, 0.0, 16.0, 13.0, 16.0)
     };
 
-    public MarijuanaPlantBlock(BlockBehaviour.Properties properties) {
+    public MarijuanaPlantBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.defaultBlockState().setValue(AGE, 0).setValue(HALF, DoubleBlockHalf.LOWER));
     }

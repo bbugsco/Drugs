@@ -1,7 +1,7 @@
 package com.github.bbugsco.drugs.blocks.entity;
 
 import com.github.bbugsco.drugs.gui.RefineryMenu;
-import com.github.bbugsco.drugs.recipe.RefineryRecipe;
+import com.github.bbugsco.drugs.recipe.recipes.RefineryRecipe;
 import com.google.common.collect.Lists;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.core.BlockPos;
