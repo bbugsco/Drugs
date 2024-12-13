@@ -1,6 +1,7 @@
 package com.github.bbugsco.drugs.blocks.entity;
 
 import com.github.bbugsco.drugs.gui.HashPressMenu;
+import com.github.bbugsco.drugs.recipe.DrugsRecipes;
 import com.github.bbugsco.drugs.recipe.HashPressRecipe;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.core.BlockPos;
@@ -65,7 +66,7 @@ public class HashPressBlockEntity extends BlockEntity implements ExtendedScreenH
                 return 2;
             }
         };
-        this.matchGetter = RecipeManager.createCheck(HashPressRecipe.Type.INSTANCE);
+        this.matchGetter = RecipeManager.createCheck(DrugsRecipes.HASH_PRESS_RECIPE_TYPE);
     }
 
     public ItemStack getRenderStack() {

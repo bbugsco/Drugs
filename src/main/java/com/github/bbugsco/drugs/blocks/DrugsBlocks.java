@@ -27,6 +27,8 @@ public class DrugsBlocks {
     public static final Block HASH_PRESS = registerBlock("hash_press", new HashPressBlock(BlockBehaviour.Properties.of()));
     public static final Block REFINERY = registerBlock("refinery", new RefineryBlock(BlockBehaviour.Properties.of()));
     public static final Block OIL_SHALE = registerBlock("oil_shale", new Block(BlockBehaviour.Properties.of()));
+    public static final Block ELECTROLYSIS_MACHINE = registerBlock("electrolysis", new Block(BlockBehaviour.Properties.of()));
+    public static final Block OXIDATION_MACHINE = registerBlock("oxidation_machine", new Block(BlockBehaviour.Properties.of()));
 
     public static Item getBlockItem(Block block) {
         return BLOCK_ITEMS.get(block);
