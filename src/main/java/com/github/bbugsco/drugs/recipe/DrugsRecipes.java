@@ -1,6 +1,7 @@
 package com.github.bbugsco.drugs.recipe;
 
 import com.github.bbugsco.drugs.Drugs;
+import com.github.bbugsco.drugs.recipe.recipes.AirExtractorRecipe;
 import com.github.bbugsco.drugs.recipe.recipes.CatalyticReformerRecipe;
 import com.github.bbugsco.drugs.recipe.recipes.ElectrolysisRecipe;
 import com.github.bbugsco.drugs.recipe.recipes.HashPressRecipe;
@@ -29,6 +30,9 @@ public class DrugsRecipes {
 
         Registry.register(BuiltInRegistries.RECIPE_TYPE, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, CatalyticReformerRecipe.ID), CatalyticReformerRecipe.Type.INSTANCE);
         Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID,  CatalyticReformerRecipe.ID), CatalyticReformerRecipe.Serializer.INSTANCE);
+
+        Registry.register(BuiltInRegistries.RECIPE_TYPE, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, AirExtractorRecipe.ID), AirExtractorRecipe.Type.INSTANCE);
+        Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID,  AirExtractorRecipe.ID), AirExtractorRecipe.Serializer.INSTANCE);
 
     }
 

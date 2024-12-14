@@ -1,7 +1,7 @@
 package com.github.bbugsco.drugs.datagen;
 
 import com.github.bbugsco.drugs.block.DrugsBlocks;
-import com.github.bbugsco.drugs.block.blocks.MarijuanaPlant;
+import com.github.bbugsco.drugs.block.blocks.plants.MarijuanaPlant;
 import com.github.bbugsco.drugs.items.DrugsItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
@@ -47,7 +47,7 @@ public class ModelGenerator extends FabricModelProvider {
         itemModelGenerator.generateFlatItem(DrugsItems.SALT, ModelTemplates.FLAT_ITEM);
         itemModelGenerator.generateFlatItem(DrugsItems.BRINE, ModelTemplates.FLAT_ITEM);
         itemModelGenerator.generateFlatItem(DrugsItems.SODIUM_HYDROXIDE, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(DrugsItems.METHANE, ModelTemplates.FLAT_ITEM);
     }
-
 
 }

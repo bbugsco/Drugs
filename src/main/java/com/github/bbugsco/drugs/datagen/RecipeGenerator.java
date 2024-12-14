@@ -3,9 +3,11 @@ package com.github.bbugsco.drugs.datagen;
 import com.github.bbugsco.drugs.Drugs;
 import com.github.bbugsco.drugs.block.DrugsBlocks;
 import com.github.bbugsco.drugs.items.DrugsItems;
+import com.github.bbugsco.drugs.recipe.builder.AirExtractorRecipeBuilder;
 import com.github.bbugsco.drugs.recipe.builder.CatalyticReformerRecipeBuilder;
 import com.github.bbugsco.drugs.recipe.builder.ElectrolysisRecipeBuilder;
 import com.github.bbugsco.drugs.recipe.builder.OxidizerRecipeBuilder;
+import com.github.bbugsco.drugs.recipe.recipes.AirExtractorRecipe;
 import com.github.bbugsco.drugs.recipe.recipes.CatalyticReformerRecipe;
 import com.github.bbugsco.drugs.recipe.recipes.ElectrolysisRecipe;
 import com.github.bbugsco.drugs.recipe.recipes.HashPressRecipe;
@@ -19,7 +21,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -75,7 +76,6 @@ public class RecipeGenerator extends FabricRecipeProvider {
                 .unlockedBy("has_item", has(Items.IRON_INGOT))
                 .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "refinery"));
 
-
         HashPressRecipeBuilder.press(
                         Ingredient.of(DrugsItems.MARIJUANA),
                         DrugsItems.HASH,
@@ -85,15 +85,15 @@ public class RecipeGenerator extends FabricRecipeProvider {
                 .unlockedBy("has_item", has(DrugsItems.MARIJUANA))
                 .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "press_hash"));
 
-        SimpleCookingRecipeBuilder.smelting(
+        RefineryRecipeBuilder.refine(
                         Ingredient.of(DrugsBlocks.getBlockItem(DrugsBlocks.OIL_SHALE)),
-                        RecipeCategory.MISC,
                         DrugsItems.OIL,
-                        10,
-                        1000
+                        List.of(new ItemStack(DrugsItems.NATURAL_GAS), new ItemStack(DrugsItems.NATURAL_GAS)),
+                        1000,
+                        RefineryRecipe::new
                 )
                 .unlockedBy("has_item", has(DrugsBlocks.getBlockItem(DrugsBlocks.OIL_SHALE)))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "oil"));
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "refine_oil"));
 
         RefineryRecipeBuilder.refine(
                         Ingredient.of(DrugsItems.OIL),
@@ -141,13 +141,58 @@ public class RecipeGenerator extends FabricRecipeProvider {
                 .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "refine_ketamine"));
 
         RefineryRecipeBuilder.refine(
-                        Ingredient.of(Items.COAL),
+                        Ingredient.of(DrugsItems.NATURAL_GAS),
                         DrugsItems.METHANOL,
                         1000,
                         RefineryRecipe::new
                 )
-                .unlockedBy("has_item", has(DrugsItems.OIL))
+                .unlockedBy("has_item", has(DrugsItems.NATURAL_GAS))
                 .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "refine_methanol"));
+
+        RefineryRecipeBuilder.refine(
+                        Ingredient.of(DrugsItems.NATURAL_GAS),
+                        DrugsItems.ETHANE,
+                        1000,
+                        RefineryRecipe::new
+                )
+                .unlockedBy("has_item", has(DrugsItems.NATURAL_GAS))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "refine_ethane"));
+
+        RefineryRecipeBuilder.refine(
+                        Ingredient.of(DrugsItems.NATURAL_GAS),
+                        DrugsItems.BUTANE,
+                        1000,
+                        RefineryRecipe::new
+                )
+                .unlockedBy("has_item", has(DrugsItems.NATURAL_GAS))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "refine_butane"));
+
+        RefineryRecipeBuilder.refine(
+                        Ingredient.of(DrugsItems.NATURAL_GAS),
+                        DrugsItems.PROPANE,
+                        1000,
+                        RefineryRecipe::new
+                )
+                .unlockedBy("has_item", has(DrugsItems.NATURAL_GAS))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "refine_propane"));
+
+        RefineryRecipeBuilder.refine(
+                        Ingredient.of(DrugsItems.PROPANE),
+                        DrugsItems.PROPYLENE,
+                        1000,
+                        RefineryRecipe::new
+                )
+                .unlockedBy("has_item", has(DrugsItems.PROPANE))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "refine_propylene"));
+
+        RefineryRecipeBuilder.refine(
+                        Ingredient.of(DrugsItems.ETHANE),
+                        DrugsItems.ETHYLENE,
+                        1000,
+                        RefineryRecipe::new
+                )
+                .unlockedBy("has_item", has(DrugsItems.ETHANE))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "refine_ethylene"));
 
         CatalyticReformerRecipeBuilder.reform(
                         Ingredient.of(DrugsItems.PETROLEUM_NAPHTHA),
@@ -185,6 +230,24 @@ public class RecipeGenerator extends FabricRecipeProvider {
         )
                 .unlockedBy("has_item", has(DrugsItems.BRINE))
                 .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "electrolysis_brine"));
+
+        AirExtractorRecipeBuilder.extract(
+                Ingredient.of(Items.GLASS_BOTTLE),
+                DrugsItems.NITROGEN,
+                500,
+                AirExtractorRecipe::new
+        )
+                .unlockedBy("has_item", has(Items.GLASS_BOTTLE))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "extract_nitrogen"));
+
+        AirExtractorRecipeBuilder.extract(
+                Ingredient.of(Items.GLASS_BOTTLE),
+                DrugsItems.OXYGEN,
+                1200,
+                AirExtractorRecipe::new
+        )
+                .unlockedBy("has_item", has(Items.GLASS_BOTTLE))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "extract_oxygen"));
 
     }
 

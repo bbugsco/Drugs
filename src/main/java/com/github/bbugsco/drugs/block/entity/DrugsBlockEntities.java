@@ -2,6 +2,12 @@ package com.github.bbugsco.drugs.block.entity;
 
 import com.github.bbugsco.drugs.Drugs;
 import com.github.bbugsco.drugs.block.DrugsBlocks;
+import com.github.bbugsco.drugs.block.entity.one_input.CatalyticReformerBlockEntity;
+import com.github.bbugsco.drugs.block.entity.one_input.ElectrolysisMachineBlockEntity;
+import com.github.bbugsco.drugs.block.entity.one_input.HashPressBlockEntity;
+import com.github.bbugsco.drugs.block.entity.one_input.OxidizerBlockEntity;
+import com.github.bbugsco.drugs.block.entity.one_input.RefineryBlockEntity;
+import com.github.bbugsco.drugs.block.entity.one_input.AirExtractorBlockEntity;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -25,10 +31,13 @@ public class DrugsBlockEntities {
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "oxidizer"),
                     BlockEntityType.Builder.of(OxidizerBlockEntity::new, DrugsBlocks.OXIDATION_MACHINE).build());
 
-
     public static final BlockEntityType<CatalyticReformerBlockEntity> CATALYTIC_REFORMER =
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "catalytic_reformer"),
                     BlockEntityType.Builder.of(CatalyticReformerBlockEntity::new, DrugsBlocks.CATALYTIC_REFORMER).build());
+
+    public static final BlockEntityType<AirExtractorBlockEntity> AIR_EXTRACTOR =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "air_extractor"),
+                    BlockEntityType.Builder.of(AirExtractorBlockEntity::new, DrugsBlocks.AIR_EXTRACTOR).build());
 
     public static void registerBlockEntities() {
         Drugs.LOGGER.info("Registering Block Entities for " + Drugs.MOD_ID);

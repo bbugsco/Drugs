@@ -1,6 +1,12 @@
 package com.github.bbugsco.drugs.gui;
 
 import com.github.bbugsco.drugs.Drugs;
+import com.github.bbugsco.drugs.gui.one_input_menu.AirExtractorMenu;
+import com.github.bbugsco.drugs.gui.one_input_menu.CatalyticReformerMenu;
+import com.github.bbugsco.drugs.gui.one_input_menu.ElectrolysisMachineMenu;
+import com.github.bbugsco.drugs.gui.one_input_menu.HashPressMenu;
+import com.github.bbugsco.drugs.gui.one_input_menu.OxidizerMenu;
+import com.github.bbugsco.drugs.gui.one_input_menu.RefineryMenu;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
@@ -38,6 +44,12 @@ public class DrugsMenus {
             BuiltInRegistries.MENU,
             ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "electrolysis_machine"),
             new ExtendedScreenHandlerType<>(ElectrolysisMachineMenu::new, BlockPos.STREAM_CODEC.cast())
+    );
+
+    public static final MenuType<AirExtractorMenu> AIR_EXTRACTOR = Registry.register(
+            BuiltInRegistries.MENU,
+            ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "air_extractor"),
+            new ExtendedScreenHandlerType<>(AirExtractorMenu::new, BlockPos.STREAM_CODEC.cast())
     );
 
     public static void registerMenus() {

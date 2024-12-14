@@ -11,12 +11,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class CatalyticReformerRecipe extends OneInputRecipe {
+public class AirExtractorRecipe extends OneInputRecipe {
 
-    public static final String ID = "catalytic_reformer";
+    public static final String ID = "air_extractor";
 
-    public CatalyticReformerRecipe(Ingredient ingredient, ItemStack result, List<ItemStack> byproducts, int time) {
-        super(Type.INSTANCE, Serializer.INSTANCE, ID, ingredient, result, byproducts, time);
+    public AirExtractorRecipe(Ingredient ingredient, ItemStack result, List<ItemStack> byproducts, int time) {
+        super(AirExtractorRecipe.Type.INSTANCE, AirExtractorRecipe.Serializer.INSTANCE, ID, ingredient, result, byproducts, time);
     }
 
     @Override
@@ -24,12 +24,12 @@ public class CatalyticReformerRecipe extends OneInputRecipe {
         return new ItemStack(DrugsBlocks.CATALYTIC_REFORMER);
     }
 
-    public static class Type implements RecipeType<CatalyticReformerRecipe> {
-        public static final CatalyticReformerRecipe.Type INSTANCE = new CatalyticReformerRecipe.Type();
+    public static class Type implements RecipeType<AirExtractorRecipe> {
+        public static final AirExtractorRecipe.Type INSTANCE = new AirExtractorRecipe.Type();
     }
 
     public static class Serializer {
-        public static final RecipeSerializer<CatalyticReformerRecipe> INSTANCE = new OneInputRecipeSerializer<>(CatalyticReformerRecipe::new);
+        public static final RecipeSerializer<AirExtractorRecipe> INSTANCE = new OneInputRecipeSerializer<>(AirExtractorRecipe::new);
     }
 
 }

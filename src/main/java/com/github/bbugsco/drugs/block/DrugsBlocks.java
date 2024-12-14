@@ -1,12 +1,13 @@
 package com.github.bbugsco.drugs.block;
 
 import com.github.bbugsco.drugs.Drugs;
-import com.github.bbugsco.drugs.block.blocks.CatalyticReformer;
-import com.github.bbugsco.drugs.block.blocks.ElectrolysisMachine;
-import com.github.bbugsco.drugs.block.blocks.HashPress;
-import com.github.bbugsco.drugs.block.blocks.MarijuanaPlant;
-import com.github.bbugsco.drugs.block.blocks.Oxidizer;
-import com.github.bbugsco.drugs.block.blocks.Refinery;
+import com.github.bbugsco.drugs.block.blocks.one_input.AirExtractor;
+import com.github.bbugsco.drugs.block.blocks.one_input.CatalyticReformer;
+import com.github.bbugsco.drugs.block.blocks.one_input.ElectrolysisMachine;
+import com.github.bbugsco.drugs.block.blocks.one_input.HashPress;
+import com.github.bbugsco.drugs.block.blocks.plants.MarijuanaPlant;
+import com.github.bbugsco.drugs.block.blocks.one_input.Oxidizer;
+import com.github.bbugsco.drugs.block.blocks.one_input.Refinery;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -31,6 +32,7 @@ public class DrugsBlocks {
     public static final Block ELECTROLYSIS_MACHINE = registerBlock("electrolysis", new ElectrolysisMachine(BlockBehaviour.Properties.of()));
     public static final Block OXIDATION_MACHINE = registerBlock("oxidation_machine", new Oxidizer(BlockBehaviour.Properties.of()));
     public static final Block CATALYTIC_REFORMER = registerBlock("catalytic_reformer", new CatalyticReformer(BlockBehaviour.Properties.of()));
+    public static final Block AIR_EXTRACTOR = registerBlock("air_extractor", new AirExtractor(BlockBehaviour.Properties.of()));
 
     public static Item getBlockItem(Block block) {
         return BLOCK_ITEMS.get(block);

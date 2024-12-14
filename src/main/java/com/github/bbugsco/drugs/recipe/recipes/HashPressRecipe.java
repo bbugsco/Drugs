@@ -2,20 +2,22 @@ package com.github.bbugsco.drugs.recipe.recipes;
 
 
 import com.github.bbugsco.drugs.block.DrugsBlocks;
-import com.github.bbugsco.drugs.recipe.generic.SingleInputSerializer;
-import com.github.bbugsco.drugs.recipe.generic.SingleInputTimedRecipe;
+import com.github.bbugsco.drugs.recipe.generic.OneInputRecipe;
+import com.github.bbugsco.drugs.recipe.generic.OneInputRecipeSerializer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import org.jetbrains.annotations.NotNull;
 
-public class HashPressRecipe extends SingleInputTimedRecipe {
+import java.util.List;
+
+public class HashPressRecipe extends OneInputRecipe {
 
     public static final String ID = "hash_press";
 
-    public HashPressRecipe(Ingredient ingredient, ItemStack result, int time) {
-        super(Type.INSTANCE, Serializer.INSTANCE, "hash_press", ingredient, result, time);
+    public HashPressRecipe(Ingredient ingredient, ItemStack result, List<ItemStack> byproducts, int time) {
+        super(Type.INSTANCE, Serializer.INSTANCE, "hash_press", ingredient, result, byproducts, time);
     }
 
     @Override
@@ -28,7 +30,7 @@ public class HashPressRecipe extends SingleInputTimedRecipe {
     }
 
     public static class Serializer {
-        public static final RecipeSerializer<HashPressRecipe> INSTANCE = new SingleInputSerializer<>(HashPressRecipe::new);
+        public static final RecipeSerializer<HashPressRecipe> INSTANCE = new OneInputRecipeSerializer<>(HashPressRecipe::new);
     }
 
 }

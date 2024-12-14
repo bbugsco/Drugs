@@ -1,19 +1,26 @@
 package com.github.bbugsco.drugs.recipe.builder;
 
+import com.github.bbugsco.drugs.recipe.generic.OneInputRecipe;
+import com.github.bbugsco.drugs.recipe.generic.OneInputRecipeBuilder;
 import com.github.bbugsco.drugs.recipe.recipes.HashPressRecipe;
-import com.github.bbugsco.drugs.recipe.generic.SingleInputTimedRecipe;
-import com.github.bbugsco.drugs.recipe.generic.SingleInputTimedRecipeBuilder;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 
-public class HashPressRecipeBuilder extends SingleInputTimedRecipeBuilder {
+import java.util.List;
 
-    private HashPressRecipeBuilder(final ItemLike result, final Ingredient ingredient, int time, SingleInputTimedRecipe.Factory<HashPressRecipe> factory) {
-        super(ingredient, result, time, factory);
+public class HashPressRecipeBuilder extends OneInputRecipeBuilder {
+
+    private HashPressRecipeBuilder(final ItemLike result, final Ingredient ingredient, List<ItemStack> byproducts, int time, OneInputRecipe.Factory<HashPressRecipe> factory) {
+        super(ingredient, result, byproducts, time, factory);
     }
 
-    public static HashPressRecipeBuilder press(Ingredient ingredient, ItemLike result, int time, SingleInputTimedRecipe.Factory<HashPressRecipe> factory) {
-        return new HashPressRecipeBuilder(result, ingredient, time, factory);
+    public static HashPressRecipeBuilder press(Ingredient ingredient, ItemLike result, List<ItemStack> byproducts, int time, OneInputRecipe.Factory<HashPressRecipe> factory) {
+        return new HashPressRecipeBuilder(result, ingredient, byproducts, time, factory);
+    }
+
+    public static HashPressRecipeBuilder press(Ingredient ingredient, ItemLike result, int time, OneInputRecipe.Factory<HashPressRecipe> factory) {
+        return new HashPressRecipeBuilder(result, ingredient, null, time, factory);
     }
 
 }

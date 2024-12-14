@@ -29,18 +29,15 @@ public class Drugs implements ModInitializer, DataGeneratorEntrypoint {
      TODO:
      - yeast composter block
      - barley, hops
-     - urgot?
+     - ergot?
      - fermentation tank (vinegar, alcohol)
      - dmt
      - bho/butane
      - chloroform recipe
      -
-     - DPH: DMAE, Sodium Carbonate, Toluene, Bromodiphenylmethane
-     - DMAE: DMA, Ethanolamine
-     - DMA: methanol, ammonia, silica-alumina
-     - silica-alumina: aluminum nitrate, water, tetraethyl orthosilicate
-     - aluminum nitrate: aluminum, ammonia, oxygen
-     -
+     - chloroform = heated chlorine, methane
+     - ammonia = hydrogen + nitrogen heat
+     - methylamine = ammonia + methanol
      */
 
     @Override
