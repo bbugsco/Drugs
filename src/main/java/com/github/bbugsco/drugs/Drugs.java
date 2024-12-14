@@ -33,6 +33,7 @@ public class Drugs implements ModInitializer, DataGeneratorEntrypoint {
      - fermentation tank (vinegar, alcohol)
      - dmt
      - bho/butane
+     - chloroform recipe
      -
      - DPH: DMAE, Sodium Carbonate, Toluene, Bromodiphenylmethane
      - DMAE: DMA, Ethanolamine
