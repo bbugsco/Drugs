@@ -1,7 +1,7 @@
-package com.github.bbugsco.drugs.blocks.entity;
+package com.github.bbugsco.drugs.block.generic;
 
-import com.github.bbugsco.drugs.gui.RefineryMenu;
-import com.github.bbugsco.drugs.recipe.recipes.RefineryRecipe;
+import com.github.bbugsco.drugs.block.entity.ImplementedInventory;
+import com.github.bbugsco.drugs.recipe.generic.SingleInputTimedRecipe;
 import com.google.common.collect.Lists;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.core.BlockPos;
@@ -11,40 +11,41 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
-public class RefineryBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory<BlockPos>, ImplementedInventory {
+public abstract class MultipleOutputsFromSingleInputBlockEntity<T extends SingleInputTimedRecipe> extends BlockEntity implements ExtendedScreenHandlerFactory<BlockPos>, ImplementedInventory {
 
     private final NonNullList<ItemStack> inventory = NonNullList.withSize(2, ItemStack.EMPTY);
     public static final int INPUT_SLOT = 0;
     public static final int OUTPUT_SLOT = 1;
 
+    private final RecipeType<T> recipeType;
+    private final String displayName;
+    
     int progress;
     int maxProgress;
     int selectedRecipeIndex;
-
-    private List<RecipeHolder<RefineryRecipe>> recipes;
+    
+    private List<RecipeHolder<T>> recipes;
 
     protected final SimpleContainerData dataAccess = new SimpleContainerData(3) {
         @Override
         public int get(int index) {
             return switch (index) {
-                case 0 -> RefineryBlockEntity.this.progress;
-                case 1 -> RefineryBlockEntity.this.maxProgress;
-                case 2 -> RefineryBlockEntity.this.selectedRecipeIndex;
+                case 0 -> MultipleOutputsFromSingleInputBlockEntity.this.progress;
+                case 1 -> MultipleOutputsFromSingleInputBlockEntity.this.maxProgress;
+                case 2 -> MultipleOutputsFromSingleInputBlockEntity.this.selectedRecipeIndex;
                 default -> 0;
             };
         }
@@ -52,9 +53,9 @@ public class RefineryBlockEntity extends BlockEntity implements ExtendedScreenHa
         @Override
         public void set(int index, int value) {
             switch (index) {
-                case 0 -> RefineryBlockEntity.this.progress = value;
-                case 1 -> RefineryBlockEntity.this.maxProgress = value;
-                case 2 -> RefineryBlockEntity.this.selectedRecipeIndex = value;
+                case 0 -> MultipleOutputsFromSingleInputBlockEntity.this.progress = value;
+                case 1 -> MultipleOutputsFromSingleInputBlockEntity.this.maxProgress = value;
+                case 2 -> MultipleOutputsFromSingleInputBlockEntity.this.selectedRecipeIndex = value;
             }
         }
 
@@ -63,25 +64,27 @@ public class RefineryBlockEntity extends BlockEntity implements ExtendedScreenHa
             return 3;
         }
     };
-
-    public RefineryBlockEntity(BlockPos pos, BlockState blockState) {
-        super(DrugsBlockEntities.REFINERY, pos, blockState);
+    
+    public MultipleOutputsFromSingleInputBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState, String displayName, RecipeType<T> recipeType) {
+        super(type, pos, blockState);
+        this.displayName = displayName;
+        this.recipeType = recipeType;
         this.recipes = Lists.newArrayList();
     }
 
     @Override
     public void setLevel(Level level) {
         super.setLevel(level);
-        this.setupRecipeList();
+        setupRecipeList();
     }
 
-    public List<RecipeHolder<RefineryRecipe>> getRecipes() {
+    public List<RecipeHolder<T>> getRecipes() {
         return this.recipes;
     }
 
     public void setupRecipeList() {
         if (this.level != null) {
-            this.recipes = this.level.getRecipeManager().getAllRecipesFor(RefineryRecipe.Type.INSTANCE);
+            this.recipes = this.level.getRecipeManager().getAllRecipesFor(recipeType);
         }
     }
 
@@ -95,20 +98,21 @@ public class RefineryBlockEntity extends BlockEntity implements ExtendedScreenHa
 
     private int getCookTime() {
         if (hasRecipe()) {
-            RefineryRecipe recipe = getRecipes().get(getSelectedRecipeIndex()).value();
+            T recipe = getRecipes().get(getSelectedRecipeIndex()).value();
             return recipe.getTime();
         }
         return 0;
     }
 
     private boolean hasRecipe() {
-        RefineryRecipe recipe;
+        T recipe;
         try {
             recipe = getRecipes().get(getSelectedRecipeIndex()).value();
         } catch (IndexOutOfBoundsException e) {
             setSelectedRecipeIndex(0);
             return false;
         }
+        if (getLevel() == null) return false;
         return recipe.matches(new SingleRecipeInput(inventory.getFirst()), getLevel());
     }
 
@@ -116,7 +120,7 @@ public class RefineryBlockEntity extends BlockEntity implements ExtendedScreenHa
         if(level.isClientSide) return;
         if (isOutputSlotEmptyOrReceivable()) {
             if (this.hasRecipe()) {
-                RefineryRecipe recipe = getRecipes().get(getSelectedRecipeIndex()).value();
+                T recipe = getRecipes().get(getSelectedRecipeIndex()).value();
                 if (recipe.matches(new SingleRecipeInput(inventory.getFirst()), level)) {
                     if ((inventory.get(OUTPUT_SLOT).getCount() == 0) || inventory.get(OUTPUT_SLOT).getItem() == recipe.result().getItem()) {
                         progress++;
@@ -152,19 +156,14 @@ public class RefineryBlockEntity extends BlockEntity implements ExtendedScreenHa
 
     @Override
     public @NotNull Component getDisplayName() {
-        return Component.literal("Refinery");
+        return Component.literal(displayName);
     }
 
     @Override
     public BlockPos getScreenOpeningData(ServerPlayer player) {
         return worldPosition;
     }
-
-    @Override
-    public @Nullable AbstractContainerMenu createMenu(int syncId, Inventory inventory, Player player) {
-        return new RefineryMenu(syncId, inventory, this, this.dataAccess);
-    }
-
+    
     @Override
     public void setChanged() {
         if (level != null) {
@@ -207,5 +206,6 @@ public class RefineryBlockEntity extends BlockEntity implements ExtendedScreenHa
         tag.putInt("MaxProgress", maxProgress);
         tag.putInt("SelectedRecipeIndex", selectedRecipeIndex);
     }
-
+    
 }
+

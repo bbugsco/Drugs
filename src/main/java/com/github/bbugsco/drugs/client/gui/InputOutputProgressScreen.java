@@ -1,7 +1,7 @@
 package com.github.bbugsco.drugs.client.gui;
 
 import com.github.bbugsco.drugs.Drugs;
-import com.github.bbugsco.drugs.gui.AbstractInputOutputProgressMenu;
+import com.github.bbugsco.drugs.gui.InputOutputProgressMenu;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -10,12 +10,21 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
-public class AbstractOneInputOneOutputScreen<T extends AbstractInputOutputProgressMenu> extends AbstractContainerScreen<T> {
+public class InputOutputProgressScreen<T extends InputOutputProgressMenu> extends AbstractContainerScreen<T> {
 
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "textures/gui/one_input_output.png");
+    private static ResourceLocation TEXTURE = null;
 
-    public AbstractOneInputOneOutputScreen(T menu, Inventory playerInventory, Component title) {
+    public InputOutputProgressScreen(T menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
+        int byProductSlots = menu.getNumByproducts();
+        ResourceLocation texture1;
+        switch (byProductSlots) {
+            case 1: { texture1 = ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "textures/gui/one_input_output_1_byproduct.png"); break; }
+            case 2: { texture1 = ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "textures/gui/one_input_output_2_byproduct.png"); break; }
+            case 3: { texture1 = ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "textures/gui/one_input_output_3_byproduct.png"); break; }
+            default: { texture1 = ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "textures/gui/one_input_output.png"); break; }
+        }
+        TEXTURE = texture1;
     }
 
     @Override

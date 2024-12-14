@@ -7,7 +7,7 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-public class HashPressMenu extends AbstractInputOutputProgressMenu {
+public class HashPressMenu extends InputOutputProgressMenu {
 
     public HashPressMenu(int syncId, Inventory playerInventory, BlockPos pos) {
         this(syncId, playerInventory, playerInventory.player.level().getBlockEntity(pos), new SimpleContainerData(2));

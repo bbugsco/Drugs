@@ -1,7 +1,7 @@
 package com.github.bbugsco.drugs.client;
 
-import com.github.bbugsco.drugs.blocks.DrugsBlocks;
-import com.github.bbugsco.drugs.blocks.entity.DrugsBlockEntities;
+import com.github.bbugsco.drugs.block.DrugsBlocks;
+import com.github.bbugsco.drugs.block.entity.DrugsBlockEntities;
 import com.github.bbugsco.drugs.client.block.entity.renderer.HashPressBlockEntityRenderer;
 import com.github.bbugsco.drugs.client.entity.DrugsEntityRenderers;
 import com.github.bbugsco.drugs.client.gui.DrugsScreens;

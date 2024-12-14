@@ -1,7 +1,6 @@
-package com.github.bbugsco.drugs.blocks;
+package com.github.bbugsco.drugs.block.generic;
 
-import com.github.bbugsco.drugs.blocks.entity.DrugsBlockEntities;
-import com.github.bbugsco.drugs.blocks.entity.RefineryBlockEntity;
+import com.github.bbugsco.drugs.block.entity.HashPressBlockEntity;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -12,6 +11,7 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
@@ -24,33 +24,33 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public class RefineryBlock extends BaseEntityBlock implements EntityBlock {
+public class IoBlock<T extends MenuProvider> extends BaseEntityBlock implements EntityBlock {
 
-    public static final MapCodec<RefineryBlock> CODEC = simpleCodec(RefineryBlock::new);
+    private final MapCodec<? extends BaseEntityBlock> codec;
+    private final VoxelShape SHAPE;
 
-    protected RefineryBlock(Properties properties) {
+    protected IoBlock(Properties properties, MapCodec<? extends BaseEntityBlock> codec, VoxelShape shape) {
         super(properties);
-        this.registerDefaultState(this.defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH).setValue(BlockStateProperties.LIT, false));
+        this.codec = codec;
+        this.SHAPE = shape;
+        this.registerDefaultState(this.defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH));
     }
 
     @Override
-    protected @NotNull MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
-    }
-
-    @Override
-    protected @NotNull RenderShape getRenderShape(BlockState state) {
-        return RenderShape.MODEL;
+    public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return null;
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(BlockStateProperties.HORIZONTAL_FACING, BlockStateProperties.LIT);
+        builder.add(BlockStateProperties.HORIZONTAL_FACING);
     }
 
     @Nullable
@@ -59,19 +59,28 @@ public class RefineryBlock extends BaseEntityBlock implements EntityBlock {
         return Objects.requireNonNull(super.getStateForPlacement(ctx)).setValue(BlockStateProperties.HORIZONTAL_FACING, ctx.getHorizontalDirection().getOpposite());
     }
 
-    @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new RefineryBlockEntity(pos, state);
+    protected @NotNull VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return SHAPE == null ? super.getShape(state, level, pos, context) : SHAPE;
+    }
+
+    @Override
+    protected @NotNull RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
+    }
+
+    @Override
+    protected @NotNull MapCodec<? extends BaseEntityBlock> codec() {
+        return codec;
     }
 
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean moved) {
         if (!state.is(newState.getBlock())) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (blockEntity instanceof RefineryBlockEntity) {
+            if (blockEntity instanceof HashPressBlockEntity) {
                 if (level instanceof ServerLevel) {
-                    Containers.dropContents(level, pos, (RefineryBlockEntity) blockEntity);
+                    Containers.dropContents(level, pos, (HashPressBlockEntity) blockEntity);
                 }
                 super.onRemove(state, level, pos, newState, moved);
                 level.updateNeighbourForOutputSignal(pos, this);
@@ -94,7 +103,7 @@ public class RefineryBlock extends BaseEntityBlock implements EntityBlock {
     @Override
     public @NotNull InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player entity, BlockHitResult hit) {
         if (!world.isClientSide) {
-            MenuProvider menuProvider = (RefineryBlockEntity) world.getBlockEntity(pos);
+            MenuProvider menuProvider = ((T) world.getBlockEntity(pos));
             if (menuProvider != null) {
                 entity.openMenu(menuProvider);
             }
@@ -105,7 +114,7 @@ public class RefineryBlock extends BaseEntityBlock implements EntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return level.isClientSide ? null : createTickerHelper(blockEntityType, DrugsBlockEntities.REFINERY, (world1, pos, blockState, blockEntity) -> blockEntity.tick(world1, pos, blockState));
+        return null;
     }
 
 }

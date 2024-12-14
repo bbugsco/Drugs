@@ -1,4 +1,4 @@
-package com.github.bbugsco.drugs.recipe;
+package com.github.bbugsco.drugs.recipe.generic;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;

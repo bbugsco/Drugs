@@ -1,5 +1,6 @@
-package com.github.bbugsco.drugs.blocks;
+package com.github.bbugsco.drugs.block.blocks;
 
+import com.github.bbugsco.drugs.block.DrugsBlocks;
 import com.github.bbugsco.drugs.items.DrugsItems;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -25,7 +26,6 @@ import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.LevelEvent;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -41,9 +41,9 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class MarijuanaPlantBlock extends BushBlock implements BonemealableBlock {
+public class MarijuanaPlant extends BushBlock implements BonemealableBlock {
 
-    public static final MapCodec<MarijuanaPlantBlock> CODEC = simpleCodec(MarijuanaPlantBlock::new);
+    public static final MapCodec<MarijuanaPlant> CODEC = simpleCodec(MarijuanaPlant::new);
     public static final int MAX_AGE = 7;
     public static final IntegerProperty AGE = BlockStateProperties.AGE_7;
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
@@ -60,13 +60,13 @@ public class MarijuanaPlantBlock extends BushBlock implements BonemealableBlock 
             Block.box(0.0, 0.0, 0.0, 16.0, 13.0, 16.0)
     };
 
-    public MarijuanaPlantBlock(Properties properties) {
+    public MarijuanaPlant(Properties properties) {
         super(properties);
         this.registerDefaultState(this.defaultBlockState().setValue(AGE, 0).setValue(HALF, DoubleBlockHalf.LOWER));
     }
 
     @Override
-    public @NotNull MapCodec<MarijuanaPlantBlock> codec() {
+    public @NotNull MapCodec<MarijuanaPlant> codec() {
         return CODEC;
     }
 
@@ -196,7 +196,7 @@ public class MarijuanaPlantBlock extends BushBlock implements BonemealableBlock 
 
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        level.setBlock(pos, MarijuanaPlantBlock.withWaterloggedState(level, pos, this.defaultBlockState().setValue(HALF, DoubleBlockHalf.LOWER)), Block.UPDATE_ALL);
+        level.setBlock(pos, MarijuanaPlant.withWaterloggedState(level, pos, this.defaultBlockState().setValue(HALF, DoubleBlockHalf.LOWER)), Block.UPDATE_ALL);
     }
 
     @Override
@@ -212,7 +212,7 @@ public class MarijuanaPlantBlock extends BushBlock implements BonemealableBlock 
     public @NotNull BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
         if (!level.isClientSide) {
             if (player.isCreative()) {
-                MarijuanaPlantBlock.onBreakInCreative(level, pos, state, player);
+                MarijuanaPlant.onBreakInCreative(level, pos, state, player);
             } else {
                 if (state.getValue(HALF) == DoubleBlockHalf.LOWER) {
                     popResource(level,  pos, new ItemStack(DrugsBlocks.getBlockItem(DrugsBlocks.MARIJUANA_PLANT), 1));

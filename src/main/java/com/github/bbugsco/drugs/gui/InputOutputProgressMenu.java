@@ -11,13 +11,18 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class AbstractInputOutputProgressMenu extends AbstractContainerMenu {
+public abstract class InputOutputProgressMenu extends AbstractContainerMenu {
 
     protected final Container inventory;
     protected final SimpleContainerData simpleContainerData;
+    protected int numByproducts = 0;
 
+    protected InputOutputProgressMenu(MenuType<? extends InputOutputProgressMenu> menu, int syncId, Inventory playerInventory, int inventorySize, BlockEntity entity, SimpleContainerData blockEntityData, Slot[] slots, int numByproducts) {
+        this(menu, syncId, playerInventory, inventorySize, entity, blockEntityData, slots);
+        this.numByproducts = numByproducts;
+    }
 
-    protected AbstractInputOutputProgressMenu(MenuType<? extends AbstractInputOutputProgressMenu> menu, int syncId, Inventory playerInventory, int inventorySize, BlockEntity entity, SimpleContainerData blockEntityData, Slot[] slots) {
+    protected InputOutputProgressMenu(MenuType<? extends InputOutputProgressMenu> menu, int syncId, Inventory playerInventory, int inventorySize, BlockEntity entity, SimpleContainerData blockEntityData, Slot[] slots) {
         super(menu, syncId);
         checkContainerSize(((Container) entity), inventorySize);
         this.inventory = ((Container) entity);
@@ -32,6 +37,10 @@ public abstract class AbstractInputOutputProgressMenu extends AbstractContainerM
         addPlayerHotbar(playerInventory);
 
         addDataSlots(blockEntityData);
+    }
+
+    public int getNumByproducts() {
+        return numByproducts;
     }
 
     public boolean isCrafting() {

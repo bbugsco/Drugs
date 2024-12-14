@@ -1,8 +1,8 @@
 package com.github.bbugsco.drugs.recipe.recipes;
 
-import com.github.bbugsco.drugs.blocks.DrugsBlocks;
-import com.github.bbugsco.drugs.recipe.SingleInputSerializer;
-import com.github.bbugsco.drugs.recipe.SingleInputTimedRecipe;
+import com.github.bbugsco.drugs.block.DrugsBlocks;
+import com.github.bbugsco.drugs.recipe.generic.SingleInputSerializer;
+import com.github.bbugsco.drugs.recipe.generic.SingleInputTimedRecipe;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -20,10 +20,6 @@ public class OxidizerRecipe extends SingleInputTimedRecipe {
     @Override
     public @NotNull ItemStack getToastSymbol() {
         return new ItemStack(DrugsBlocks.OXIDATION_MACHINE);
-    }
-
-    public interface RecipeFactory<OxidizerRecipe> {
-        OxidizerRecipe create(Ingredient input, ItemStack result, int time);
     }
 
     public static class Type implements RecipeType<OxidizerRecipe> {

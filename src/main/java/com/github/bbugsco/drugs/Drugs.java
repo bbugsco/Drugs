@@ -1,7 +1,7 @@
 package com.github.bbugsco.drugs;
 
-import com.github.bbugsco.drugs.blocks.DrugsBlocks;
-import com.github.bbugsco.drugs.blocks.entity.DrugsBlockEntities;
+import com.github.bbugsco.drugs.block.DrugsBlocks;
+import com.github.bbugsco.drugs.block.entity.DrugsBlockEntities;
 import com.github.bbugsco.drugs.datagen.BlockTagGenerator;
 import com.github.bbugsco.drugs.datagen.ItemTagGenerator;
 import com.github.bbugsco.drugs.datagen.LootTableGenerator;
@@ -33,6 +33,13 @@ public class Drugs implements ModInitializer, DataGeneratorEntrypoint {
      - fermentation tank (vinegar, alcohol)
      - dmt
      - bho/butane
+     -
+     - DPH: DMAE, Sodium Carbonate, Toluene, Bromodiphenylmethane
+     - DMAE: DMA, Ethanolamine
+     - DMA: methanol, ammonia, silica-alumina
+     - silica-alumina: aluminum nitrate, water, tetraethyl orthosilicate
+     - aluminum nitrate: aluminum, ammonia, oxygen
+     -
      */
 
     @Override

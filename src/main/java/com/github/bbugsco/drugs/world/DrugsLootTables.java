@@ -1,7 +1,7 @@
 package com.github.bbugsco.drugs.world;
 
 import com.github.bbugsco.drugs.Drugs;
-import com.github.bbugsco.drugs.blocks.DrugsBlocks;
+import com.github.bbugsco.drugs.block.DrugsBlocks;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootPool;

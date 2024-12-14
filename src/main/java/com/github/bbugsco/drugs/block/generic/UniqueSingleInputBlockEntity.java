@@ -1,6 +1,8 @@
-package com.github.bbugsco.drugs.blocks.entity;
+package com.github.bbugsco.drugs.block.generic;
 
-import com.github.bbugsco.drugs.recipe.SingleInputTimedRecipe;
+import com.github.bbugsco.drugs.block.entity.ImplementedInventory;
+import com.github.bbugsco.drugs.recipe.generic.SingleInputTimedByproductRecipe;
+import com.github.bbugsco.drugs.recipe.generic.SingleInputTimedRecipe;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -23,30 +25,38 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Optional;
 
-public abstract class InputOutputBlockEntity<T extends SingleInputTimedRecipe> extends BlockEntity implements ExtendedScreenHandlerFactory<BlockPos>, ImplementedInventory {
+public abstract class UniqueSingleInputBlockEntity<T extends SingleInputTimedRecipe> extends BlockEntity implements ExtendedScreenHandlerFactory<BlockPos>, ImplementedInventory {
 
     private final String displayName;
-    private final NonNullList<ItemStack> inventory = NonNullList.withSize(2, ItemStack.EMPTY);
+    private NonNullList<ItemStack> inventory = NonNullList.withSize(2, ItemStack.EMPTY);
     public static final int INPUT_SLOT = 0;
     public static final int OUTPUT_SLOT = 1;
 
     protected final SimpleContainerData simpleContainerData;
     private int progress;
     private int maxProgress;
+    private int maxByProducts = 0;
 
     public final RecipeManager.CachedCheck<SingleRecipeInput, T> matchGetter;
 
-    public InputOutputBlockEntity(BlockPos pos, BlockState state, String displayName, RecipeType<T> type, BlockEntityType<?> blockEntityType) {
+    public UniqueSingleInputBlockEntity(BlockPos pos, BlockState state, String displayName, RecipeType<T> type, BlockEntityType<?> blockEntityType, int maxByProducts) {
+        this(pos, state, displayName, type, blockEntityType);
+         inventory = NonNullList.withSize(2 + maxByProducts, ItemStack.EMPTY);
+         this.maxByProducts = maxByProducts;
+    }
+
+    public UniqueSingleInputBlockEntity(BlockPos pos, BlockState state, String displayName, RecipeType<T> type, BlockEntityType<?> blockEntityType) {
         super(blockEntityType, pos, state);
         this.displayName = displayName;
         this.simpleContainerData = new SimpleContainerData(2) {
             @Override
             public int get(int index) {
                 return switch (index) {
-                    case 0 -> InputOutputBlockEntity.this.progress;
-                    case 1 -> InputOutputBlockEntity.this.maxProgress;
+                    case 0 -> UniqueSingleInputBlockEntity.this.progress;
+                    case 1 -> UniqueSingleInputBlockEntity.this.maxProgress;
                     default -> 0;
                 };
             }
@@ -54,8 +64,8 @@ public abstract class InputOutputBlockEntity<T extends SingleInputTimedRecipe> e
             @Override
             public void set(int index, int value) {
                 switch (index) {
-                    case 0 -> InputOutputBlockEntity.this.progress = value;
-                    case 1 -> InputOutputBlockEntity.this.maxProgress = value;
+                    case 0 -> UniqueSingleInputBlockEntity.this.progress = value;
+                    case 1 -> UniqueSingleInputBlockEntity.this.maxProgress = value;
                 }
             }
 
@@ -65,6 +75,14 @@ public abstract class InputOutputBlockEntity<T extends SingleInputTimedRecipe> e
             }
         };
         this.matchGetter = RecipeManager.createCheck(type);
+    }
+
+    public boolean hasByproducts() {
+        return maxByProducts > 0;
+    }
+
+    public int numberOfByproducts() {
+        return maxByProducts;
     }
 
     public ItemStack getRenderStack() {
@@ -104,7 +122,7 @@ public abstract class InputOutputBlockEntity<T extends SingleInputTimedRecipe> e
 
     public void tick(Level level, BlockPos pos, BlockState state) {
         if(level.isClientSide) return;
-        if (isOutputSlotEmptyOrReceivable()) {
+        if (isSlotEmptyOrReceivable(OUTPUT_SLOT)) {
             if (hasRecipe()) {
                 progress++;
                 setChanged(level, pos, state);
@@ -127,31 +145,51 @@ public abstract class InputOutputBlockEntity<T extends SingleInputTimedRecipe> e
         recipe.ifPresent(inputOutputRecipeRecipeEntry -> this.setItem(OUTPUT_SLOT, new ItemStack(
                 inputOutputRecipeRecipeEntry.value().result().getItem(),
                 getItem(OUTPUT_SLOT).getCount() + inputOutputRecipeRecipeEntry.value().result().getCount())));
+        recipe.ifPresent(recipeHolder -> byproduct(recipeHolder.value()));
+    }
+
+    private void byproduct(SingleInputTimedRecipe recipe) {
+        if (hasByproducts()) {
+            if (recipe instanceof SingleInputTimedByproductRecipe byproductRecipe) {
+                List<ItemStack> byproducts = byproductRecipe.getByproducts();
+                for (int i = 0; i < byproducts.size() && i < numberOfByproducts(); i++) {
+                    if (getLevel() != null) {
+                        if (getLevel().random.nextInt(5) == 0) {
+                            int slot = OUTPUT_SLOT + 1 + i;
+                            ItemStack toAdd = byproducts.get(i);
+                            if (!canInsertItemIntoSlot(toAdd.getItem(), slot)) return;
+                            if (!canInsertAmountIntoSlot(toAdd, slot)) return;
+                            setItem(slot, new ItemStack(toAdd.getItem(), getItem(slot).getCount() + toAdd.getCount()));
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private boolean hasRecipe() {
         Optional<RecipeHolder<T>> recipe = getCurrentRecipe();
-        return recipe.isPresent() && canInsertAmountIntoOutputSlot(recipe.get().value().result())
-                && canInsertItemIntoOutputSlot(recipe.get().value().result().getItem());
+        return recipe.isPresent() && canInsertAmountIntoSlot(recipe.get().value().result(), OUTPUT_SLOT)
+                && canInsertItemIntoSlot(recipe.get().value().result().getItem(), OUTPUT_SLOT);
     }
 
     private Optional<RecipeHolder<T>> getCurrentRecipe() {
         return matchGetter.getRecipeFor(new SingleRecipeInput(getItem(INPUT_SLOT)), level);
     }
 
-    private boolean canInsertItemIntoOutputSlot(Item item) {
-        return this.getItem(OUTPUT_SLOT).getItem() == item || getItem(OUTPUT_SLOT).isEmpty();
+    private boolean canInsertItemIntoSlot(Item item, int slot) {
+        return this.getItem(slot).getItem() == item || getItem(slot).isEmpty();
     }
 
-    private boolean canInsertAmountIntoOutputSlot(ItemStack result) {
-        return this.getItem(OUTPUT_SLOT).getCount() + result.getCount() <= getItem(OUTPUT_SLOT).getMaxStackSize();
+    private boolean canInsertAmountIntoSlot(ItemStack result, int slot) {
+        return this.getItem(slot).getCount() + result.getCount() <= getItem(slot).getMaxStackSize();
     }
 
-    private boolean isOutputSlotEmptyOrReceivable() {
-        return this.getItem(OUTPUT_SLOT).isEmpty() || getItem(OUTPUT_SLOT).getCount() < getItem(OUTPUT_SLOT).getMaxStackSize();
+    private boolean isSlotEmptyOrReceivable(int slot) {
+        return this.getItem(slot).isEmpty() || getItem(slot).getCount() < getItem(slot).getMaxStackSize();
     }
 
-    private int getCookTime(Level world, InputOutputBlockEntity<T> entity) {
+    private int getCookTime(Level world, UniqueSingleInputBlockEntity<T> entity) {
         SingleRecipeInput input = new SingleRecipeInput(entity.getItem(INPUT_SLOT));
         return entity.matchGetter.getRecipeFor(input, world).map((recipe) -> recipe.value().getTime()).orElse(200);
     }

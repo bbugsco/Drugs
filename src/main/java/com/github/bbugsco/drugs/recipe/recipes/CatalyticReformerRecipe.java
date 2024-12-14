@@ -9,25 +9,25 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import org.jetbrains.annotations.NotNull;
 
-public class RefineryRecipe extends SingleInputTimedRecipe {
+public class CatalyticReformerRecipe extends SingleInputTimedRecipe {
 
-    public static final String ID = "refinery";
+    public static final String ID = "catalytic_reformer";
 
-    public RefineryRecipe(Ingredient ingredient, ItemStack result, int time) {
+    public CatalyticReformerRecipe(Ingredient ingredient, ItemStack result, int time) {
         super(Type.INSTANCE, Serializer.INSTANCE, ID, ingredient, result, time);
     }
 
     @Override
     public @NotNull ItemStack getToastSymbol() {
-        return new ItemStack(DrugsBlocks.REFINERY);
+        return new ItemStack(DrugsBlocks.CATALYTIC_REFORMER);
     }
 
-    public static class Type implements RecipeType<RefineryRecipe> {
-        public static final Type INSTANCE = new Type();
+    public static class Type implements RecipeType<CatalyticReformerRecipe> {
+        public static final CatalyticReformerRecipe.Type INSTANCE = new CatalyticReformerRecipe.Type();
     }
 
     public static class Serializer {
-        public static final RecipeSerializer<RefineryRecipe> INSTANCE = new SingleInputSerializer<>(RefineryRecipe::new);
+        public static final RecipeSerializer<CatalyticReformerRecipe> INSTANCE = new SingleInputSerializer<>(CatalyticReformerRecipe::new);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.github.bbugsco.drugs.blocks.entity;
+package com.github.bbugsco.drugs.block.entity;
 
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;

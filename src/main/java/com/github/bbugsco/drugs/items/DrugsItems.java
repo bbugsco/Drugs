@@ -21,6 +21,15 @@ public class DrugsItems {
     public static final Item KEROSENE = registerItem("kerosene", new Item(new Item.Properties()));
     public static final Item GASOLINE = registerItem("gasoline", new Item(new Item.Properties()));
     public static final Item METHANOL = registerItem("methanol", new Item(new Item.Properties()));
+    public static final Item BENZENE = registerItem("benzene", new Item(new Item.Properties()));
+    public static final Item CHLOROFORM = registerItem("chloroform", new Item(new Item.Properties()));
+    public static final Item FORMALDEHYDE = registerItem("formaldehyde", new Item(new Item.Properties()));
+    public static final Item TOLUENE = registerItem("toluene", new Item(new Item.Properties()));
+    public static final Item SALT = registerItem("salt", new Item(new Item.Properties()));
+    public static final Item BRINE = registerItem("brine", new Item(new Item.Properties()));
+    public static final Item SODIUM_HYDROXIDE = registerItem("sodium_hydroxide", new Item(new Item.Properties()));
+    public static final Item HYDROGEN = registerItem("hydrogen", new Item(new Item.Properties()));
+    public static final Item CHLORINE = registerItem("chlorine", new Item(new Item.Properties()));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(BuiltInRegistries.ITEM, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, name), item);

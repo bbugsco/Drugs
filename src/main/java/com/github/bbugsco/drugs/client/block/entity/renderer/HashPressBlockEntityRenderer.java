@@ -1,6 +1,6 @@
 package com.github.bbugsco.drugs.client.block.entity.renderer;
 
-import com.github.bbugsco.drugs.blocks.entity.HashPressBlockEntity;
+import com.github.bbugsco.drugs.block.entity.HashPressBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;

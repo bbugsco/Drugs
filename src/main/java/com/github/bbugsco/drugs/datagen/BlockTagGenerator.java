@@ -1,6 +1,6 @@
 package com.github.bbugsco.drugs.datagen;
 
-import com.github.bbugsco.drugs.blocks.DrugsBlocks;
+import com.github.bbugsco.drugs.block.DrugsBlocks;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.core.HolderLookup;

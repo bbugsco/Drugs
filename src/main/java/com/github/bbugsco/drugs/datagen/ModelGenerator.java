@@ -1,7 +1,7 @@
 package com.github.bbugsco.drugs.datagen;
 
-import com.github.bbugsco.drugs.blocks.DrugsBlocks;
-import com.github.bbugsco.drugs.blocks.MarijuanaPlantBlock;
+import com.github.bbugsco.drugs.block.DrugsBlocks;
+import com.github.bbugsco.drugs.block.blocks.MarijuanaPlant;
 import com.github.bbugsco.drugs.items.DrugsItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
@@ -18,9 +18,12 @@ public class ModelGenerator extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
-        blockStateModelGenerator.createCrossBlock(DrugsBlocks.MARIJUANA_PLANT, BlockModelGenerators.TintState.NOT_TINTED, MarijuanaPlantBlock.AGE, 0, 1, 2, 3, 4, 5, 6, 7);
-        blockStateModelGenerator.createFurnace(DrugsBlocks.REFINERY, TexturedModel.ORIENTABLE_ONLY_TOP);
+        blockStateModelGenerator.createCrossBlock(DrugsBlocks.MARIJUANA_PLANT, BlockModelGenerators.TintState.NOT_TINTED, MarijuanaPlant.AGE, 0, 1, 2, 3, 4, 5, 6, 7);
+        blockStateModelGenerator.createHorizontallyRotatedBlock(DrugsBlocks.REFINERY, TexturedModel.ORIENTABLE);
         blockStateModelGenerator.createTrivialCube(DrugsBlocks.OIL_SHALE);
+        blockStateModelGenerator.createHorizontallyRotatedBlock(DrugsBlocks.ELECTROLYSIS_MACHINE, TexturedModel.ORIENTABLE);
+        blockStateModelGenerator.createHorizontallyRotatedBlock(DrugsBlocks.OXIDATION_MACHINE, TexturedModel.ORIENTABLE);
+        blockStateModelGenerator.createHorizontallyRotatedBlock(DrugsBlocks.CATALYTIC_REFORMER, TexturedModel.ORIENTABLE);
     }
 
     @Override
@@ -37,6 +40,13 @@ public class ModelGenerator extends FabricModelProvider {
         itemModelGenerator.generateFlatItem(DrugsItems.KEROSENE, ModelTemplates.FLAT_ITEM);
         itemModelGenerator.generateFlatItem(DrugsItems.GASOLINE, ModelTemplates.FLAT_ITEM);
         itemModelGenerator.generateFlatItem(DrugsItems.METHANOL, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(DrugsItems.FORMALDEHYDE, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(DrugsItems.CHLOROFORM, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(DrugsItems.BENZENE, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(DrugsItems.TOLUENE, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(DrugsItems.SALT, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(DrugsItems.BRINE, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(DrugsItems.SODIUM_HYDROXIDE, ModelTemplates.FLAT_ITEM);
     }
 
 

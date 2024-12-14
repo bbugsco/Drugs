@@ -22,6 +22,24 @@ public class DrugsMenus {
             new ExtendedScreenHandlerType<>(RefineryMenu::new, BlockPos.STREAM_CODEC.cast())
     );
 
+    public static final MenuType<CatalyticReformerMenu> CATALYTIC_REFORMER_MENU = Registry.register(
+            BuiltInRegistries.MENU,
+            ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "catalytic_reformer"),
+            new ExtendedScreenHandlerType<>(CatalyticReformerMenu::new, BlockPos.STREAM_CODEC.cast())
+    );
+
+    public static final MenuType<OxidizerMenu> OXIDIZER_MENU = Registry.register(
+            BuiltInRegistries.MENU,
+            ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "oxidizer"),
+            new ExtendedScreenHandlerType<>(OxidizerMenu::new, BlockPos.STREAM_CODEC.cast())
+    );
+
+    public static final MenuType<ElectrolysisMachineMenu> ELECTROLYSIS_MACHINE = Registry.register(
+            BuiltInRegistries.MENU,
+            ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "electrolysis_machine"),
+            new ExtendedScreenHandlerType<>(ElectrolysisMachineMenu::new, BlockPos.STREAM_CODEC.cast())
+    );
+
     public static void registerMenus() {
         Drugs.LOGGER.info("Registering Menus for " + Drugs.MOD_ID);
     }

@@ -7,7 +7,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
 @Environment(EnvType.CLIENT)
-public class HashPressScreen extends AbstractOneInputOneOutputScreen<HashPressMenu> {
+public class HashPressScreen extends InputOutputProgressScreen<HashPressMenu> {
 
     public HashPressScreen(HashPressMenu handler, Inventory inventory, Component title) {
         super(handler, inventory, title);

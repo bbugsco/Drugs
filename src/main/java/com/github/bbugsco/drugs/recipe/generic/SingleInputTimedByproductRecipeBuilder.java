@@ -1,4 +1,4 @@
-package com.github.bbugsco.drugs.recipe;
+package com.github.bbugsco.drugs.recipe.generic;
 
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
@@ -14,29 +14,31 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class SingleInputTimedRecipeBuilder implements RecipeBuilder {
+public class SingleInputTimedByproductRecipeBuilder implements RecipeBuilder {
 
     private final Item result;
     private final Ingredient ingredient;
+    private final List<ItemStack> byproducts;
     private final int time;
 
-    private final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
-    private final SingleInputTimedRecipe.Factory<? extends SingleInputTimedRecipe> factory;
+    protected final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
+    private final SingleInputTimedByproductRecipe.Factory<? extends SingleInputTimedByproductRecipe> factory;
 
-    protected SingleInputTimedRecipeBuilder(final ItemLike result, final Ingredient ingredient, int time, SingleInputTimedRecipe.Factory<? extends SingleInputTimedRecipe> factory) {
-        this.result = result.asItem();
+    protected SingleInputTimedByproductRecipeBuilder(final Ingredient ingredient, final ItemLike result, List<ItemStack> byproducts, int time, SingleInputTimedByproductRecipe.Factory<? extends SingleInputTimedByproductRecipe> factory) {
         this.ingredient = ingredient;
+        this.result = result.asItem();
+        this.byproducts = byproducts;
         this.time = time;
         this.factory = factory;
     }
 
     @Override
-    public @NotNull SingleInputTimedRecipeBuilder unlockedBy(String string, Criterion<?> advancementCriterion) {
+    public @NotNull SingleInputTimedByproductRecipeBuilder unlockedBy(String string, Criterion<?> advancementCriterion) {
         this.criteria.put(string, advancementCriterion);
         return this;
     }
@@ -57,11 +59,11 @@ public class SingleInputTimedRecipeBuilder implements RecipeBuilder {
         Advancement.Builder builder = exporter.advancement().addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(recipeId)).rewards(AdvancementRewards.Builder.recipe(recipeId)).requirements(AdvancementRequirements.Strategy.OR);
         Objects.requireNonNull(builder);
         this.criteria.forEach(builder::addCriterion);
-        SingleInputTimedRecipe recipeFactory = this.factory.create(this.ingredient, new ItemStack(this.result), this.time);
+        SingleInputTimedByproductRecipe recipeFactory = this.factory.create(this.ingredient, new ItemStack(this.result), this.byproducts, this.time);
         exporter.accept(recipeId, recipeFactory, builder.build(recipeId.withPrefix("recipes/")));
     }
 
-    private void validate(ResourceLocation recipeId) {
+    protected void validate(ResourceLocation recipeId) {
         if (this.criteria.isEmpty()) {
             throw new IllegalStateException("No way of obtaining recipe " + recipeId);
         }

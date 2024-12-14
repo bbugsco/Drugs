@@ -1,7 +1,7 @@
 package com.github.bbugsco.drugs.items;
 
 import com.github.bbugsco.drugs.Drugs;
-import com.github.bbugsco.drugs.blocks.DrugsBlocks;
+import com.github.bbugsco.drugs.block.DrugsBlocks;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -33,6 +33,17 @@ public class DrugsItemGroups {
                         entries.accept(DrugsItems.KEROSENE);
                         entries.accept(DrugsItems.GASOLINE);
                         entries.accept(DrugsItems.METHANOL);
+                        entries.accept(DrugsItems.FORMALDEHYDE);
+                        entries.accept(DrugsItems.CHLOROFORM);
+                        entries.accept(DrugsItems.TOLUENE);
+                        entries.accept(DrugsItems.BENZENE);
+                        entries.accept(DrugsItems.SALT);
+                        entries.accept(DrugsItems.BRINE);
+                        entries.accept(DrugsItems.CHLORINE);
+                        entries.accept(DrugsItems.HYDROGEN);
+                        entries.accept(DrugsBlocks.getBlockItem(DrugsBlocks.CATALYTIC_REFORMER));
+                        entries.accept(DrugsBlocks.getBlockItem(DrugsBlocks.ELECTROLYSIS_MACHINE));
+                        entries.accept(DrugsBlocks.getBlockItem(DrugsBlocks.OXIDATION_MACHINE));
                     }).build());
 
     public static void registerItemGroups() {

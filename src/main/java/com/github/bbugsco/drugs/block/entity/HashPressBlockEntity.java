@@ -1,5 +1,6 @@
-package com.github.bbugsco.drugs.blocks.entity;
+package com.github.bbugsco.drugs.block.entity;
 
+import com.github.bbugsco.drugs.block.generic.UniqueSingleInputBlockEntity;
 import com.github.bbugsco.drugs.gui.HashPressMenu;
 import com.github.bbugsco.drugs.recipe.recipes.HashPressRecipe;
 import net.minecraft.core.BlockPos;
@@ -9,7 +10,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-public class HashPressBlockEntity extends InputOutputBlockEntity<HashPressRecipe> {
+public class HashPressBlockEntity extends UniqueSingleInputBlockEntity<HashPressRecipe> {
 
     public HashPressBlockEntity(BlockPos pos, BlockState state) {
         super(pos, state, "Hash Press", HashPressRecipe.Type.INSTANCE, DrugsBlockEntities.HASH_PRESS);

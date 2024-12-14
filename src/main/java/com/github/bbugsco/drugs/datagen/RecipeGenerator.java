@@ -1,10 +1,16 @@
 package com.github.bbugsco.drugs.datagen;
 
 import com.github.bbugsco.drugs.Drugs;
-import com.github.bbugsco.drugs.blocks.DrugsBlocks;
+import com.github.bbugsco.drugs.block.DrugsBlocks;
 import com.github.bbugsco.drugs.items.DrugsItems;
+import com.github.bbugsco.drugs.recipe.builder.CatalyticReformerRecipeBuilder;
+import com.github.bbugsco.drugs.recipe.builder.ElectrolysisRecipeBuilder;
+import com.github.bbugsco.drugs.recipe.builder.OxidizerRecipeBuilder;
+import com.github.bbugsco.drugs.recipe.recipes.CatalyticReformerRecipe;
+import com.github.bbugsco.drugs.recipe.recipes.ElectrolysisRecipe;
 import com.github.bbugsco.drugs.recipe.recipes.HashPressRecipe;
 import com.github.bbugsco.drugs.recipe.builder.HashPressRecipeBuilder;
+import com.github.bbugsco.drugs.recipe.recipes.OxidizerRecipe;
 import com.github.bbugsco.drugs.recipe.recipes.RefineryRecipe;
 import com.github.bbugsco.drugs.recipe.builder.RefineryRecipeBuilder;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -15,10 +21,12 @@ import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class RecipeGenerator extends FabricRecipeProvider {
@@ -121,7 +129,7 @@ public class RecipeGenerator extends FabricRecipeProvider {
                         RefineryRecipe::new
                 )
                 .unlockedBy("has_item", has(DrugsItems.OIL))
-                    .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "refine_dph"));
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "refine_dph"));
 
         RefineryRecipeBuilder.refine(
                         Ingredient.of(DrugsItems.OIL),
@@ -132,7 +140,7 @@ public class RecipeGenerator extends FabricRecipeProvider {
                 .unlockedBy("has_item", has(DrugsItems.OIL))
                 .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "refine_ketamine"));
 
-    RefineryRecipeBuilder.refine(
+        RefineryRecipeBuilder.refine(
                         Ingredient.of(Items.COAL),
                         DrugsItems.METHANOL,
                         1000,
@@ -141,6 +149,42 @@ public class RecipeGenerator extends FabricRecipeProvider {
                 .unlockedBy("has_item", has(DrugsItems.OIL))
                 .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "refine_methanol"));
 
+        CatalyticReformerRecipeBuilder.reform(
+                        Ingredient.of(DrugsItems.PETROLEUM_NAPHTHA),
+                        DrugsItems.BENZENE,
+                        1000,
+                        CatalyticReformerRecipe::new
+                )
+                .unlockedBy("has_item", has(DrugsItems.PETROLEUM_NAPHTHA))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "reform_benzene"));
+
+        CatalyticReformerRecipeBuilder.reform(
+                        Ingredient.of(DrugsItems.PETROLEUM_NAPHTHA),
+                        DrugsItems.TOLUENE,
+                        1000,
+                        CatalyticReformerRecipe::new
+                )
+                .unlockedBy("has_item", has(DrugsItems.PETROLEUM_NAPHTHA))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "reform_toluene"));
+
+        OxidizerRecipeBuilder.oxidize(
+                        Ingredient.of(DrugsItems.METHANOL),
+                        DrugsItems.FORMALDEHYDE,
+                        1000,
+                        OxidizerRecipe::new
+                )
+                .unlockedBy("has_item", has(DrugsItems.METHANOL))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "oxidize_formaldehyde"));
+
+        ElectrolysisRecipeBuilder.electrolysis(
+                Ingredient.of(DrugsItems.BRINE),
+                DrugsItems.SODIUM_HYDROXIDE,
+                List.of(new ItemStack(DrugsItems.CHLORINE), new ItemStack(DrugsItems.HYDROGEN)),
+                100,
+                ElectrolysisRecipe::new
+        )
+                .unlockedBy("has_item", has(DrugsItems.BRINE))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "electrolysis_brine"));
 
     }
 
