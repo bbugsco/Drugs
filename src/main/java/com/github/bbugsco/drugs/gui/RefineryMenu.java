@@ -9,14 +9,16 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-public class RefineryMenu extends RecipeSelectionIoMenu<RefineryRecipe, RefineryBlockEntity> {
+public class RefineryMenu extends OneInputMenu<RefineryRecipe, RefineryBlockEntity> {
 
     public RefineryMenu(int syncId, Inventory playerInventory, BlockPos pos) {
         this(syncId, playerInventory, playerInventory.player.level().getBlockEntity(pos), new SimpleContainerData(3));
     }
 
     public RefineryMenu(int syncId, Inventory inventory, BlockEntity entity, SimpleContainerData arrayPropertyDelegate) {
-        super(DrugsMenus.REFINERY_MENU, syncId, inventory, 2, entity, arrayPropertyDelegate, new Slot[]{new Slot((Container) entity, 0, 121, 11), new Slot((Container) entity, 1, 121, 59)});
+        super(DrugsMenus.REFINERY_MENU, syncId, inventory, entity, arrayPropertyDelegate,
+                new Slot[]{OneInputMenu.inputSlot((Container) entity), OneInputMenu.outputSlot((Container) entity),
+                        OneInputMenu.byproductSlot((Container) entity, 0)});
     }
 
 }

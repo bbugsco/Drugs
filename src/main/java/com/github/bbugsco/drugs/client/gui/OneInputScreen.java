@@ -1,7 +1,8 @@
 package com.github.bbugsco.drugs.client.gui;
 
 import com.github.bbugsco.drugs.Drugs;
-import com.github.bbugsco.drugs.gui.RecipeSelectionIoMenu;
+import com.github.bbugsco.drugs.block.generic.OneInputBlockEntity;
+import com.github.bbugsco.drugs.gui.OneInputMenu;
 import com.github.bbugsco.drugs.recipe.generic.SingleInputTimedRecipe;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
@@ -20,9 +21,9 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import java.util.List;
 import java.util.Optional;
 
-public class RecipeSelectionIoScreen<R extends SingleInputTimedRecipe, T extends RecipeSelectionIoMenu<R, ?>> extends AbstractContainerScreen<T> {
+public class OneInputScreen<R extends SingleInputTimedRecipe, E extends OneInputBlockEntity<R>, T extends OneInputMenu<R, E>> extends AbstractContainerScreen<T> {
 
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "textures/gui/recipe_selector_io.png");
+    private ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "textures/gui/one_input_output.png");
     private static final ResourceLocation SCROLLER_SPRITE = ResourceLocation.withDefaultNamespace("container/stonecutter/scroller");
     private static final ResourceLocation SCROLLER_DISABLED_SPRITE = ResourceLocation.withDefaultNamespace("container/stonecutter/scroller_disabled");
     private static final ResourceLocation RECIPE_SELECTED_SPRITE = ResourceLocation.withDefaultNamespace("container/stonecutter/recipe_selected");
@@ -36,24 +37,31 @@ public class RecipeSelectionIoScreen<R extends SingleInputTimedRecipe, T extends
     private static final int RECIPES_IMAGE_SIZE_WIDTH = 16;
     private static final int RECIPES_IMAGE_SIZE_HEIGHT = 18;
     private static final int SCROLLER_FULL_HEIGHT = 54;
-    private static final int RECIPES_X = 20;
-    private static final int RECIPES_Y = 14;
-    private static final int SCROLLER_X = 87;
-    private static final int SCROLLER_Y = 15;
+    private static final int RECIPES_X = 11;
+    private static final int RECIPES_Y = 15;
+    private static final int SCROLLER_X = 78;
+    private static final int SCROLLER_Y = 16;
+    private static final int PROGRESS_ARROW_X = 103;
+    private static final int PROGRESS_ARROW_Y = 30;
 
-    private float scrollOffs;
+    private float scrollOffset;
     private boolean scrolling;
     private int startIndex;
 
-    public RecipeSelectionIoScreen(T menu, Inventory playerInventory, Component title) {
+    public OneInputScreen(T menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
+        int byproductSlots = menu.getNumByproducts();
+        if (byproductSlots == 1) TEXTURE = ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "textures/gui/one_input_output_1_byproduct.png");
+        else if (byproductSlots == 2) TEXTURE = ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "textures/gui/one_input_output_2_byproduct.png");
+        else if (byproductSlots == 3) TEXTURE = ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "textures/gui/one_input_output_3_byproduct.png");
+
     }
 
     @Override
     protected void init() {
         super.init();
         titleLabelY = 5;
-        titleLabelX = 20;
+        titleLabelX = 10;
     }
 
     @Override
@@ -92,7 +100,7 @@ public class RecipeSelectionIoScreen<R extends SingleInputTimedRecipe, T extends
         RenderSystem.setShaderTexture(0, TEXTURE);
         guiGraphics.blit(TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight);
         ResourceLocation resourceLocation = this.isScrollBarActive() ? SCROLLER_SPRITE : SCROLLER_DISABLED_SPRITE;
-        guiGraphics.blitSprite(resourceLocation, leftPos + SCROLLER_X, topPos + SCROLLER_Y + (int) (41.0F * this.scrollOffs), SCROLLER_WIDTH, SCROLLER_HEIGHT);
+        guiGraphics.blitSprite(resourceLocation, leftPos + SCROLLER_X, topPos + SCROLLER_Y + (int) (41.0F * this.scrollOffset), SCROLLER_WIDTH, SCROLLER_HEIGHT);
         renderProgressArrow(guiGraphics, leftPos, topPos);
         this.renderButtons(guiGraphics, mouseX, mouseY, leftPos + RECIPES_X, topPos + RECIPES_Y, startIndex + (RECIPES_ROWS * RECIPES_COLUMNS));
         this.renderRecipes(guiGraphics, leftPos + RECIPES_X, topPos + RECIPES_Y, startIndex + (RECIPES_ROWS * RECIPES_COLUMNS));
@@ -102,9 +110,9 @@ public class RecipeSelectionIoScreen<R extends SingleInputTimedRecipe, T extends
     public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
         if (this.isScrollBarActive()) {
             int offscreenRows = this.getOffscreenRows();
-            float f = (float)scrollY / (float)offscreenRows;
-            this.scrollOffs = Mth.clamp(this.scrollOffs - f, 0.0F, 1.0F);
-            this.startIndex = (int)((double)(this.scrollOffs * (float)offscreenRows) + 0.5) * RECIPES_COLUMNS;
+            float f = (float) scrollY / (float) offscreenRows;
+            this.scrollOffset = Mth.clamp(this.scrollOffset - f, 0.0F, 1.0F);
+            this.startIndex = (int)((double)(this.scrollOffset * (float) offscreenRows) + 0.5) * RECIPES_COLUMNS;
         }
         return true;
     }
@@ -114,9 +122,9 @@ public class RecipeSelectionIoScreen<R extends SingleInputTimedRecipe, T extends
         if (this.scrolling && this.isScrollBarActive()) {
             int y = this.topPos + RECIPES_Y;
             int y2 = y + SCROLLER_FULL_HEIGHT;
-            this.scrollOffs = ((float) mouseY - (float) y - 7.5F) / ((float) (y2 - y) - 15.0F);
-            this.scrollOffs = Mth.clamp(this.scrollOffs, 0.0F, 1.0F);
-            this.startIndex = (int)((double)(this.scrollOffs * (float)this.getOffscreenRows()) + (double)0.5F) * RECIPES_COLUMNS;
+            this.scrollOffset = ((float) mouseY - (float) y - 7.5F) / ((float) (y2 - y) - 15.0F);
+            this.scrollOffset = Mth.clamp(this.scrollOffset, 0.0F, 1.0F);
+            this.startIndex = (int)((double)(this.scrollOffset * (float)this.getOffscreenRows()) + (double)0.5F) * RECIPES_COLUMNS;
             return true;
         } else {
             return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
@@ -156,7 +164,7 @@ public class RecipeSelectionIoScreen<R extends SingleInputTimedRecipe, T extends
             int row = indexShift / RECIPES_COLUMNS;
             int renderY = y + row * RECIPES_IMAGE_SIZE_HEIGHT + 2;
             ResourceLocation buttonStateTexture;
-            if (index == this.menu.getSelectedRecipeIndex()) {
+            if (menu.selectsRecipe() && index == this.menu.getSelectedRecipeIndex()) {
                 buttonStateTexture = RECIPE_SELECTED_SPRITE;
             } else if (mouseX >= renderX && mouseY >= renderY && mouseX < renderX + RECIPES_IMAGE_SIZE_WIDTH && mouseY < renderY + RECIPES_IMAGE_SIZE_HEIGHT) {
                 buttonStateTexture = RECIPE_HIGHLIGHTED_SPRITE;
@@ -180,7 +188,7 @@ public class RecipeSelectionIoScreen<R extends SingleInputTimedRecipe, T extends
 
     private void renderProgressArrow(GuiGraphics context, int x, int y) {
         if(menu.isCrafting()) {
-            context.blit(TEXTURE, x + 125, y + 30, 176, 0, 8, menu.getScaledProgress());
+            context.blit(TEXTURE, x + PROGRESS_ARROW_X, y + PROGRESS_ARROW_Y, 176, 0, 8, menu.getScaledProgress());
         }
     }
 

@@ -1,6 +1,6 @@
 package com.github.bbugsco.drugs.block.entity;
 
-import com.github.bbugsco.drugs.block.generic.MultipleOutputsFromSingleInputBlockEntity;
+import com.github.bbugsco.drugs.block.generic.OneInputBlockEntity;
 import com.github.bbugsco.drugs.gui.RefineryMenu;
 import com.github.bbugsco.drugs.recipe.recipes.RefineryRecipe;
 import net.minecraft.core.BlockPos;
@@ -10,10 +10,10 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-public class RefineryBlockEntity extends MultipleOutputsFromSingleInputBlockEntity<RefineryRecipe> {
+public class RefineryBlockEntity extends OneInputBlockEntity<RefineryRecipe> {
 
     public RefineryBlockEntity(BlockPos pos, BlockState blockState) {
-        super(DrugsBlockEntities.REFINERY, pos, blockState, "Refinery", RefineryRecipe.Type.INSTANCE);
+        super(pos, blockState, "Refinery", RefineryRecipe.Type.INSTANCE, DrugsBlockEntities.REFINERY, 1, true);
     }
 
     @Override

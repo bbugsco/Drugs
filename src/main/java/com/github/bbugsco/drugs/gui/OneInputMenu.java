@@ -1,5 +1,7 @@
 package com.github.bbugsco.drugs.gui;
 
+import com.github.bbugsco.drugs.block.generic.OneInputBlockEntity;
+import com.github.bbugsco.drugs.recipe.generic.SingleInputTimedRecipe;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -8,23 +10,35 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class InputOutputProgressMenu extends AbstractContainerMenu {
+import java.util.List;
 
+@SuppressWarnings("unchecked")
+public class OneInputMenu<R extends SingleInputTimedRecipe, T extends OneInputBlockEntity<R>> extends AbstractContainerMenu {
+
+    public static final int INPUT_SLOT_INDEX = 0;
+    public static final int INPUT_SLOT_X = 98;
+    public static final int INPUT_SLOT_Y = 11;
+
+    public static final int OUTPUT_SLOT_INDEX = 1;
+    public static final int OUTPUT_SLOT_X = 98;
+    public static final int OUTPUT_SLOT_Y = 59;
+
+    public static final int BYPRODUCT_SLOT_INDEX = 2;
+    public static final int BYPRODUCT_SLOT_X = 116;
+    public static final int BYPRODUCT_SLOT_Y = 59;
+
+    public final T handle;
     protected final Container inventory;
     protected final SimpleContainerData simpleContainerData;
-    protected int numByproducts = 0;
 
-    protected InputOutputProgressMenu(MenuType<? extends InputOutputProgressMenu> menu, int syncId, Inventory playerInventory, int inventorySize, BlockEntity entity, SimpleContainerData blockEntityData, Slot[] slots, int numByproducts) {
-        this(menu, syncId, playerInventory, inventorySize, entity, blockEntityData, slots);
-        this.numByproducts = numByproducts;
-    }
-
-    protected InputOutputProgressMenu(MenuType<? extends InputOutputProgressMenu> menu, int syncId, Inventory playerInventory, int inventorySize, BlockEntity entity, SimpleContainerData blockEntityData, Slot[] slots) {
+    protected OneInputMenu(MenuType<? extends OneInputMenu> menu, int syncId, Inventory playerInventory, BlockEntity entity, SimpleContainerData blockEntityData, Slot[] slots) {
         super(menu, syncId);
-        checkContainerSize(((Container) entity), inventorySize);
+        checkContainerSize(((Container) entity), ((Container) entity).getContainerSize());
+        this.handle = (T) entity;
         this.inventory = ((Container) entity);
         inventory.startOpen(playerInventory.player);
         this.simpleContainerData = blockEntityData;
@@ -39,8 +53,45 @@ public abstract class InputOutputProgressMenu extends AbstractContainerMenu {
         addDataSlots(blockEntityData);
     }
 
+    @Override
+    public boolean clickMenuButton(Player player, int id) {
+        if (this.isValidRecipeIndex(id)) {
+            if (handle.selectsRecipe()) {
+                handle.setSelectedRecipeIndex(id);
+                handle.setChanged();
+           } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean isValidRecipeIndex(int recipeIndex) {
+        return recipeIndex >= 0 && recipeIndex < handle.getRecipes().size();
+    }
+
+    public int getSelectedRecipeIndex() {
+        try {
+            return simpleContainerData.get(2);
+        } catch (IndexOutOfBoundsException e) {
+            return 0;
+        }
+    }
+
+    public List<RecipeHolder<R>> getRecipes() {
+        return handle.getRecipes();
+    }
+
+    public int getNumRecipes() {
+        return getRecipes().size();
+    }
+
+    public boolean selectsRecipe() {
+        return handle.selectsRecipe();
+    }
+
     public int getNumByproducts() {
-        return numByproducts;
+        return handle.numberOfByproducts();
     }
 
     public boolean isCrafting() {
@@ -95,4 +146,17 @@ public abstract class InputOutputProgressMenu extends AbstractContainerMenu {
     public boolean stillValid(Player player) {
         return this.inventory.stillValid(player);
     }
+    
+    public static Slot inputSlot(Container container) {
+        return new Slot(container, INPUT_SLOT_INDEX, INPUT_SLOT_X, INPUT_SLOT_Y);
+    }
+
+    public static Slot outputSlot(Container container) {
+        return new Slot(container, OUTPUT_SLOT_INDEX, OUTPUT_SLOT_X, OUTPUT_SLOT_Y);
+    }
+
+    public static Slot byproductSlot(Container container, int index) {
+        return new Slot(container, BYPRODUCT_SLOT_INDEX + index, BYPRODUCT_SLOT_X + (18 * index), BYPRODUCT_SLOT_Y);
+    }
+
 }
