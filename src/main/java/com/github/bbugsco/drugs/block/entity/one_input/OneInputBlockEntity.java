@@ -24,7 +24,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -239,18 +238,17 @@ public abstract class OneInputBlockEntity<T extends OneInputRecipe> extends Bloc
     }
 
     private void byproduct(OneInputRecipe recipe) {
-        if (recipe instanceof OneInputRecipe byproductRecipe) {
-            List<ItemStack> byproducts = byproductRecipe.getByproducts();
-            if (byproducts.isEmpty()) { return; }
-            for (int i = 0; i < byproducts.size(); i++) {
-                if (getLevel() == null) return;
-                if (getLevel().random.nextInt(5) != 0) continue;
-                int slot = OUTPUT_SLOT + 1 + i;
-                ItemStack toAdd = byproducts.get(i);
-                if (!canInsertItemIntoSlot(toAdd.getItem(), slot)) return;
-                if (!canInsertAmountIntoSlot(toAdd, slot)) return;
-                setItem(slot, new ItemStack(toAdd.getItem(), getItem(slot).getCount() + toAdd.getCount()));
-            }
+        List<ItemStack> byproducts = recipe.getByproducts();
+        if (byproducts.isEmpty()) { return; }
+        int index = 0;
+        for (ItemStack byproduct : byproducts) {
+            if (getLevel() == null) return;
+            if (getLevel().random.nextInt(100) < byproduct.getCount() << 1) continue;
+            int slot = OUTPUT_SLOT + 1 + index;
+            if (!canInsertItemIntoSlot(byproduct.getItem(), slot)) return;
+            if (!canInsertAmountIntoSlot(byproduct, slot)) return;
+            setItem(slot, new ItemStack(byproduct.getItem(), getItem(slot).getCount() + 1));
+            index++;
         }
     }
 

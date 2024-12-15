@@ -16,12 +16,12 @@ public class AirExtractorRecipe extends OneInputRecipe {
     public static final String ID = "air_extractor";
 
     public AirExtractorRecipe(Ingredient ingredient, ItemStack result, List<ItemStack> byproducts, int time) {
-        super(AirExtractorRecipe.Type.INSTANCE, AirExtractorRecipe.Serializer.INSTANCE, ID, ingredient, result, byproducts, time);
+        super(Type.INSTANCE, Serializer.INSTANCE, ID, ingredient, result, byproducts, time);
     }
 
     @Override
     public @NotNull ItemStack getToastSymbol() {
-        return new ItemStack(DrugsBlocks.CATALYTIC_REFORMER);
+        return new ItemStack(DrugsBlocks.AIR_EXTRACTOR);
     }
 
     public static class Type implements RecipeType<AirExtractorRecipe> {

@@ -88,7 +88,7 @@ public class RecipeGenerator extends FabricRecipeProvider {
         RefineryRecipeBuilder.refine(
                         Ingredient.of(DrugsBlocks.getBlockItem(DrugsBlocks.OIL_SHALE)),
                         DrugsItems.OIL,
-                        List.of(new ItemStack(DrugsItems.NATURAL_GAS), new ItemStack(DrugsItems.NATURAL_GAS)),
+                        List.of(new ItemStack(DrugsItems.NATURAL_GAS, 40 >> 1)),
                         1000,
                         RefineryRecipe::new
                 )
@@ -224,17 +224,27 @@ public class RecipeGenerator extends FabricRecipeProvider {
         ElectrolysisRecipeBuilder.electrolysis(
                 Ingredient.of(DrugsItems.BRINE),
                 DrugsItems.SODIUM_HYDROXIDE,
-                List.of(new ItemStack(DrugsItems.CHLORINE), new ItemStack(DrugsItems.HYDROGEN)),
-                100,
+                List.of(new ItemStack(DrugsItems.CHLORINE, 30 >> 1), new ItemStack(DrugsItems.HYDROGEN, 30 >> 1)),
+                1000,
                 ElectrolysisRecipe::new
         )
                 .unlockedBy("has_item", has(DrugsItems.BRINE))
                 .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "electrolysis_brine"));
 
+        ElectrolysisRecipeBuilder.electrolysis(
+                Ingredient.of(Items.POTION),
+                DrugsItems.HYDROGEN,
+                List.of(new ItemStack(DrugsItems.OXYGEN, 50 >> 1)),
+                1000,
+                ElectrolysisRecipe::new
+        )
+                .unlockedBy("has_item", has(DrugsItems.BRINE))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "electrolysis_water"));
+
         AirExtractorRecipeBuilder.extract(
                 Ingredient.of(Items.GLASS_BOTTLE),
                 DrugsItems.NITROGEN,
-                500,
+                600,
                 AirExtractorRecipe::new
         )
                 .unlockedBy("has_item", has(Items.GLASS_BOTTLE))
