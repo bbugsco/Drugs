@@ -5,6 +5,11 @@
   "block.drugs.hash_press": "Hash Press",
   "block.drugs.refinery": "Refinery",
   "block.drugs.oil_shale": "Oil Shale",
+  "block.drugs.catalytic_reformer": "Catalytic Reformer",
+  "block.drugs.electrolysis": "Electrolysis Machine",
+  "block.drugs.oxidation_machine": "Oxidation Machine",
+  "block.drugs.air_extractor": "Air Extractor",
+  "block.drugs.salt": "Salt Block",
 
   "effect.minecraft.hunger": "Munchies",
 
@@ -19,5 +24,24 @@
   "item.drugs.petroleum_naphtha": "Petroleum Naphtha",
   "item.drugs.kerosene": "Kerosene",
   "item.drugs.gasoline": "Gasoline",
-  "item.drugs.methanol": "Methanol"
+  "item.drugs.methanol": "Methanol",
+  "item.drugs.formaldehyde": "Formaldehyde",
+  "item.drugs.chloroform": "Chloroform",
+  "item.drugs.toluene": "Toluene",
+  "item.drugs.benzene": "Benzene",
+  "item.drugs.salt": "Salt",
+  "item.drugs.brine": "Brine",
+  "item.drugs.chlorine": "Chlorine",
+  "item.drugs.hydrogen": "Hydrogen",
+  "item.drugs.methane": "Methane",
+  "item.drugs.nitrogen": "Nitrogen",
+  "item.drugs.oxygen": "Oxygen",
+  "item.drugs.natural_gas": "Natural Gas",
+  "item.drugs.propane": "Propane",
+  "item.drugs.ethane": "Ethane",
+  "item.drugs.butane": "Butane",
+  "item.drugs.methylamine": "Methylamine",
+  "item.drugs.ethylene": "Ethylene",
+  "item.drugs.propylene": "Propylene"
+
 }
