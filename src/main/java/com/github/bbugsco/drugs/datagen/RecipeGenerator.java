@@ -232,7 +232,7 @@ public class RecipeGenerator extends FabricRecipeProvider {
                 .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "electrolysis_brine"));
 
         ElectrolysisRecipeBuilder.electrolysis(
-                Ingredient.of(Items.POTION),
+                Ingredient.of(DrugsItems.WATER),
                 DrugsItems.HYDROGEN,
                 List.of(new ItemStack(DrugsItems.OXYGEN, 50 >> 1)),
                 1000,
