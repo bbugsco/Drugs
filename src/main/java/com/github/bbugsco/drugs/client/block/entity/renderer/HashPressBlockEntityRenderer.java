@@ -3,6 +3,8 @@ package com.github.bbugsco.drugs.client.block.entity.renderer;
 import com.github.bbugsco.drugs.block.entity.one_input.HashPressBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -17,6 +19,7 @@ import net.minecraft.world.level.LightLayer;
 
 import java.util.Objects;
 
+@Environment(EnvType.CLIENT)
 public class HashPressBlockEntityRenderer implements BlockEntityRenderer<HashPressBlockEntity> {
 
     @Override

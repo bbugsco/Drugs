@@ -5,6 +5,8 @@ import com.github.bbugsco.drugs.block.entity.one_input.OneInputBlockEntity;
 import com.github.bbugsco.drugs.gui.one_input_menu.OneInputMenu;
 import com.github.bbugsco.drugs.recipe.generic.OneInputRecipe;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -18,9 +20,11 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Environment(EnvType.CLIENT)
 public class OneInputScreen<R extends OneInputRecipe, E extends OneInputBlockEntity<R>, T extends OneInputMenu<R, E>> extends AbstractContainerScreen<T> {
 
     private ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "textures/gui/one_input_output.png");
@@ -71,12 +75,19 @@ public class OneInputScreen<R extends OneInputRecipe, E extends OneInputBlockEnt
             int n = i + m % RECIPES_COLUMNS * RECIPES_IMAGE_SIZE_WIDTH;
             int o = j + m / RECIPES_COLUMNS * RECIPES_IMAGE_SIZE_HEIGHT + 2;
             if (x >= n && x < n + RECIPES_IMAGE_SIZE_WIDTH && y >= o && y < o + RECIPES_IMAGE_SIZE_HEIGHT) {
-                ItemStack inputItem = list.get(l).value().getIngredients().getFirst().getItems()[0];
-                ItemStack resultItem = list.get(l).value().getResult();
-                List<Component> tooltip = List.of(
-                        Component.literal(resultItem.getDisplayName().getString().replace("[", "").replace("]", "")),
-                        Component.literal("Requires " + (inputItem.getDisplayName().getString().replace("[", "").replace("]", "")))
-                );
+                OneInputRecipe recipe = list.get(l).value();
+                ItemStack inputItem = recipe.getIngredients().getFirst().getItems()[0];
+                ItemStack resultItem = recipe.getResult();
+                List<Component> tooltip = new ArrayList<>();
+                tooltip.add(Component.literal(resultItem.getDisplayName().getString().replace("[", "").replace("]", "")));
+                tooltip.add(Component.literal("Requires " + (inputItem.getDisplayName().getString().replace("[", "").replace("]", ""))));
+                if (!recipe.getByproducts().isEmpty()) {
+                    tooltip.add(Component.literal("Byproducts: "));
+                    List<ItemStack> byproducts = recipe.getByproducts();
+                    for (ItemStack byproduct : byproducts) {
+                        tooltip.add(Component.literal(byproduct.getDisplayName().getString().replace("[", "").replace("]", "") + " " + (byproduct.getCount() << 1) + "%"));
+                    }
+                }
                 guiGraphics.renderTooltip(this.font, tooltip, Optional.empty(), x, y);
             }
         }
@@ -108,7 +119,7 @@ public class OneInputScreen<R extends OneInputRecipe, E extends OneInputBlockEnt
             int offscreenRows = this.getOffscreenRows();
             float f = (float) scrollY / (float) offscreenRows;
             this.scrollOffset = Mth.clamp(this.scrollOffset - f, 0.0F, 1.0F);
-            this.startIndex = (int)((double)(this.scrollOffset * (float) offscreenRows) + 0.5) * RECIPES_COLUMNS;
+            this.startIndex = (int) ((double) (this.scrollOffset * (float) offscreenRows) + 0.5) * RECIPES_COLUMNS;
         }
         return true;
     }
@@ -120,7 +131,7 @@ public class OneInputScreen<R extends OneInputRecipe, E extends OneInputBlockEnt
             int y2 = y + SCROLLER_FULL_HEIGHT;
             this.scrollOffset = ((float) mouseY - (float) y - 7.5F) / ((float) (y2 - y) - 15.0F);
             this.scrollOffset = Mth.clamp(this.scrollOffset, 0.0F, 1.0F);
-            this.startIndex = (int)((double)(this.scrollOffset * (float)this.getOffscreenRows()) + (double)0.5F) * RECIPES_COLUMNS;
+            this.startIndex = (int) ((double) (this.scrollOffset * (float) this.getOffscreenRows()) + (double) 0.5F) * RECIPES_COLUMNS;
             return true;
         } else {
             return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
@@ -136,8 +147,8 @@ public class OneInputScreen<R extends OneInputRecipe, E extends OneInputBlockEnt
 
         for (int index = this.startIndex; index < i; index++) {
             int m = index - this.startIndex;
-            double d = mouseX - (double)(x + m % RECIPES_COLUMNS * RECIPES_IMAGE_SIZE_WIDTH);
-            double e = mouseY - (double)(y + m / RECIPES_COLUMNS * RECIPES_IMAGE_SIZE_HEIGHT);
+            double d = mouseX - (double) (x + m % RECIPES_COLUMNS * RECIPES_IMAGE_SIZE_WIDTH);
+            double e = mouseY - (double) (y + m / RECIPES_COLUMNS * RECIPES_IMAGE_SIZE_HEIGHT);
             if (d >= 0.0 && e >= 0.0 && d < RECIPES_IMAGE_SIZE_WIDTH && e < RECIPES_IMAGE_SIZE_HEIGHT && this.menu.clickMenuButton(this.minecraft.player, index)) {
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1.0F));
                 this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, index);
@@ -146,7 +157,7 @@ public class OneInputScreen<R extends OneInputRecipe, E extends OneInputBlockEnt
         }
         x = this.leftPos + SCROLLER_X;
         y = this.topPos + SCROLLER_Y;
-        if (mouseX >= (double)x && mouseX < (double)(x + (RECIPES_ROWS * RECIPES_COLUMNS)) && mouseY >= (double)y && mouseY < (double)(y + SCROLLER_FULL_HEIGHT)) {
+        if (mouseX >= (double) x && mouseX < (double) (x + (RECIPES_ROWS * RECIPES_COLUMNS)) && mouseY >= (double) y && mouseY < (double) (y + SCROLLER_FULL_HEIGHT)) {
             this.scrolling = true;
         }
         return super.mouseClicked(mouseX, mouseY, button);
@@ -183,7 +194,7 @@ public class OneInputScreen<R extends OneInputRecipe, E extends OneInputBlockEnt
     }
 
     private void renderProgressArrow(GuiGraphics context, int x, int y) {
-        if(menu.isCrafting()) {
+        if (menu.isCrafting()) {
             context.blit(TEXTURE, x + PROGRESS_ARROW_X, y + PROGRESS_ARROW_Y, 176, 0, 8, menu.getScaledProgress());
         }
     }
@@ -197,9 +208,12 @@ public class OneInputScreen<R extends OneInputRecipe, E extends OneInputBlockEnt
     }
 
     private void setBackgroundTexture(int numberOfByproductSlots) {
-        if (numberOfByproductSlots == 1) TEXTURE = ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "textures/gui/one_input_output_1_byproduct.png");
-        else if (numberOfByproductSlots == 2) TEXTURE = ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "textures/gui/one_input_output_2_byproduct.png");
-        else if (numberOfByproductSlots == 3) TEXTURE = ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "textures/gui/one_input_output_3_byproduct.png");
+        if (numberOfByproductSlots == 1)
+            TEXTURE = ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "textures/gui/one_input_output_1_byproduct.png");
+        else if (numberOfByproductSlots == 2)
+            TEXTURE = ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "textures/gui/one_input_output_2_byproduct.png");
+        else if (numberOfByproductSlots == 3)
+            TEXTURE = ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "textures/gui/one_input_output_3_byproduct.png");
         else TEXTURE = ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "textures/gui/one_input_output.png");
     }
 }
