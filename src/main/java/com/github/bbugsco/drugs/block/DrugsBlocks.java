@@ -26,13 +26,14 @@ public class DrugsBlocks {
     private static final HashMap<Block, Item> BLOCK_ITEMS = new HashMap<>();
 
     public static final Block MARIJUANA_PLANT = registerBlock("marijuana_plant", new MarijuanaPlant(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).randomTicks().noCollission().sound(SoundType.SWEET_BERRY_BUSH).pushReaction(PushReaction.DESTROY)));
-    public static final Block HASH_PRESS = registerBlock("hash_press", new HashPress(BlockBehaviour.Properties.of()));
-    public static final Block REFINERY = registerBlock("refinery", new Refinery(BlockBehaviour.Properties.of()));
-    public static final Block OIL_SHALE = registerBlock("oil_shale", new Block(BlockBehaviour.Properties.of()));
-    public static final Block ELECTROLYSIS_MACHINE = registerBlock("electrolysis", new ElectrolysisMachine(BlockBehaviour.Properties.of()));
-    public static final Block OXIDATION_MACHINE = registerBlock("oxidation_machine", new Oxidizer(BlockBehaviour.Properties.of()));
-    public static final Block CATALYTIC_REFORMER = registerBlock("catalytic_reformer", new CatalyticReformer(BlockBehaviour.Properties.of()));
-    public static final Block AIR_EXTRACTOR = registerBlock("air_extractor", new AirExtractor(BlockBehaviour.Properties.of()));
+    public static final Block HASH_PRESS = registerBlock("hash_press", new HashPress(BlockBehaviour.Properties.of().strength(3.5F)));
+    public static final Block REFINERY = registerBlock("refinery", new Refinery(BlockBehaviour.Properties.of().strength(3.5F).sound(SoundType.STONE)));
+    public static final Block OIL_SHALE = registerBlock("oil_shale", new Block(BlockBehaviour.Properties.of().strength(0.6F).sound(SoundType.GRAVEL)));
+    public static final Block ELECTROLYSIS_MACHINE = registerBlock("electrolysis", new ElectrolysisMachine(BlockBehaviour.Properties.of().strength(3.5F).sound(SoundType.STONE)));
+    public static final Block OXIDATION_MACHINE = registerBlock("oxidation_machine", new Oxidizer(BlockBehaviour.Properties.of().strength(3.5F).sound(SoundType.STONE)));
+    public static final Block CATALYTIC_REFORMER = registerBlock("catalytic_reformer", new CatalyticReformer(BlockBehaviour.Properties.of().strength(3.5F).sound(SoundType.STONE)));
+    public static final Block AIR_EXTRACTOR = registerBlock("air_extractor", new AirExtractor(BlockBehaviour.Properties.of().strength(3.5F).sound(SoundType.STONE)));
+    public static final Block SALT = registerBlock("salt", new Block(BlockBehaviour.Properties.of().strength(2.0F).sound(SoundType.CALCITE)));
 
     public static Item getBlockItem(Block block) {
         return BLOCK_ITEMS.get(block);

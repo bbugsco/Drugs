@@ -24,6 +24,8 @@ public class ModelGenerator extends FabricModelProvider {
         blockStateModelGenerator.createHorizontallyRotatedBlock(DrugsBlocks.ELECTROLYSIS_MACHINE, TexturedModel.ORIENTABLE);
         blockStateModelGenerator.createHorizontallyRotatedBlock(DrugsBlocks.OXIDATION_MACHINE, TexturedModel.ORIENTABLE);
         blockStateModelGenerator.createHorizontallyRotatedBlock(DrugsBlocks.CATALYTIC_REFORMER, TexturedModel.ORIENTABLE);
+        blockStateModelGenerator.createHorizontallyRotatedBlock(DrugsBlocks.AIR_EXTRACTOR, TexturedModel.ORIENTABLE);
+        blockStateModelGenerator.createTrivialCube(DrugsBlocks.SALT);
     }
 
     @Override
@@ -48,6 +50,17 @@ public class ModelGenerator extends FabricModelProvider {
         itemModelGenerator.generateFlatItem(DrugsItems.BRINE, ModelTemplates.FLAT_ITEM);
         itemModelGenerator.generateFlatItem(DrugsItems.SODIUM_HYDROXIDE, ModelTemplates.FLAT_ITEM);
         itemModelGenerator.generateFlatItem(DrugsItems.METHANE, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(DrugsItems.CHLORINE, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(DrugsItems.HYDROGEN, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(DrugsItems.NITROGEN, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(DrugsItems.OXYGEN, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(DrugsItems.NATURAL_GAS, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(DrugsItems.PROPANE, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(DrugsItems.ETHANE, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(DrugsItems.BUTANE, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(DrugsItems.METHYLAMINE, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(DrugsItems.ETHYLENE, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(DrugsItems.PROPYLENE, ModelTemplates.FLAT_ITEM);
     }
 
 }

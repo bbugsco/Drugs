@@ -16,7 +16,11 @@ public class BlockTagGenerator extends FabricTagProvider.BlockTagProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider wrapperLookup) {
-        getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_PICKAXE).add(DrugsBlocks.HASH_PRESS).add(DrugsBlocks.REFINERY);
+        getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_PICKAXE)
+                .add(DrugsBlocks.HASH_PRESS).add(DrugsBlocks.REFINERY)
+                .add(DrugsBlocks.AIR_EXTRACTOR).add(DrugsBlocks.CATALYTIC_REFORMER)
+                .add(DrugsBlocks.OXIDATION_MACHINE).add(DrugsBlocks.ELECTROLYSIS_MACHINE)
+                .add(DrugsBlocks.SALT);
         getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_SHOVEL).add(DrugsBlocks.OIL_SHALE);
 
     }

@@ -38,6 +38,7 @@ public class Drugs implements ModInitializer, DataGeneratorEntrypoint {
      - chloroform = heated chlorine, methane
      - ammonia = hydrogen + nitrogen heat
      - methylamine = ammonia + methanol
+     - HCl = hydrogen, chlorine, water
      */
 
     @Override
