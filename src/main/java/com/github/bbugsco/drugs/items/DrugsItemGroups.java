@@ -22,17 +22,24 @@ public class DrugsItemGroups {
                 ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "drugs"),
                 FabricItemGroup.builder().title(Component.translatable("itemgroup.drugs.drugs"))
                         .icon(() -> new ItemStack(Items.OMINOUS_BOTTLE)).displayItems((displayContext, entries) -> {
+                            entries.accept(DrugsBlocks.getBlockItem(DrugsBlocks.MARIJUANA_PLANT));
                             entries.accept(DrugsItems.MARIJUANA);
                             entries.accept(DrugsItems.MARIJUANA_TRIM);
+                            entries.accept(DrugsItems.HASH);
                             entries.accept(DrugsItems.EMPTY_DAB_RIG);
                             entries.accept(DrugsItems.DAB_RIG);
-                            entries.accept(DrugsItems.HASH);
-                            entries.accept(DrugsItems.DIPHENHYDRAMINE);
-                            entries.accept(DrugsItems.KETAMINE);
-                            entries.accept(DrugsBlocks.getBlockItem(DrugsBlocks.MARIJUANA_PLANT));
                             entries.accept(DrugsBlocks.getBlockItem(DrugsBlocks.HASH_PRESS));
                             entries.accept(DrugsBlocks.getBlockItem(DrugsBlocks.REFINERY));
+                            entries.accept(DrugsBlocks.getBlockItem(DrugsBlocks.CATALYTIC_REFORMER));
+                            entries.accept(DrugsBlocks.getBlockItem(DrugsBlocks.ELECTROLYSIS_MACHINE));
+                            entries.accept(DrugsBlocks.getBlockItem(DrugsBlocks.OXIDATION_MACHINE));
+                            entries.accept(DrugsBlocks.getBlockItem(DrugsBlocks.AIR_EXTRACTOR));
                             entries.accept(DrugsBlocks.getBlockItem(DrugsBlocks.OIL_SHALE));
+                            entries.accept(DrugsBlocks.getBlockItem(DrugsBlocks.SALT));
+                            entries.accept(DrugsItems.DIPHENHYDRAMINE);
+                            entries.accept(DrugsItems.KETAMINE);
+                            entries.accept(DrugsItems.SALT);
+                            entries.accept(DrugsItems.SODIUM_HYDROXIDE);
                             entries.accept(DrugsItems.OIL);
                             entries.accept(DrugsItems.PETROLEUM_NAPHTHA);
                             entries.accept(DrugsItems.KEROSENE);
@@ -42,17 +49,12 @@ public class DrugsItemGroups {
                             entries.accept(DrugsItems.CHLOROFORM);
                             entries.accept(DrugsItems.TOLUENE);
                             entries.accept(DrugsItems.BENZENE);
-                            entries.accept(DrugsItems.SALT);
                             entries.accept(DrugsItems.BRINE);
                             entries.accept(DrugsItems.CHLORINE);
                             entries.accept(DrugsItems.HYDROGEN);
-                            entries.accept(DrugsBlocks.getBlockItem(DrugsBlocks.CATALYTIC_REFORMER));
-                            entries.accept(DrugsBlocks.getBlockItem(DrugsBlocks.ELECTROLYSIS_MACHINE));
-                            entries.accept(DrugsBlocks.getBlockItem(DrugsBlocks.OXIDATION_MACHINE));
                             entries.accept(DrugsItems.METHANE);
                             entries.accept(DrugsItems.NITROGEN);
                             entries.accept(DrugsItems.OXYGEN);
-                            entries.accept(DrugsBlocks.getBlockItem(DrugsBlocks.AIR_EXTRACTOR));
                             entries.accept(DrugsItems.NATURAL_GAS);
                             entries.accept(DrugsItems.PROPANE);
                             entries.accept(DrugsItems.ETHANE);
@@ -60,6 +62,7 @@ public class DrugsItemGroups {
                             entries.accept(DrugsItems.METHYLAMINE);
                             entries.accept(DrugsItems.ETHYLENE);
                             entries.accept(DrugsItems.PROPYLENE);
+                            entries.accept(DrugsItems.DIESEL);
                         }).build());
 
     }

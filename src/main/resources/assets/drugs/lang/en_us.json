@@ -9,7 +9,7 @@
   "block.drugs.electrolysis": "Electrolysis Machine",
   "block.drugs.oxidation_machine": "Oxidation Machine",
   "block.drugs.air_extractor": "Air Extractor",
-  "block.drugs.salt": "Salt Block",
+  "block.drugs.salt_block": "Salt Block",
 
   "effect.minecraft.hunger": "Munchies",
 
@@ -26,6 +26,7 @@
   "item.drugs.gasoline": "Gasoline",
   "item.drugs.methanol": "Methanol",
   "item.drugs.formaldehyde": "Formaldehyde",
+  "item.drugs.sodium_hydroxide": "Sodium Hydroxide",
   "item.drugs.chloroform": "Chloroform",
   "item.drugs.toluene": "Toluene",
   "item.drugs.benzene": "Benzene",
@@ -42,6 +43,7 @@
   "item.drugs.butane": "Butane",
   "item.drugs.methylamine": "Methylamine",
   "item.drugs.ethylene": "Ethylene",
-  "item.drugs.propylene": "Propylene"
+  "item.drugs.propylene": "Propylene",
+  "item.drugs.diesel": "Diesel"
 
 }

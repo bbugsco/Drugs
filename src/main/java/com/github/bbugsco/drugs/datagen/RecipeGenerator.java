@@ -194,6 +194,15 @@ public class RecipeGenerator extends FabricRecipeProvider {
                 .unlockedBy("has_item", has(DrugsItems.ETHANE))
                 .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "refine_ethylene"));
 
+        RefineryRecipeBuilder.refine(
+                        Ingredient.of(DrugsItems.OIL),
+                        DrugsItems.DIESEL,
+                        1000,
+                        RefineryRecipe::new
+                )
+                .unlockedBy("has_item", has(DrugsItems.ETHANE))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "refine_diesel"));
+
         CatalyticReformerRecipeBuilder.reform(
                         Ingredient.of(DrugsItems.PETROLEUM_NAPHTHA),
                         DrugsItems.BENZENE,
@@ -232,7 +241,7 @@ public class RecipeGenerator extends FabricRecipeProvider {
                 .save(exporter, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, "electrolysis_brine"));
 
         ElectrolysisRecipeBuilder.electrolysis(
-                Ingredient.of(DrugsItems.WATER),
+                Ingredient.of(Items.POTION),
                 DrugsItems.HYDROGEN,
                 List.of(new ItemStack(DrugsItems.OXYGEN, 50 >> 1)),
                 1000,

@@ -33,7 +33,7 @@ public class DrugsBlocks {
     public static final Block OXIDATION_MACHINE = registerBlock("oxidation_machine", new Oxidizer(BlockBehaviour.Properties.of().strength(3.5F).sound(SoundType.STONE)));
     public static final Block CATALYTIC_REFORMER = registerBlock("catalytic_reformer", new CatalyticReformer(BlockBehaviour.Properties.of().strength(3.5F).sound(SoundType.STONE)));
     public static final Block AIR_EXTRACTOR = registerBlock("air_extractor", new AirExtractor(BlockBehaviour.Properties.of().strength(3.5F).sound(SoundType.STONE)));
-    public static final Block SALT = registerBlock("salt", new Block(BlockBehaviour.Properties.of().strength(2.0F).sound(SoundType.CALCITE)));
+    public static final Block SALT = registerBlock("salt_block", new Block(BlockBehaviour.Properties.of().strength(2.0F).sound(SoundType.CALCITE)));
 
     public static Item getBlockItem(Block block) {
         return BLOCK_ITEMS.get(block);

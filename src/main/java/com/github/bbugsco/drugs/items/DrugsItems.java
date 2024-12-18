@@ -6,9 +6,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.PotionContents;
-import net.minecraft.world.item.alchemy.Potions;
 
 public class DrugsItems {
 
@@ -43,7 +40,7 @@ public class DrugsItems {
     public static final Item METHYLAMINE = registerItem("methylamine", new Item(new Item.Properties()));
     public static final Item ETHYLENE = registerItem("ethylene", new Item(new Item.Properties()));
     public static final Item PROPYLENE = registerItem("propylene", new Item(new Item.Properties()));
-    public static final Item WATER = PotionContents.createItemStack(Items.POTION, Potions.WATER).getItem();
+    public static final Item DIESEL = registerItem("diesel", new Item(new Item.Properties()));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(BuiltInRegistries.ITEM, ResourceLocation.fromNamespaceAndPath(Drugs.MOD_ID, name), item);

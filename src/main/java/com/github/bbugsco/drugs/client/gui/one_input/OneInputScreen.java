@@ -18,6 +18,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
 import java.util.ArrayList;
@@ -79,13 +80,13 @@ public class OneInputScreen<R extends OneInputRecipe, E extends OneInputBlockEnt
                 ItemStack inputItem = recipe.getIngredients().getFirst().getItems()[0];
                 ItemStack resultItem = recipe.getResult();
                 List<Component> tooltip = new ArrayList<>();
-                tooltip.add(Component.literal(resultItem.getDisplayName().getString().replace("[", "").replace("]", "")));
-                tooltip.add(Component.literal("Requires " + (inputItem.getDisplayName().getString().replace("[", "").replace("]", ""))));
+                tooltip.add(getItemNameString(resultItem, false));
+                tooltip.add(getItemNameString(inputItem, true));
                 if (!recipe.getByproducts().isEmpty()) {
                     tooltip.add(Component.literal("Byproducts: "));
                     List<ItemStack> byproducts = recipe.getByproducts();
                     for (ItemStack byproduct : byproducts) {
-                        tooltip.add(Component.literal(byproduct.getDisplayName().getString().replace("[", "").replace("]", "") + " " + (byproduct.getCount() << 1) + "%"));
+                        tooltip.add(getByproductString(byproduct, byproduct.getCount() << 1));
                     }
                 }
                 guiGraphics.renderTooltip(this.font, tooltip, Optional.empty(), x, y);
@@ -205,6 +206,23 @@ public class OneInputScreen<R extends OneInputRecipe, E extends OneInputBlockEnt
 
     protected int getOffscreenRows() {
         return (this.menu.getNumRecipes() + RECIPES_COLUMNS - 1) / RECIPES_COLUMNS - RECIPES_ROWS;
+    }
+
+    private Component getItemNameString(ItemStack itemStack, boolean isInput) {
+        if (itemStack == null) return Component.empty();
+        if (isInput) {
+            if (itemStack.getItem() == Items.POTION) return Component.literal("Requires Water Bottle");
+            else return Component.literal("Requires " + itemStack.getDisplayName().getString().replace("[", "").replace("]", ""));
+        } else {
+            if (itemStack.getItem() == Items.POTION) return Component.literal("Water Bottle");
+            else return Component.literal(itemStack.getDisplayName().getString().replace("[", "").replace("]", ""));
+        }
+    }
+
+    private Component getByproductString(ItemStack itemStack, int chance) {
+        if (itemStack == null) return Component.empty();
+        if (itemStack.getItem() == Items.POTION) return Component.literal("Water Bottle " + chance + "%");
+        else return Component.literal(itemStack.getDisplayName().getString().replace("[", "").replace("]", "") + " " + chance + "%");
     }
 
     private void setBackgroundTexture(int numberOfByproductSlots) {

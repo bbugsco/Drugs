@@ -61,6 +61,7 @@ public class ModelGenerator extends FabricModelProvider {
         itemModelGenerator.generateFlatItem(DrugsItems.METHYLAMINE, ModelTemplates.FLAT_ITEM);
         itemModelGenerator.generateFlatItem(DrugsItems.ETHYLENE, ModelTemplates.FLAT_ITEM);
         itemModelGenerator.generateFlatItem(DrugsItems.PROPYLENE, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(DrugsItems.DIESEL, ModelTemplates.FLAT_ITEM);
     }
 
 }
