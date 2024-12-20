@@ -1,23 +1,23 @@
 {
   "schemaVersion": 1,
-  "id": "drugs",
+  "id": "substancecraft",
   "version": "${version}",
-  "name": "Drugs",
+  "name": "SubstanceCraft",
   "description": "",
   "authors": [],
   "contact": {},
   "license": "GPL-3.0",
-  "icon": "assets/drugs/icon.png",
+  "icon": "assets/substancecraft/icon.png",
   "environment": "*",
   "entrypoints": {
     "fabric-datagen": [
-      "com.github.bbugsco.drugs.Drugs"
+      "com.github.bbugsco.substancecraft.SubstanceCraft"
     ],
     "client": [
-      "com.github.bbugsco.drugs.client.DrugsClient"
+      "com.github.bbugsco.substancecraft.client.SubstanceCraftClient"
     ],
     "main": [
-      "com.github.bbugsco.drugs.Drugs"
+      "com.github.bbugsco.substancecraft.SubstanceCraft"
     ]
   },
   "depends": {
