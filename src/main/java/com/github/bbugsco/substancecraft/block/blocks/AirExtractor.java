@@ -1,7 +1,7 @@
 package com.github.bbugsco.substancecraft.block.blocks;
 
 import com.github.bbugsco.substancecraft.block.entity.SubstanceCraftBlockEntities;
-import com.github.bbugsco.substancecraft.block.entity.one_input.AirExtractorBlockEntity;
+import com.github.bbugsco.substancecraft.block.entity.entities.AirExtractorBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;

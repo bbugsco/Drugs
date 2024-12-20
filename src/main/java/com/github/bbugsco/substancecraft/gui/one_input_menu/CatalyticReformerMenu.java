@@ -1,6 +1,6 @@
 package com.github.bbugsco.substancecraft.gui.one_input_menu;
 
-import com.github.bbugsco.substancecraft.block.entity.one_input.CatalyticReformerBlockEntity;
+import com.github.bbugsco.substancecraft.block.entity.entities.CatalyticReformerBlockEntity;
 import com.github.bbugsco.substancecraft.gui.SubstanceCraftMenus;
 import com.github.bbugsco.substancecraft.recipe.recipes.CatalyticReformerRecipe;
 import net.minecraft.core.BlockPos;

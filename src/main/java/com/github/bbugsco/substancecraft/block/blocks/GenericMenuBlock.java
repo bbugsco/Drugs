@@ -1,6 +1,6 @@
 package com.github.bbugsco.substancecraft.block.blocks;
 
-import com.github.bbugsco.substancecraft.block.entity.one_input.HashPressBlockEntity;
+import com.github.bbugsco.substancecraft.block.entity.entities.HashPressBlockEntity;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

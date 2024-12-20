@@ -1,7 +1,7 @@
 package com.github.bbugsco.substancecraft.block.blocks;
 
 import com.github.bbugsco.substancecraft.block.entity.SubstanceCraftBlockEntities;
-import com.github.bbugsco.substancecraft.block.entity.one_input.ElectrolysisMachineBlockEntity;
+import com.github.bbugsco.substancecraft.block.entity.entities.ElectrolysisMachineBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;

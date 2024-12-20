@@ -1,70 +1,24 @@
-package com.github.bbugsco.substancecraft.block.entity.one_input;
+package com.github.bbugsco.substancecraft.block.entity;
 
-import com.github.bbugsco.substancecraft.block.entity.ImplementedInventory;
-import com.github.bbugsco.substancecraft.block.entity.RecipeList;
 import com.github.bbugsco.substancecraft.recipe.generic.OneInputRecipe;
-import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.inventory.SimpleContainerData;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class OneInputBlockEntity<T extends OneInputRecipe> extends BlockEntity implements ExtendedScreenHandlerFactory<BlockPos>, ImplementedInventory, RecipeList<T> {
-
-    private final String displayName;
-    private final NonNullList<ItemStack> inventory;
+public abstract class OneInputBlockEntity<T extends OneInputRecipe> extends AbstractIoBlockEntity implements RecipeList<T> {
 
     public static final int INPUT_SLOT = 0;
     public static final int OUTPUT_SLOT = 1;
-
-    private int progress;
-    private int maxProgress;
-    private int selectedRecipeIndex;
-
-    protected final SimpleContainerData dataAccess = new SimpleContainerData(3) {
-        @Override
-        public int get(int index) {
-            return switch (index) {
-                case 0 -> OneInputBlockEntity.this.progress;
-                case 1 -> OneInputBlockEntity.this.maxProgress;
-                case 2 -> OneInputBlockEntity.this.selectedRecipeIndex;
-                default -> 0;
-            };
-        }
-
-        @Override
-        public void set(int index, int value) {
-            switch (index) {
-                case 0 -> OneInputBlockEntity.this.progress = value;
-                case 1 -> OneInputBlockEntity.this.maxProgress = value;
-                case 2 -> OneInputBlockEntity.this.selectedRecipeIndex = value;
-            }
-        }
-
-        @Override
-        public int getCount() {
-            return 3;
-        }
-    };
+    public static final int BYPRODUCT_START_SLOT = 2;
 
     public final RecipeManager.CachedCheck<SingleRecipeInput, T> matchGetter;
     private final boolean selectsRecipe;
@@ -72,9 +26,7 @@ public abstract class OneInputBlockEntity<T extends OneInputRecipe> extends Bloc
     private List<RecipeHolder<T>> recipes;
 
     public OneInputBlockEntity(BlockPos pos, BlockState state, String displayName, RecipeType<T> type, BlockEntityType<?> blockEntityType, boolean selectsRecipe) {
-        super(blockEntityType, pos, state);
-        this.displayName = displayName;
-        this.inventory = NonNullList.withSize(5, ItemStack.EMPTY);
+        super(blockEntityType, pos, state, displayName, 5);
         this.selectsRecipe = selectsRecipe;
         this.matchGetter = RecipeManager.createCheck(type);
         this.type = type;
@@ -85,11 +37,6 @@ public abstract class OneInputBlockEntity<T extends OneInputRecipe> extends Bloc
     public void setLevel(Level level) {
         super.setLevel(level);
         setupRecipeList();
-    }
-
-    @Override
-    public boolean selectsRecipe() {
-        return selectsRecipe;
     }
 
     public int getMaxByproducts() {
@@ -106,18 +53,15 @@ public abstract class OneInputBlockEntity<T extends OneInputRecipe> extends Bloc
         return this.recipes;
     }
 
+    @Override
+    public boolean selectsRecipe() {
+        return selectsRecipe;
+    }
+
     public void setupRecipeList() {
         if (this.level != null) {
             this.recipes = this.level.getRecipeManager().getAllRecipesFor(type);
         }
-    }
-
-    public int getSelectedRecipeIndex() {
-        return this.selectedRecipeIndex;
-    }
-
-    public void setSelectedRecipeIndex(int selectedRecipeIndex) {
-        this.selectedRecipeIndex = selectedRecipeIndex;
     }
 
     public ItemStack getRenderStack() {
@@ -129,27 +73,12 @@ public abstract class OneInputBlockEntity<T extends OneInputRecipe> extends Bloc
     }
 
     @Override
-    public BlockPos getScreenOpeningData(ServerPlayer player) {
-        return worldPosition;
-    }
-
-    @Override
-    public @NotNull Component getDisplayName() {
-        return Component.literal(displayName);
-    }
-
-    @Override
-    public NonNullList<ItemStack> getItems() {
-        return inventory;
-    }
-
-    @Override
     public void setItem(int slot, ItemStack stack) {
         ItemStack itemStack = this.inventory.get(slot);
         boolean itemsEqual = !stack.isEmpty() && ItemStack.isSameItem(itemStack, stack);
         this.inventory.set(slot, stack);
         if (slot == INPUT_SLOT && !itemsEqual) {
-            this.maxProgress = getCookTime(this.level, this);
+            this.maxProgress = getCookTime();
             this.progress = 0;
             this.setChanged();
         }
@@ -174,9 +103,9 @@ public abstract class OneInputBlockEntity<T extends OneInputRecipe> extends Bloc
     public void tick(Level level, BlockPos pos, BlockState state) {
         if(level.isClientSide) return;
         if (selectsRecipe) {
-            tickForWhenOneInputCanHaveMultipleOutputs(level, pos, state);
+            selectedRecipeTick(level, pos, state);
         } else {
-            if (isOutputSlotEmptyOrReceivable()) {
+            if (isSlotEmptyOrReceivable(OUTPUT_SLOT)) {
                 if (hasRecipe()) {
                     progress++;
                     setChanged(level, pos, state);
@@ -194,8 +123,8 @@ public abstract class OneInputBlockEntity<T extends OneInputRecipe> extends Bloc
         }
     }
 
-    public void tickForWhenOneInputCanHaveMultipleOutputs(Level level, BlockPos pos, BlockState state) {
-        if (isOutputSlotEmptyOrReceivable()) {
+    public void selectedRecipeTick(Level level, BlockPos pos, BlockState state) {
+        if (isSlotEmptyOrReceivable(OUTPUT_SLOT)) {
             if (hasRecipe()) {
                 T recipe = getRecipes().get(getSelectedRecipeIndex()).value();
                 if (recipe.matches(new SingleRecipeInput(inventory.getFirst()), level)) {
@@ -244,7 +173,7 @@ public abstract class OneInputBlockEntity<T extends OneInputRecipe> extends Bloc
         for (ItemStack byproduct : byproducts) {
             if (getLevel() == null) return;
             if (getLevel().random.nextInt(100) < byproduct.getCount() << 1) continue;
-            int slot = OUTPUT_SLOT + 1 + index;
+            int slot = BYPRODUCT_START_SLOT + index;
             if (!canInsertItemIntoSlot(byproduct.getItem(), slot)) return;
             if (!canInsertAmountIntoSlot(byproduct, slot)) return;
             setItem(slot, new ItemStack(byproduct.getItem(), getItem(slot).getCount() + 1));
@@ -257,47 +186,9 @@ public abstract class OneInputBlockEntity<T extends OneInputRecipe> extends Bloc
         return recipe.isPresent() && canInsertAmountIntoSlot(recipe.get().value().getResult(), OUTPUT_SLOT) && canInsertItemIntoSlot(recipe.get().value().getResult().getItem(), OUTPUT_SLOT);
     }
 
-    private boolean canInsertItemIntoSlot(Item item, int slot) {
-        return this.getItem(slot).getItem() == item || getItem(slot).isEmpty();
-    }
-
-    private boolean canInsertAmountIntoSlot(ItemStack result, int slot) {
-        return this.getItem(slot).getCount() + result.getCount() <= getItem(slot).getMaxStackSize();
-    }
-
-    private boolean isOutputSlotEmptyOrReceivable() {
-        return this.getItem(OUTPUT_SLOT).isEmpty() || getItem(OUTPUT_SLOT).getCount() < getItem(OUTPUT_SLOT).getMaxStackSize();
-    }
-
-    private int getCookTime(Level world, OneInputBlockEntity<T> entity) {
-        SingleRecipeInput input = new SingleRecipeInput(entity.getItem(INPUT_SLOT));
-        return entity.matchGetter.getRecipeFor(input, world).map((recipe) -> recipe.value().getTime()).orElse(200);
-    }
-
-    @Override
-    public void setChanged() {
-        if (level != null) {
-            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
-            super.setChanged();
-        }
-    }
-
-    @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        ContainerHelper.loadAllItems(tag, this.inventory, registries);
-        progress = tag.getInt("Progress");
-        maxProgress = tag.getInt("MaxProgress");
-        selectedRecipeIndex = tag.getInt("SelectedRecipeIndex");
-    }
-
-    @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        ContainerHelper.saveAllItems(tag, this.inventory, registries);
-        tag.putInt("Progress", progress);
-        tag.putInt("MaxProgress", maxProgress);
-        tag.putInt("SelectedRecipeIndex", selectedRecipeIndex);
+    private int getCookTime() {
+        SingleRecipeInput input = new SingleRecipeInput(getItem(INPUT_SLOT));
+        return matchGetter.getRecipeFor(input, level).map((recipe) -> recipe.value().getTime()).orElse(200);
     }
 
 }

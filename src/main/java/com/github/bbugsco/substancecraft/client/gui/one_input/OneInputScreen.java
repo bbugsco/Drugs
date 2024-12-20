@@ -1,7 +1,7 @@
 package com.github.bbugsco.substancecraft.client.gui.one_input;
 
 import com.github.bbugsco.substancecraft.SubstanceCraft;
-import com.github.bbugsco.substancecraft.block.entity.one_input.OneInputBlockEntity;
+import com.github.bbugsco.substancecraft.block.entity.OneInputBlockEntity;
 import com.github.bbugsco.substancecraft.gui.one_input_menu.OneInputMenu;
 import com.github.bbugsco.substancecraft.recipe.generic.OneInputRecipe;
 import com.mojang.blaze3d.systems.RenderSystem;

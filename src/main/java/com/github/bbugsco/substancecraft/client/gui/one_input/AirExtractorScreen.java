@@ -1,6 +1,6 @@
 package com.github.bbugsco.substancecraft.client.gui.one_input;
 
-import com.github.bbugsco.substancecraft.block.entity.one_input.AirExtractorBlockEntity;
+import com.github.bbugsco.substancecraft.block.entity.entities.AirExtractorBlockEntity;
 import com.github.bbugsco.substancecraft.gui.one_input_menu.AirExtractorMenu;
 import com.github.bbugsco.substancecraft.recipe.recipes.AirExtractorRecipe;
 import net.fabricmc.api.EnvType;

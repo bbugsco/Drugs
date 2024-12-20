@@ -1,5 +1,6 @@
-package com.github.bbugsco.substancecraft.block.entity.one_input;
+package com.github.bbugsco.substancecraft.block.entity.entities;
 
+import com.github.bbugsco.substancecraft.block.entity.OneInputBlockEntity;
 import com.github.bbugsco.substancecraft.block.entity.SubstanceCraftBlockEntities;
 import com.github.bbugsco.substancecraft.gui.one_input_menu.RefineryMenu;
 import com.github.bbugsco.substancecraft.recipe.recipes.RefineryRecipe;

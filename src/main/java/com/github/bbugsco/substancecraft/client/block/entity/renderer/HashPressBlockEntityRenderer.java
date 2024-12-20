@@ -1,6 +1,6 @@
 package com.github.bbugsco.substancecraft.client.block.entity.renderer;
 
-import com.github.bbugsco.substancecraft.block.entity.one_input.HashPressBlockEntity;
+import com.github.bbugsco.substancecraft.block.entity.entities.HashPressBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.fabricmc.api.EnvType;

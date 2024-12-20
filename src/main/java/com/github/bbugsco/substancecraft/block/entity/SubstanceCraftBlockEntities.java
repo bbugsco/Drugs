@@ -2,12 +2,12 @@ package com.github.bbugsco.substancecraft.block.entity;
 
 import com.github.bbugsco.substancecraft.SubstanceCraft;
 import com.github.bbugsco.substancecraft.block.SubstanceCraftBlocks;
-import com.github.bbugsco.substancecraft.block.entity.one_input.CatalyticReformerBlockEntity;
-import com.github.bbugsco.substancecraft.block.entity.one_input.ElectrolysisMachineBlockEntity;
-import com.github.bbugsco.substancecraft.block.entity.one_input.HashPressBlockEntity;
-import com.github.bbugsco.substancecraft.block.entity.one_input.OxidizerBlockEntity;
-import com.github.bbugsco.substancecraft.block.entity.one_input.RefineryBlockEntity;
-import com.github.bbugsco.substancecraft.block.entity.one_input.AirExtractorBlockEntity;
+import com.github.bbugsco.substancecraft.block.entity.entities.AirExtractorBlockEntity;
+import com.github.bbugsco.substancecraft.block.entity.entities.CatalyticReformerBlockEntity;
+import com.github.bbugsco.substancecraft.block.entity.entities.ElectrolysisMachineBlockEntity;
+import com.github.bbugsco.substancecraft.block.entity.entities.HashPressBlockEntity;
+import com.github.bbugsco.substancecraft.block.entity.entities.OxidizerBlockEntity;
+import com.github.bbugsco.substancecraft.block.entity.entities.RefineryBlockEntity;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
