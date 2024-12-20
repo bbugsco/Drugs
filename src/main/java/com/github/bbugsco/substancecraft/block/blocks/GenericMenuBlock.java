@@ -113,7 +113,7 @@ public class GenericMenuBlock<T extends MenuProvider> extends BaseEntityBlock im
 
     @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
+    public <E extends BlockEntity> BlockEntityTicker<E> getTicker(Level level, BlockState state, BlockEntityType<E> blockEntityType) {
         return null;
     }
 
