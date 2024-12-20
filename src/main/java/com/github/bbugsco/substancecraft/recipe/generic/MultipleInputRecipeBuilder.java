@@ -20,24 +20,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class MultipleInputTimeRecipeBuilder implements RecipeBuilder {
+public class MultipleInputRecipeBuilder implements RecipeBuilder {
 
-    private final Item result;
     private final List<Ingredient> ingredients;
+    private final Item result;
+    private final List<ItemStack> byproducts;
     private final int time;
 
     private final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
-    private final MultipleInputTimedRecipe.Factory<? extends MultipleInputTimedRecipe> factory;
+    private final MultipleInputRecipe.Factory<? extends MultipleInputRecipe> factory;
 
-    protected MultipleInputTimeRecipeBuilder(final ItemLike result, final List<Ingredient> ingredients, int time, MultipleInputTimedRecipe.Factory<? extends MultipleInputTimedRecipe> factory) {
-        this.result = result.asItem();
+    protected MultipleInputRecipeBuilder(final List<Ingredient> ingredients, final ItemLike result, List<ItemStack> byproducts, int time, MultipleInputRecipe.Factory<? extends MultipleInputRecipe> factory) {
         this.ingredients = ingredients;
+        this.result = result.asItem();
+        this.byproducts = byproducts;
         this.time = time;
         this.factory = factory;
     }
 
     @Override
-    public @NotNull MultipleInputTimeRecipeBuilder unlockedBy(String string, Criterion<?> advancementCriterion) {
+    public @NotNull MultipleInputRecipeBuilder unlockedBy(String string, Criterion<?> advancementCriterion) {
         this.criteria.put(string, advancementCriterion);
         return this;
     }
@@ -58,7 +60,7 @@ public class MultipleInputTimeRecipeBuilder implements RecipeBuilder {
         Advancement.Builder builder = exporter.advancement().addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(recipeId)).rewards(AdvancementRewards.Builder.recipe(recipeId)).requirements(AdvancementRequirements.Strategy.OR);
         Objects.requireNonNull(builder);
         this.criteria.forEach(builder::addCriterion);
-        MultipleInputTimedRecipe recipeFactory = this.factory.create(this.ingredients, new ItemStack(this.result), this.time);
+        MultipleInputRecipe recipeFactory = this.factory.create(this.ingredients, new ItemStack(this.result), byproducts, this.time);
         exporter.accept(recipeId, recipeFactory, builder.build(recipeId.withPrefix("recipes/")));
     }
 

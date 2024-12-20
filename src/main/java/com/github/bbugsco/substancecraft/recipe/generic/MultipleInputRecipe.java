@@ -11,32 +11,47 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class MultipleInputTimedRecipe implements Recipe<MultipleItemInput> {
+public class MultipleInputRecipe implements Recipe<MultipleItemInput> {
 
-    private final RecipeType<? extends MultipleInputTimedRecipe> type;
-    private final RecipeSerializer<? extends MultipleInputTimedRecipe> serializer;
+    private final RecipeType<? extends MultipleInputRecipe> type;
+    private final RecipeSerializer<? extends MultipleInputRecipe> serializer;
 
-    protected final ItemStack result;
     protected final List<Ingredient> ingredients;
+    protected final ItemStack result;
+    protected final List<ItemStack> byproducts;
     protected final int time;
 
-    public MultipleInputTimedRecipe
-            (RecipeType<? extends MultipleInputTimedRecipe> type,
-             RecipeSerializer<? extends MultipleInputTimedRecipe> serializer,
-             ItemStack result, List<Ingredient> ingredients, int time)
+    public MultipleInputRecipe
+            (RecipeType<? extends MultipleInputRecipe> type,
+             RecipeSerializer<? extends MultipleInputRecipe> serializer,
+             List<Ingredient> ingredients, ItemStack result, List<ItemStack> byproducts, int time)
     {
         this.type = type;
         this.serializer = serializer;
+        this.ingredients = ingredients != null ? ingredients : List.of();
         this.result = result;
-        this.ingredients = ingredients;
+        this.byproducts = byproducts;
         this.time = time;
     }
 
     @NotNull
-    public ItemStack result() {
+    public List<Ingredient> getInputs() {
+        return ingredients;
+    }
+
+    @NotNull
+    public ItemStack getResult() {
         return result;
     }
 
+    @NotNull
+    public List<ItemStack> getByproducts() {
+        return byproducts;
+    }
+
+    public int getTime() {
+        return time;
+    }
     public int time() {
         return time;
     }
@@ -83,8 +98,8 @@ public class MultipleInputTimedRecipe implements Recipe<MultipleItemInput> {
         return type;
     }
 
-    public interface Factory<T extends MultipleInputTimedRecipe> {
-        T create(List<Ingredient> ingredient, ItemStack itemStack, int time);
+    public interface Factory<T extends MultipleInputRecipe> {
+        T create(List<Ingredient> ingredient, ItemStack itemStack, List<ItemStack> byproducts, int time);
     }
 
 }

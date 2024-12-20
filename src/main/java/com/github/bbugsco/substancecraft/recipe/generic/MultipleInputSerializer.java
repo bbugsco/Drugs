@@ -11,19 +11,20 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import org.jetbrains.annotations.NotNull;
 
-public class MultipleInputSerializer<T extends MultipleInputTimedRecipe> implements RecipeSerializer<T> {
+public class MultipleInputSerializer<T extends MultipleInputRecipe> implements RecipeSerializer<T> {
 
-    private final MultipleInputTimedRecipe.Factory<T> factory;
+    private final MultipleInputRecipe.Factory<T> factory;
     private final MapCodec<T> codec;
     private final StreamCodec<RegistryFriendlyByteBuf, T> packetCodec;
 
-    public MultipleInputSerializer(MultipleInputTimedRecipe.Factory<T> factory) {
+    public MultipleInputSerializer(MultipleInputRecipe.Factory<T> factory) {
         this.factory = factory;
         this.codec = RecordCodecBuilder.mapCodec(
                 (instance) -> instance.group(
-                        Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").forGetter(recipe -> recipe.ingredients),
-                        ItemStack.STRICT_CODEC.fieldOf("result").forGetter(MultipleInputTimedRecipe::result),
-                        Codec.INT.fieldOf("time").orElse(200).forGetter(MultipleInputTimedRecipe::time)
+                        Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").forGetter(MultipleInputRecipe::getInputs),
+                        ItemStack.STRICT_CODEC.fieldOf("result").forGetter(MultipleInputRecipe::getResult),
+                        ItemStack.CODEC.listOf().fieldOf("byproducts").forGetter(MultipleInputRecipe::getByproducts),
+                        Codec.INT.fieldOf("time").orElse(200).forGetter(MultipleInputRecipe::getTime)
                 ).apply(instance, factory::create));
         packetCodec = StreamCodec.of(this::write, this::read);
     }
@@ -42,7 +43,9 @@ public class MultipleInputSerializer<T extends MultipleInputTimedRecipe> impleme
         NonNullList<Ingredient> input =  NonNullList.withSize(buf.readVarInt(), Ingredient.EMPTY);;
         input.replaceAll(ingredient -> Ingredient.CONTENTS_STREAM_CODEC.decode(buf));
         ItemStack output = ItemStack.STREAM_CODEC.decode(buf);
-        return this.factory.create(input, output, buf.readInt());
+        NonNullList<ItemStack> byproducts =  NonNullList.withSize(buf.readVarInt(), ItemStack.EMPTY);
+        byproducts.replaceAll(ingredient -> ItemStack.STREAM_CODEC.decode(buf));
+        return this.factory.create(input, output, byproducts, buf.readInt());
     }
 
     private void write(RegistryFriendlyByteBuf buf, T recipe) {
@@ -50,7 +53,11 @@ public class MultipleInputSerializer<T extends MultipleInputTimedRecipe> impleme
         for (Ingredient ingredient : recipe.ingredients) {
             Ingredient.CONTENTS_STREAM_CODEC.encode(buf, ingredient);
         }
-        ItemStack.STREAM_CODEC.encode(buf, recipe.result());
+        ItemStack.STREAM_CODEC.encode(buf, recipe.getResult());
+        buf.writeVarInt(recipe.getByproducts().size());
+        for (ItemStack byproduct : recipe.getByproducts()) {
+            ItemStack.STREAM_CODEC.encode(buf, byproduct);
+        }
         buf.writeInt(recipe.time);
     }
 }
