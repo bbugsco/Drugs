@@ -13,6 +13,8 @@ import java.util.List;
 
 public class FermentationTankRecipe extends MultipleInputRecipe {
 
+    public static final String ID = "fermentation_tank";
+
     public FermentationTankRecipe(List<Ingredient> ingredients, ItemStack result, List<ItemStack> byproducts, int time) {
         super(Type.INSTANCE, Serializer.INSTANCE, ingredients, result, byproducts, time);
     }

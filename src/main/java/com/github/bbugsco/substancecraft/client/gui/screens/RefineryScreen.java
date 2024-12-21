@@ -1,7 +1,8 @@
-package com.github.bbugsco.substancecraft.client.gui.one_input;
+package com.github.bbugsco.substancecraft.client.gui.screens;
 
 import com.github.bbugsco.substancecraft.block.entity.entities.RefineryBlockEntity;
-import com.github.bbugsco.substancecraft.gui.one_input_menu.RefineryMenu;
+import com.github.bbugsco.substancecraft.client.gui.OneInputScreen;
+import com.github.bbugsco.substancecraft.gui.menus.RefineryMenu;
 import com.github.bbugsco.substancecraft.recipe.recipes.RefineryRecipe;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

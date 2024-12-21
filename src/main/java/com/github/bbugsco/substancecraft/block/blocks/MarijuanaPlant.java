@@ -1,4 +1,4 @@
-package com.github.bbugsco.substancecraft.block.blocks.plants;
+package com.github.bbugsco.substancecraft.block.blocks;
 
 import com.github.bbugsco.substancecraft.block.SubstanceCraftBlocks;
 import com.github.bbugsco.substancecraft.items.SubstanceCraftItems;

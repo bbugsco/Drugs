@@ -21,23 +21,18 @@ import org.slf4j.LoggerFactory;
 
 public class SubstanceCraft implements ModInitializer, DataGeneratorEntrypoint {
 
-    public static final String MOD_ID = "substance";
+    public static final String MOD_ID = "substancecraft";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
     /*
      TODO:
-     - yeast composter block
      - barley, hops
      - ergot?
      - fermentation tank (vinegar, alcohol)
      - dmt
      - bho/butane
-     - chloroform recipe
      -
-     - chloroform = heated chlorine, methane
-     - ammonia = hydrogen + nitrogen heat
-     - methylamine = ammonia + methanol
-     - HCl = hydrogen, chlorine, water
+     - create abstract class for scroll menu screen (multipleInputScreen & oneInputScreen to extend)
      */
 
     @Override

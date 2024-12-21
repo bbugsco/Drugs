@@ -14,7 +14,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +32,7 @@ public class MultipleInputRecipeBuilder implements RecipeBuilder {
     protected MultipleInputRecipeBuilder(final List<Ingredient> ingredients, final ItemLike result, List<ItemStack> byproducts, int time, MultipleInputRecipe.Factory<? extends MultipleInputRecipe> factory) {
         this.ingredients = ingredients;
         this.result = result.asItem();
-        this.byproducts = byproducts;
+        this.byproducts = byproducts == null ? List.of() : byproducts;
         this.time = time;
         this.factory = factory;
     }
@@ -51,7 +50,7 @@ public class MultipleInputRecipeBuilder implements RecipeBuilder {
 
     @Override
     public @NotNull Item getResult() {
-        return this.result;
+        return result;
     }
 
     @Override
@@ -60,7 +59,7 @@ public class MultipleInputRecipeBuilder implements RecipeBuilder {
         Advancement.Builder builder = exporter.advancement().addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(recipeId)).rewards(AdvancementRewards.Builder.recipe(recipeId)).requirements(AdvancementRequirements.Strategy.OR);
         Objects.requireNonNull(builder);
         this.criteria.forEach(builder::addCriterion);
-        MultipleInputRecipe recipeFactory = this.factory.create(this.ingredients, new ItemStack(this.result), byproducts, this.time);
+        MultipleInputRecipe recipeFactory = this.factory.create(this.ingredients, new ItemStack(this.result), this.byproducts, this.time);
         exporter.accept(recipeId, recipeFactory, builder.build(recipeId.withPrefix("recipes/")));
     }
 

@@ -20,6 +20,8 @@ public class BlockTagGenerator extends FabricTagProvider.BlockTagProvider {
                 .add(SubstanceCraftBlocks.HASH_PRESS).add(SubstanceCraftBlocks.REFINERY)
                 .add(SubstanceCraftBlocks.AIR_EXTRACTOR).add(SubstanceCraftBlocks.CATALYTIC_REFORMER)
                 .add(SubstanceCraftBlocks.OXIDATION_MACHINE).add(SubstanceCraftBlocks.ELECTROLYSIS_MACHINE)
+                .add(SubstanceCraftBlocks.MIXER).add(SubstanceCraftBlocks.HEATED_MIXER)
+                .add(SubstanceCraftBlocks.FERMENTATION_TANK)
                 .add(SubstanceCraftBlocks.SALT);
         getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_SHOVEL).add(SubstanceCraftBlocks.OIL_SHALE);
 

@@ -13,6 +13,8 @@ import java.util.List;
 
 public class MixerRecipe extends MultipleInputRecipe {
 
+    public static final String ID = "mixer";
+
     public MixerRecipe(List<Ingredient> ingredients, ItemStack result, List<ItemStack> byproducts, int time) {
         super(MixerRecipe.Type.INSTANCE, MixerRecipe.Serializer.INSTANCE, ingredients, result, byproducts, time);
     }

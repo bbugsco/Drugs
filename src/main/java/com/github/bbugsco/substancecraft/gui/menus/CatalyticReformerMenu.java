@@ -1,6 +1,7 @@
-package com.github.bbugsco.substancecraft.gui.one_input_menu;
+package com.github.bbugsco.substancecraft.gui.menus;
 
 import com.github.bbugsco.substancecraft.block.entity.entities.CatalyticReformerBlockEntity;
+import com.github.bbugsco.substancecraft.gui.OneInputMenu;
 import com.github.bbugsco.substancecraft.gui.SubstanceCraftMenus;
 import com.github.bbugsco.substancecraft.recipe.recipes.CatalyticReformerRecipe;
 import net.minecraft.core.BlockPos;
@@ -15,7 +16,7 @@ public class CatalyticReformerMenu extends OneInputMenu<CatalyticReformerRecipe,
     }
 
     public CatalyticReformerMenu(int syncId, Inventory inventory, BlockEntity entity, SimpleContainerData arrayPropertyDelegate) {
-        super(SubstanceCraftMenus.CATALYTIC_REFORMER_MENU, syncId, inventory, entity, arrayPropertyDelegate);
+        super(SubstanceCraftMenus.CATALYTIC_REFORMER, syncId, inventory, entity, arrayPropertyDelegate);
     }
 
 }

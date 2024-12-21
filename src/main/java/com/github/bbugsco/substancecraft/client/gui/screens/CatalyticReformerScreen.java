@@ -1,7 +1,8 @@
-package com.github.bbugsco.substancecraft.client.gui.one_input;
+package com.github.bbugsco.substancecraft.client.gui.screens;
 
 import com.github.bbugsco.substancecraft.block.entity.entities.CatalyticReformerBlockEntity;
-import com.github.bbugsco.substancecraft.gui.one_input_menu.CatalyticReformerMenu;
+import com.github.bbugsco.substancecraft.client.gui.OneInputScreen;
+import com.github.bbugsco.substancecraft.gui.menus.CatalyticReformerMenu;
 import com.github.bbugsco.substancecraft.recipe.recipes.CatalyticReformerRecipe;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

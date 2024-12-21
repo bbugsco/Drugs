@@ -13,6 +13,8 @@ import java.util.List;
 
 public class HeatedMixerRecipe extends MultipleInputRecipe {
 
+    public static final String ID = "heated_mixer";
+
     public HeatedMixerRecipe(List<Ingredient> ingredients, ItemStack result, List<ItemStack> byproducts, int time) {
         super(HeatedMixerRecipe.Type.INSTANCE, HeatedMixerRecipe.Serializer.INSTANCE, ingredients, result, byproducts, time);
     }

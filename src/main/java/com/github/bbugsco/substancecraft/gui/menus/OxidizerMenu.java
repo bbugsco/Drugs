@@ -1,6 +1,7 @@
-package com.github.bbugsco.substancecraft.gui.one_input_menu;
+package com.github.bbugsco.substancecraft.gui.menus;
 
 import com.github.bbugsco.substancecraft.block.entity.entities.OxidizerBlockEntity;
+import com.github.bbugsco.substancecraft.gui.OneInputMenu;
 import com.github.bbugsco.substancecraft.gui.SubstanceCraftMenus;
 import com.github.bbugsco.substancecraft.recipe.recipes.OxidizerRecipe;
 import net.minecraft.core.BlockPos;
@@ -15,7 +16,7 @@ public class OxidizerMenu extends OneInputMenu<OxidizerRecipe, OxidizerBlockEnti
     }
 
     public OxidizerMenu(int syncId, Inventory inventory, BlockEntity entity, SimpleContainerData arrayPropertyDelegate) {
-        super(SubstanceCraftMenus.OXIDIZER_MENU, syncId, inventory, entity, arrayPropertyDelegate);
+        super(SubstanceCraftMenus.OXIDIZER, syncId, inventory, entity, arrayPropertyDelegate);
     }
 
 }

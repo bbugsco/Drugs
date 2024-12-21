@@ -1,6 +1,7 @@
-package com.github.bbugsco.substancecraft.gui.one_input_menu;
+package com.github.bbugsco.substancecraft.gui.menus;
 
 import com.github.bbugsco.substancecraft.block.entity.entities.RefineryBlockEntity;
+import com.github.bbugsco.substancecraft.gui.OneInputMenu;
 import com.github.bbugsco.substancecraft.gui.SubstanceCraftMenus;
 import com.github.bbugsco.substancecraft.recipe.recipes.RefineryRecipe;
 import net.minecraft.core.BlockPos;
@@ -15,7 +16,7 @@ public class RefineryMenu extends OneInputMenu<RefineryRecipe, RefineryBlockEnti
     }
 
     public RefineryMenu(int syncId, Inventory inventory, BlockEntity entity, SimpleContainerData arrayPropertyDelegate) {
-        super(SubstanceCraftMenus.REFINERY_MENU, syncId, inventory, entity, arrayPropertyDelegate);
+        super(SubstanceCraftMenus.REFINERY, syncId, inventory, entity, arrayPropertyDelegate);
     }
 
 }

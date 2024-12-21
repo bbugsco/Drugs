@@ -1,6 +1,7 @@
-package com.github.bbugsco.substancecraft.gui.one_input_menu;
+package com.github.bbugsco.substancecraft.gui.menus;
 
 import com.github.bbugsco.substancecraft.block.entity.entities.AirExtractorBlockEntity;
+import com.github.bbugsco.substancecraft.gui.OneInputMenu;
 import com.github.bbugsco.substancecraft.gui.SubstanceCraftMenus;
 import com.github.bbugsco.substancecraft.recipe.recipes.AirExtractorRecipe;
 import net.minecraft.core.BlockPos;

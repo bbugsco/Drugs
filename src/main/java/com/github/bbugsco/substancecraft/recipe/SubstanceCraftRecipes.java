@@ -4,7 +4,10 @@ import com.github.bbugsco.substancecraft.SubstanceCraft;
 import com.github.bbugsco.substancecraft.recipe.recipes.AirExtractorRecipe;
 import com.github.bbugsco.substancecraft.recipe.recipes.CatalyticReformerRecipe;
 import com.github.bbugsco.substancecraft.recipe.recipes.ElectrolysisRecipe;
+import com.github.bbugsco.substancecraft.recipe.recipes.FermentationTankRecipe;
 import com.github.bbugsco.substancecraft.recipe.recipes.HashPressRecipe;
+import com.github.bbugsco.substancecraft.recipe.recipes.HeatedMixerRecipe;
+import com.github.bbugsco.substancecraft.recipe.recipes.MixerRecipe;
 import com.github.bbugsco.substancecraft.recipe.recipes.OxidizerRecipe;
 import com.github.bbugsco.substancecraft.recipe.recipes.RefineryRecipe;
 import net.minecraft.core.Registry;
@@ -33,6 +36,15 @@ public class SubstanceCraftRecipes {
 
         Registry.register(BuiltInRegistries.RECIPE_TYPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, AirExtractorRecipe.ID), AirExtractorRecipe.Type.INSTANCE);
         Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID,  AirExtractorRecipe.ID), AirExtractorRecipe.Serializer.INSTANCE);
+
+        Registry.register(BuiltInRegistries.RECIPE_TYPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, MixerRecipe.ID), MixerRecipe.Type.INSTANCE);
+        Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID,  MixerRecipe.ID), MixerRecipe.Serializer.INSTANCE);
+
+        Registry.register(BuiltInRegistries.RECIPE_TYPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, HeatedMixerRecipe.ID), HeatedMixerRecipe.Type.INSTANCE);
+        Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID,  HeatedMixerRecipe.ID), HeatedMixerRecipe.Serializer.INSTANCE);
+
+        Registry.register(BuiltInRegistries.RECIPE_TYPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, FermentationTankRecipe.ID), FermentationTankRecipe.Type.INSTANCE);
+        Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID,  FermentationTankRecipe.ID), FermentationTankRecipe.Serializer.INSTANCE);
 
     }
 

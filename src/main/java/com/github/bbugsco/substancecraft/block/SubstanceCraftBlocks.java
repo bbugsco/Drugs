@@ -4,8 +4,11 @@ import com.github.bbugsco.substancecraft.SubstanceCraft;
 import com.github.bbugsco.substancecraft.block.blocks.AirExtractor;
 import com.github.bbugsco.substancecraft.block.blocks.CatalyticReformer;
 import com.github.bbugsco.substancecraft.block.blocks.ElectrolysisMachine;
+import com.github.bbugsco.substancecraft.block.blocks.FermentationTank;
 import com.github.bbugsco.substancecraft.block.blocks.HashPress;
-import com.github.bbugsco.substancecraft.block.blocks.plants.MarijuanaPlant;
+import com.github.bbugsco.substancecraft.block.blocks.HeatedMixer;
+import com.github.bbugsco.substancecraft.block.blocks.MarijuanaPlant;
+import com.github.bbugsco.substancecraft.block.blocks.Mixer;
 import com.github.bbugsco.substancecraft.block.blocks.Oxidizer;
 import com.github.bbugsco.substancecraft.block.blocks.Refinery;
 import net.minecraft.core.Registry;
@@ -34,6 +37,9 @@ public class SubstanceCraftBlocks {
     public static final Block CATALYTIC_REFORMER = registerBlock("catalytic_reformer", new CatalyticReformer(BlockBehaviour.Properties.of().strength(3.5F).sound(SoundType.STONE)));
     public static final Block AIR_EXTRACTOR = registerBlock("air_extractor", new AirExtractor(BlockBehaviour.Properties.of().strength(3.5F).sound(SoundType.STONE)));
     public static final Block SALT = registerBlock("salt_block", new Block(BlockBehaviour.Properties.of().strength(2.0F).sound(SoundType.CALCITE)));
+    public static final Block MIXER = registerBlock("mixer", new Mixer(BlockBehaviour.Properties.of().strength(3.5F).sound(SoundType.STONE)));
+    public static final Block HEATED_MIXER = registerBlock("heated_mixer", new HeatedMixer(BlockBehaviour.Properties.of().strength(3.5F).sound(SoundType.STONE)));
+    public static final Block FERMENTATION_TANK = registerBlock("fermentation_tank", new FermentationTank(BlockBehaviour.Properties.of().strength(3.5F).sound(SoundType.STONE)));
 
     public static Item getBlockItem(Block block) {
         return BLOCK_ITEMS.get(block);

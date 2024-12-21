@@ -5,7 +5,10 @@ import com.github.bbugsco.substancecraft.block.SubstanceCraftBlocks;
 import com.github.bbugsco.substancecraft.block.entity.entities.AirExtractorBlockEntity;
 import com.github.bbugsco.substancecraft.block.entity.entities.CatalyticReformerBlockEntity;
 import com.github.bbugsco.substancecraft.block.entity.entities.ElectrolysisMachineBlockEntity;
+import com.github.bbugsco.substancecraft.block.entity.entities.FermentationTankBlockEntity;
 import com.github.bbugsco.substancecraft.block.entity.entities.HashPressBlockEntity;
+import com.github.bbugsco.substancecraft.block.entity.entities.HeatedMixerBlockEntity;
+import com.github.bbugsco.substancecraft.block.entity.entities.MixerBlockEntity;
 import com.github.bbugsco.substancecraft.block.entity.entities.OxidizerBlockEntity;
 import com.github.bbugsco.substancecraft.block.entity.entities.RefineryBlockEntity;
 import net.minecraft.core.Registry;
@@ -38,6 +41,18 @@ public class SubstanceCraftBlockEntities {
     public static final BlockEntityType<AirExtractorBlockEntity> AIR_EXTRACTOR =
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "air_extractor"),
                     BlockEntityType.Builder.of(AirExtractorBlockEntity::new, SubstanceCraftBlocks.AIR_EXTRACTOR).build());
+
+    public static final BlockEntityType<MixerBlockEntity> MIXER =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "mixer"),
+                    BlockEntityType.Builder.of(MixerBlockEntity::new, SubstanceCraftBlocks.MIXER).build());
+
+    public static final BlockEntityType<HeatedMixerBlockEntity> HEATED_MIXER =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "heated_mixer"),
+                    BlockEntityType.Builder.of(HeatedMixerBlockEntity::new, SubstanceCraftBlocks.HEATED_MIXER).build());
+
+    public static final BlockEntityType<FermentationTankBlockEntity> FERMENTATION_TANK =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "air_extractor"),
+                    BlockEntityType.Builder.of(FermentationTankBlockEntity::new, SubstanceCraftBlocks.FERMENTATION_TANK).build());
 
     public static void registerBlockEntities() {
         SubstanceCraft.LOGGER.info("Registering Block Entities for " + SubstanceCraft.MOD_ID);

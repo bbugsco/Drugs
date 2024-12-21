@@ -2,7 +2,7 @@ package com.github.bbugsco.substancecraft.block.entity.entities;
 
 import com.github.bbugsco.substancecraft.block.entity.OneInputBlockEntity;
 import com.github.bbugsco.substancecraft.block.entity.SubstanceCraftBlockEntities;
-import com.github.bbugsco.substancecraft.gui.one_input_menu.CatalyticReformerMenu;
+import com.github.bbugsco.substancecraft.gui.menus.CatalyticReformerMenu;
 import com.github.bbugsco.substancecraft.recipe.recipes.CatalyticReformerRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;

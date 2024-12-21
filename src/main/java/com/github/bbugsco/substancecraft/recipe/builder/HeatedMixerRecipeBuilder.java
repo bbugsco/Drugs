@@ -11,7 +11,7 @@ import java.util.List;
 
 public class HeatedMixerRecipeBuilder extends MultipleInputRecipeBuilder {
 
-    protected HeatedMixerRecipeBuilder(List<Ingredient> ingredients, ItemLike result, List<ItemStack> byproducts, int time, MultipleInputRecipe.Factory<? extends MultipleInputRecipe> factory) {
+    public HeatedMixerRecipeBuilder(List<Ingredient> ingredients, ItemLike result, List<ItemStack> byproducts, int time, MultipleInputRecipe.Factory<? extends MultipleInputRecipe> factory) {
         super(ingredients, result, byproducts, time, factory);
     }
 

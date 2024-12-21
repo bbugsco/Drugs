@@ -1,7 +1,7 @@
 package com.github.bbugsco.substancecraft.datagen;
 
 import com.github.bbugsco.substancecraft.block.SubstanceCraftBlocks;
-import com.github.bbugsco.substancecraft.block.blocks.plants.MarijuanaPlant;
+import com.github.bbugsco.substancecraft.block.blocks.MarijuanaPlant;
 import com.github.bbugsco.substancecraft.items.SubstanceCraftItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
@@ -26,6 +26,10 @@ public class ModelGenerator extends FabricModelProvider {
         blockStateModelGenerator.createHorizontallyRotatedBlock(SubstanceCraftBlocks.CATALYTIC_REFORMER, TexturedModel.ORIENTABLE);
         blockStateModelGenerator.createHorizontallyRotatedBlock(SubstanceCraftBlocks.AIR_EXTRACTOR, TexturedModel.ORIENTABLE);
         blockStateModelGenerator.createTrivialCube(SubstanceCraftBlocks.SALT);
+        blockStateModelGenerator.createHorizontallyRotatedBlock(SubstanceCraftBlocks.MIXER, TexturedModel.ORIENTABLE);
+        blockStateModelGenerator.createHorizontallyRotatedBlock(SubstanceCraftBlocks.HEATED_MIXER, TexturedModel.ORIENTABLE);
+        blockStateModelGenerator.createHorizontallyRotatedBlock(SubstanceCraftBlocks.FERMENTATION_TANK, TexturedModel.ORIENTABLE);
+
     }
 
     @Override
@@ -62,6 +66,11 @@ public class ModelGenerator extends FabricModelProvider {
         itemModelGenerator.generateFlatItem(SubstanceCraftItems.ETHYLENE, ModelTemplates.FLAT_ITEM);
         itemModelGenerator.generateFlatItem(SubstanceCraftItems.PROPYLENE, ModelTemplates.FLAT_ITEM);
         itemModelGenerator.generateFlatItem(SubstanceCraftItems.DIESEL, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(SubstanceCraftItems.AMMONIA, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(SubstanceCraftItems.CORN, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(SubstanceCraftItems.ETHANOL, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(SubstanceCraftItems.YEAST, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(SubstanceCraftItems.HYDROCHLORIC_ACID, ModelTemplates.FLAT_ITEM);
     }
 
 }

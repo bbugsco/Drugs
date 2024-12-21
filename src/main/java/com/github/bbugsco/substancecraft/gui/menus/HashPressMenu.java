@@ -1,6 +1,7 @@
-package com.github.bbugsco.substancecraft.gui.one_input_menu;
+package com.github.bbugsco.substancecraft.gui.menus;
 
 import com.github.bbugsco.substancecraft.block.entity.entities.HashPressBlockEntity;
+import com.github.bbugsco.substancecraft.gui.OneInputMenu;
 import com.github.bbugsco.substancecraft.gui.SubstanceCraftMenus;
 import com.github.bbugsco.substancecraft.recipe.recipes.HashPressRecipe;
 import net.minecraft.core.BlockPos;
@@ -15,7 +16,7 @@ public class HashPressMenu extends OneInputMenu<HashPressRecipe, HashPressBlockE
     }
 
     public HashPressMenu(int syncId, Inventory inventory, BlockEntity entity, SimpleContainerData arrayPropertyDelegate) {
-        super(SubstanceCraftMenus.HASH_PRESS_MENU, syncId, inventory, entity, arrayPropertyDelegate);
+        super(SubstanceCraftMenus.HASH_PRESS, syncId, inventory, entity, arrayPropertyDelegate);
     }
 
 }

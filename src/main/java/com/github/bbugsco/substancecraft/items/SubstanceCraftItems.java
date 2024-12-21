@@ -49,6 +49,11 @@ public class SubstanceCraftItems {
     public static final Item ETHYLENE = registerItem("ethylene", new Item(new Item.Properties()));
     public static final Item PROPYLENE = registerItem("propylene", new Item(new Item.Properties()));
     public static final Item DIESEL = registerItem("diesel", new Item(new Item.Properties()));
+    public static final Item AMMONIA = registerItem("ammonia", new Item(new Item.Properties()));
+    public static final Item CORN = registerItem("corn", new Item(new Item.Properties()));
+    public static final Item ETHANOL = registerItem("ethanol", new Item(new Item.Properties()));
+    public static final Item YEAST = registerItem("yeast", new Item(new Item.Properties()));
+    public static final Item HYDROCHLORIC_ACID = registerItem("hydrochloric_acid", new Item(new Item.Properties()));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(BuiltInRegistries.ITEM, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, name), item);
@@ -69,12 +74,17 @@ public class SubstanceCraftItems {
                             entries.accept(SubstanceCraftItems.HASH);
                             entries.accept(SubstanceCraftItems.EMPTY_DAB_RIG);
                             entries.accept(SubstanceCraftItems.DAB_RIG);
+                            entries.accept(SubstanceCraftItems.CORN);
+                            entries.accept(SubstanceCraftItems.YEAST);
                             entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.HASH_PRESS));
                             entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.REFINERY));
                             entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.CATALYTIC_REFORMER));
                             entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.ELECTROLYSIS_MACHINE));
                             entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.OXIDATION_MACHINE));
                             entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.AIR_EXTRACTOR));
+                            entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.MIXER));
+                            entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.HEATED_MIXER));
+                            entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.FERMENTATION_TANK));
                             entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.OIL_SHALE));
                             entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.SALT));
                             entries.accept(SubstanceCraftItems.DIPHENHYDRAMINE);
@@ -104,6 +114,8 @@ public class SubstanceCraftItems {
                             entries.accept(SubstanceCraftItems.ETHYLENE);
                             entries.accept(SubstanceCraftItems.PROPYLENE);
                             entries.accept(SubstanceCraftItems.DIESEL);
+                            entries.accept(SubstanceCraftItems.ETHANOL);
+                            entries.accept(SubstanceCraftItems.HYDROCHLORIC_ACID);
                         }).build());
 
     }

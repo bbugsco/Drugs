@@ -6,12 +6,18 @@ import com.github.bbugsco.substancecraft.items.SubstanceCraftItems;
 import com.github.bbugsco.substancecraft.recipe.builder.AirExtractorRecipeBuilder;
 import com.github.bbugsco.substancecraft.recipe.builder.CatalyticReformerRecipeBuilder;
 import com.github.bbugsco.substancecraft.recipe.builder.ElectrolysisRecipeBuilder;
+import com.github.bbugsco.substancecraft.recipe.builder.FermentationTankRecipeBuilder;
+import com.github.bbugsco.substancecraft.recipe.builder.HeatedMixerRecipeBuilder;
+import com.github.bbugsco.substancecraft.recipe.builder.MixerRecipeBuilder;
 import com.github.bbugsco.substancecraft.recipe.builder.OxidizerRecipeBuilder;
 import com.github.bbugsco.substancecraft.recipe.recipes.AirExtractorRecipe;
 import com.github.bbugsco.substancecraft.recipe.recipes.CatalyticReformerRecipe;
 import com.github.bbugsco.substancecraft.recipe.recipes.ElectrolysisRecipe;
+import com.github.bbugsco.substancecraft.recipe.recipes.FermentationTankRecipe;
 import com.github.bbugsco.substancecraft.recipe.recipes.HashPressRecipe;
 import com.github.bbugsco.substancecraft.recipe.builder.HashPressRecipeBuilder;
+import com.github.bbugsco.substancecraft.recipe.recipes.HeatedMixerRecipe;
+import com.github.bbugsco.substancecraft.recipe.recipes.MixerRecipe;
 import com.github.bbugsco.substancecraft.recipe.recipes.OxidizerRecipe;
 import com.github.bbugsco.substancecraft.recipe.recipes.RefineryRecipe;
 import com.github.bbugsco.substancecraft.recipe.builder.RefineryRecipeBuilder;
@@ -231,42 +237,104 @@ public class RecipeGenerator extends FabricRecipeProvider {
                 .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "oxidize_formaldehyde"));
 
         ElectrolysisRecipeBuilder.electrolysis(
-                Ingredient.of(SubstanceCraftItems.BRINE),
-                SubstanceCraftItems.SODIUM_HYDROXIDE,
-                List.of(new ItemStack(SubstanceCraftItems.CHLORINE, 30 >> 1), new ItemStack(SubstanceCraftItems.HYDROGEN, 30 >> 1)),
-                1000,
-                ElectrolysisRecipe::new
-        )
+                        Ingredient.of(SubstanceCraftItems.BRINE),
+                        SubstanceCraftItems.SODIUM_HYDROXIDE,
+                        List.of(new ItemStack(SubstanceCraftItems.CHLORINE, 30 >> 1), new ItemStack(SubstanceCraftItems.HYDROGEN, 30 >> 1)),
+                        1000,
+                        ElectrolysisRecipe::new
+                )
                 .unlockedBy("has_item", has(SubstanceCraftItems.BRINE))
                 .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "electrolysis_brine"));
 
         ElectrolysisRecipeBuilder.electrolysis(
-                Ingredient.of(Items.POTION),
-                SubstanceCraftItems.HYDROGEN,
-                List.of(new ItemStack(SubstanceCraftItems.OXYGEN, 50 >> 1)),
-                1000,
-                ElectrolysisRecipe::new
-        )
+                        Ingredient.of(Items.POTION),
+                        SubstanceCraftItems.HYDROGEN,
+                        List.of(new ItemStack(SubstanceCraftItems.OXYGEN, 50 >> 1)),
+                        1000,
+                        ElectrolysisRecipe::new
+                )
                 .unlockedBy("has_item", has(SubstanceCraftItems.BRINE))
                 .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "electrolysis_water"));
 
         AirExtractorRecipeBuilder.extract(
-                Ingredient.of(Items.GLASS_BOTTLE),
-                SubstanceCraftItems.NITROGEN,
-                600,
-                AirExtractorRecipe::new
-        )
+                        Ingredient.of(Items.GLASS_BOTTLE),
+                        SubstanceCraftItems.NITROGEN,
+                        600,
+                        AirExtractorRecipe::new
+                )
                 .unlockedBy("has_item", has(Items.GLASS_BOTTLE))
                 .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "extract_nitrogen"));
 
         AirExtractorRecipeBuilder.extract(
-                Ingredient.of(Items.GLASS_BOTTLE),
-                SubstanceCraftItems.OXYGEN,
-                1200,
-                AirExtractorRecipe::new
-        )
+                        Ingredient.of(Items.GLASS_BOTTLE),
+                        SubstanceCraftItems.OXYGEN,
+                        1200,
+                        AirExtractorRecipe::new
+                )
                 .unlockedBy("has_item", has(Items.GLASS_BOTTLE))
                 .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "extract_oxygen"));
+
+        MixerRecipeBuilder.mix(
+                        List.of(Ingredient.of(SubstanceCraftItems.SALT), Ingredient.of(Items.POTION)),
+                        SubstanceCraftItems.BRINE,
+                        800,
+                        MixerRecipe::new
+                )
+                .unlockedBy("has_item", has(Items.POTION))
+                .unlockedBy("has_item", has(SubstanceCraftItems.SALT))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "mix_brine"));
+
+
+        HeatedMixerRecipeBuilder.mix(
+                        List.of(Ingredient.of(SubstanceCraftItems.AMMONIA), Ingredient.of(SubstanceCraftItems.METHANOL)),
+                        SubstanceCraftItems.METHYLAMINE,
+                        800,
+                        HeatedMixerRecipe::new
+                )
+                .unlockedBy("has_item", has(SubstanceCraftItems.AMMONIA))
+                .unlockedBy("has_item", has(SubstanceCraftItems.METHANOL))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "mix_methylamine"));
+
+        HeatedMixerRecipeBuilder.mix(
+                        List.of(Ingredient.of(SubstanceCraftItems.CHLORINE), Ingredient.of(SubstanceCraftItems.METHANE)),
+                        SubstanceCraftItems.CHLOROFORM,
+                        800,
+                        HeatedMixerRecipe::new
+                )
+                .unlockedBy("has_item", has(SubstanceCraftItems.CHLORINE))
+                .unlockedBy("has_item", has(SubstanceCraftItems.METHANE))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "mix_chloroform"));
+
+        HeatedMixerRecipeBuilder.mix(
+                        List.of(Ingredient.of(SubstanceCraftItems.CHLORINE), Ingredient.of(SubstanceCraftItems.HYDROGEN), Ingredient.of(Items.POTION)),
+                        SubstanceCraftItems.HYDROCHLORIC_ACID,
+                        800,
+                        HeatedMixerRecipe::new
+                )
+                .unlockedBy("has_item", has(SubstanceCraftItems.CHLORINE))
+                .unlockedBy("has_item", has(SubstanceCraftItems.HYDROCHLORIC_ACID))
+                .unlockedBy("has_item", has(Items.POTION))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "mix_hcl"));
+
+        HeatedMixerRecipeBuilder.mix(
+                        List.of(Ingredient.of(SubstanceCraftItems.NITROGEN), Ingredient.of(SubstanceCraftItems.HYDROGEN)),
+                        SubstanceCraftItems.AMMONIA,
+                        800,
+                        HeatedMixerRecipe::new
+                )
+                .unlockedBy("has_item", has(SubstanceCraftItems.CHLORINE))
+                .unlockedBy("has_item", has(SubstanceCraftItems.METHANE))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "mix_ammonia"));
+
+        FermentationTankRecipeBuilder.ferment(
+                        List.of(Ingredient.of(SubstanceCraftItems.YEAST), Ingredient.of(SubstanceCraftItems.CORN)),
+                        SubstanceCraftItems.ETHANOL,
+                        2000,
+                        FermentationTankRecipe::new
+                )
+                .unlockedBy("has_item", has(SubstanceCraftItems.YEAST))
+                .unlockedBy("has_item", has(SubstanceCraftItems.CORN))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "ferment_ethanol"));
 
     }
 
